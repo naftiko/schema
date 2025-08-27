@@ -1,0 +1,61 @@
+---
+"$id": https://github.com/naftiko/capabilities/blob/main/schema.yml
+"$schema": https://json-schema.org/draft/2020-12/schema
+title: Capability Manifest
+type: object
+
+# Core Properties - This is all just placeholder right now. Casing, types, and other work will come next.
+properties:
+  Domain:
+    type: object
+    description: The domain.
+    properties:
+      Aggregate:
+        "$ref": "#/$defs/Aggregate"
+      UseCase:
+        "$ref": "#/$defs/UseCase"
+      Service:
+        "$ref": "#/$defs/Service"  
+      Actor:
+        "$ref": "#/$defs/Actor"  
+      Language:
+        "$ref": "#/$defs/Language"             
+  Lifecycle:
+    "$ref": "#/$defs/Lifecycle"  
+  Adapter:
+    "$ref": "#/$defs/Adapter"       
+
+# Individual Reusable Objects - Developing all objects as individual definitions and reusing across manifest.
+$defs:
+  Aggregate:
+    type: string
+    description: The aggregate.
+  UseCase:
+    type: string
+    description: The use case.   
+  Service:
+    type: string
+    description: The service.    
+  Actor:
+    type: string
+    description: The actor.   
+  Language:
+    type: object
+    description: The language.  
+    properties:
+      Prompt:
+        type: string
+        description: The prompt.                            
+      Term:
+        type: string
+        description: The term.
+  Lifecycle:
+    type: string
+    description: The lifecycle.
+  Adapter:
+    description: The adapter
+    type: object
+    properties:
+      Port:
+        type: string
+        description: The port. 
