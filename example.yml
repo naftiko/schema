@@ -1,0 +1,16 @@
+---
+Domain: 
+  Aggregate:
+    EntityType: {}
+    EventType: {}
+  UseCase:
+    Benefit: {}
+  Service:
+    Procedure: {} 
+  Actor: {}
+  Language:
+    Term: {}
+    Prompt: {}
+Lifecycle: {}
+Adapters:
+  Ports: {}  
