@@ -1,11 +1,9 @@
 # Capabilities
-This is for managing the schema for the capabilities manifest. This schema is just echoing the [product domain metamodel](https://docs.google.com/presentation/d/1zYfV1_xh7PuO3-7lcxrM-ps-lPdEDuGdOyYDu0rIFP0/edit?slide=id.g360f05e73a5_0_0#slide=id.g360f05e73a5_0_0), and will be running experiments to explore what is possible. 
+This is for managing the schema for the capabilities manifest. The goal is define a JSON Schema v2020-12 for the capabilities manifest, and provide working examples for our leading use cases, to provide an artifact that reflects the core domain metamodel. This is the machine-readable output of the negotiation occurring across the Capability Metamodel in the [Technology Plan Deck](https://docs.google.com/presentation/d/1zYfV1_xh7PuO3-7lcxrM-ps-lPdEDuGdOyYDu0rIFP0/edit?slide=id.g39b20392ad6_0_2&pli=1#slide=id.g39b20392ad6_0_2) and the Capability Metamodel in the [Google Doc](https://docs.google.com/document/d/1yo8F7sLjdE6LoQR1rYd-xK0M5spbPnZg3i5mc-yQuus/edit?tab=t.0).
 
-The goal is define a JSON Schema v2020-12 for the capabilities manifest, and provide working examples for our leading use cases, to provide an artifact that reflects the core domain metamodel.
-
-## Domain Metamodel
+## Capabilities Metamodel
 This is the domain metamodel being define as part of the core product, and available in the [technology plan deck](https://docs.google.com/presentation/d/1zYfV1_xh7PuO3-7lcxrM-ps-lPdEDuGdOyYDu0rIFP0/edit?slide=id.g360f05e73a5_0_0#slide=id.g360f05e73a5_0_0).
-![Alt text](doman-metamodel.png "Meta Model")
+![Alt text](capability-metamodel.png "Meta Model")
 
 ## JSON Schema
 This is the [JSON Schema we are iterating upon to define the capabilities manifest](schema.yml) and then validate as part of CI/CD and other automation.
