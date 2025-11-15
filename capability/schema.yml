@@ -27,9 +27,9 @@ properties:
 
 # Individual Reusable Objects - Developing all objects as individual definitions and reusing across manifest.
 $defs:
-  Aggregate:
+  Entity:
     type: string
-    description: The aggregate.
+    description: The aggregate entity.
   UseCase:
     type: string
     description: The use case.   

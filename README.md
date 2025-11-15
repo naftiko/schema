@@ -1,8 +1,22 @@
 # Schema
 These are the schemas guiding the product, go-to-market, and revenue work at Naftiko.
 
+<<<<<<< HEAD
 ## Philosophy
 We are taking a GitOps and schema-driven approach to guide work with these principles:
+=======
+## Fabric Metamodel
+This is the metamodel being defined as part of the core product, and available in the [technology plan deck](https://docs.google.com/presentation/d/1zYfV1_xh7PuO3-7lcxrM-ps-lPdEDuGdOyYDu0rIFP0/edit?slide=id.g360f05e73a5_0_0#slide=id.g360f05e73a5_0_0).
+![Alt text](fabric-metamodel.png "Fabric Metamodel")
+
+## Capabilities Metamodel
+This is the domain metamodel being define as part of the core product, and available in the [technology plan deck](https://docs.google.com/presentation/d/1zYfV1_xh7PuO3-7lcxrM-ps-lPdEDuGdOyYDu0rIFP0/edit?slide=id.g360f05e73a5_0_0#slide=id.g360f05e73a5_0_0).
+![Alt text](capability-metamodel.png "Capability Metamodel")
+
+There will be multiple ways to create this metamodel, direct edition in YAML, visual edition via the Naftiko Fabric visual interface and import from various related specifications as illustrated below:
+![Alt text](capability-conversions.png "Capability Conversions")
+
+>>>>>>> main
 
 - **Schema-First** - All entities used in code and content have a supporting JSON Schema.
 - **Contract-First** - Schemas are iterated upon with participation across ALL stakeholders.
