@@ -25,7 +25,7 @@ properties:
     type: array
     description: The controlled capabilities.
     items:
-      "$ref": "../capability/schema.yml"  
+      "$ref": "../capability/capability-rules-v0.1.0.yml"  
 
 # Individual Reusable Objects
 $defs:
