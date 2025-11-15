@@ -1,0 +1,84 @@
+--- 
+"$id": https://github.com/naftiko/capabilities/blob/main/fabric/fabric-schema.yml
+"$schema": https://json-schema.org/draft/2020-12/schema
+title: Fabric
+description: Bringing together the capabilities across your domains into a single fabric that allows you to observe, control, and understand traffic across internal and 3rd-party API consumption across different applications.
+type: object 
+
+# Core Properties for a Fabric.
+properties:
+  Accounts:
+    type: object
+    description: The account for a fabric.
+    items:
+      "$ref": "#/$defs/Account"
+  Organizations:
+    type: array
+    description: The organizations for a fabric.
+    items:
+      "$ref": "#/$defs/Organization"     
+  Fabrics:
+    type: array
+    description: The policies.
+    items:
+      "$ref": "#/$defs/Fabric"  
+
+# Individual Reusable Objects
+$defs:
+  Account:
+    type: string
+    description: The account.
+  Organization:
+    type: string
+    description: The organization.
+  Fabric:
+    type: string
+    description: The fabric.   
+    properties:
+      Repository:
+        type: object
+        description: The repository for a Fabric.
+        items:
+          "$ref": "#/$defs/Repository"
+  Repository:
+    type: string
+    description: The language model.   
+    properties:
+      UseCase:
+        type: object
+        description: The use case for a repository.
+        items:
+          "$ref": "#/$defs/UseCase"   
+      Language:
+        type: array
+        description: The use case for a repository.
+        items:
+          "$ref": "../capability/Language"    
+      Capabilities:
+        type: array
+        description: The capabilities for a repository.
+        items:
+          "$ref": "../capability/schema.yml"                         
+  UseCase:
+    type: string
+    description: A single use case.
+  Language:
+    type: string
+    description: A single use case.    
+    properties:
+      Terms:
+        type: arrays
+        description: The use case for a repository.
+        items:
+          "$ref": "#/$defs/Term"   
+      LanguageModels:
+        type: array
+        description: The use case for a repository.
+        items:
+          "$ref": "../capability/LanguageModel"   
+  Term:
+    type: string
+    description: A single term.
+  LanguageModel:
+    type: string
+    description: A single language model.            
