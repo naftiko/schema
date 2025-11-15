@@ -63,7 +63,7 @@ $defs:
         type: array
         description: The capabilities for a repository.
         items:
-          "$ref": "../capability/schema.yml"                         
+          "$ref": "../capability/capability-rules-v0.1.0.yml"                         
   UseCase:
     type: string
     description: A single use case.

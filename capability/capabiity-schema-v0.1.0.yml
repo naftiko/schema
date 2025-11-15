@@ -1,7 +1,8 @@
 ---
 "$id": https://github.com/naftiko/capabilities/blob/main/schema.yml
 "$schema": https://json-schema.org/draft/2020-12/schema
-title: Capability Manifest
+title: Capability
+description: Capabilities are open-source, declarative, standards-based integrations that are aligned with business outcomes within specific domains, providing what is needed to deliver and automate integrations across a variety of use cases.
 type: object
 
 # Core Properties - This is all just placeholder right now. Casing, types, and other work will come next.
