@@ -1,0 +1,23 @@
+aid: naftiko-capability
+name: Naftiko Capability
+type: Index
+description: |-
+  Capabilities are open-source, declarative, standards-based integrations that are aligned with business outcomes within specific domains, providing what is needed to deliver and automate integrations across a variety of use cases.
+tags:
+- Capabilities
+created: '2025-11-15'
+modified: '2025-11-15'
+url: url: https://github.com/naftiko/schema/blob/main/capability/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: capabiity-schema-v0.1.0.yml
+  - type: Example
+    url: capability-example-v0.1.0.yml  
+  - type: SpectralRules
+    url: capability-rules-v0.1.0.yml  
+  - type: DiagramImage
+    url: capability-metamodel-v0.1.0.png   
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

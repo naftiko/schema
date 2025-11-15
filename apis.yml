@@ -1,0 +1,22 @@
+aid: naftiko-schema
+name: Naftiko SChema
+type: Index
+description: |-
+  These are all of the schema that Naftiko uses to guide the product, go-to-market, and revenue work.
+tags:
+  - Schema
+  - Registry
+created: '2025-11-15'
+modified: '2025-11-15'
+url: https://github.com/naftiko/schema/blob/main/apis.yml
+specificationVersion: '0.19'
+include:
+  - name: Capability
+    url: capability/apis.yml
+  - name: Engine
+    url: engine/apis.yml
+  - name: Fabric
+    url: fabric/apis.yml        
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

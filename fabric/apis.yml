@@ -1,0 +1,23 @@
+aid: naftiko-fabric
+name: Naftiko Fabric
+type: Index
+description: |-
+  Bringing together the capabilities across your domains into a single fabric that allows you to observe, control, and understand traffic across internal and 3rd-party API consumption across different applications.
+tags:
+- Capabilities
+created: '2025-11-15'
+modified: '2025-11-15'
+url: url: https://github.com/naftiko/schema/blob/main/fabric/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: capabiity-schema-v0.1.0.yml
+  - type: Example
+    url: fabric-example-v0.1.0.yml  
+  - type: SpectralRules
+    url: fabric-rules-v0.1.0.yml  
+  - type: DiagramImage
+    url: fabric-metamodel-v0.1.0.png   
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

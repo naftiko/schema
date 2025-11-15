@@ -1,0 +1,23 @@
+aid: naftiko-engine
+name: Naftiko Engine
+type: Index
+description: |-
+  Performant and scalable engine for executing capabilities while controlling inbound and outbound traffic, managing encryption, key and token issueing and rotation, rate limiting, and other runtime needs.
+tags:
+- Capabilities
+created: '2025-11-15'
+modified: '2025-11-15'
+url: url: https://github.com/naftiko/schema/blob/main/engine/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: capabiity-schema-v0.1.0.yml
+  - type: Example
+    url: engine-example-v0.1.0.yml  
+  - type: SpectralRules
+    url: engine-rules-v0.1.0.yml  
+  - type: DiagramImage
+    url: engine-metamodel-v0.1.0.png   
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io
