@@ -1,0 +1,89 @@
+--- 
+# A unique identifier for the engine schema
+"$id": https://github.com/naftiko/capabilities/blob/main/engine/engine-schema.yml
+
+# We use latest draft of JSON Schema
+"$schema": https://json-schema.org/draft/2020-12/schema
+
+## Metadata about this object.
+title: Engine
+description: Performant and scalable engine for executing capabilities while controlling inbound and outbound traffic, managing encryption, key and token issueing and rotation, rate limiting, and other runtime needs.
+
+# Core Properties for an Engine.
+properties:
+  InboundGateway:
+    type: object
+    description: The inbound gateway.
+    schema:
+      "$ref": "#/$defs/InboundGateway"
+  OutboundGateway:
+    type: object
+    description: The outbound gateway.
+    schema:
+      "$ref": "#/$defs/OutboundGateway"     
+  Capabilities:
+    type: array
+    description: The controlled capabilities.
+    items:
+      "$ref": "../capability/schema.yml"  
+
+# Individual Reusable Objects
+$defs:
+  InboundGateway:
+    type: string
+    description: The inbound gateway.
+    properties:
+      Authentication:
+        type: string   
+      Authorization:
+        type: string    
+      Encryption:
+        type: string   
+      RateLimits:
+        type: string  
+      Quotas:
+        type: string                            
+      DataMasking:
+        type: string  
+      DataValidation:
+        type: string    
+      DataFormatting:
+        type: string  
+      Latency:
+        type: string 
+      Caching:
+        type: string   
+      Policies:
+        type: string                                                                
+  OutboundGateway:
+    type: string
+    description: The outbound gateway.
+    properties:
+      Authentication:
+        type: string   
+      Encryption:
+        type: string   
+      Observability:
+        type: string  
+      Auditing:
+        type: string                            
+      Consumption:
+        type: string  
+      RateLimits:
+        type: string    
+      Budgets:
+        type: string  
+      Discovery:
+        type: string 
+      Mocking:
+        type: string  
+      Failover:
+        type: string  
+      Scaling:
+        type: string    
+      Anomalies:
+        type: string   
+      Upgrades:
+        type: string    
+      Policies:
+        type: string                                            

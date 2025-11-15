@@ -1,6 +1,11 @@
 --- 
+# A unique identifier for the fabric schema
 "$id": https://github.com/naftiko/capabilities/blob/main/fabric/fabric-schema.yml
+
+# We use latest draft of JSON Schema
 "$schema": https://json-schema.org/draft/2020-12/schema
+
+## Metadata about this object.
 title: Fabric
 description: Bringing together the capabilities across your domains into a single fabric that allows you to observe, control, and understand traffic across internal and 3rd-party API consumption across different applications.
 type: object 
