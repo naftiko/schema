@@ -1,0 +1,46 @@
+---
+aid: naftiko-vocabularies
+name: Vocabularies
+
+type: Template
+description: |-
+  This is the inbox for all schema present in this repository, beginning with a word or phrase and a definition, then fleshing out with properties, APIs, and other details.
+
+tags:
+  - Vocabularies
+
+created: '2025-11-15'
+modified: '2025-11-15'
+
+url: https://github.com/naftiko/capabilities/blob/main/vocabulary/apis.yml
+specificationVersion: '0.19'
+apis:
+
+  - aid: naftiko-vocabularies:vocabularies-api
+    name: Vocabularies API
+    description: This is the inbox for all schema present in this repository, beginning with a word or phrase and a definition, then fleshing out with properties, APIs, and other details.
+    humanURL: https://example.com/apis.yml
+    baseURL: http://apis.example.com
+    tags:
+      - Vocabularies
+
+    properties:
+      - type: OpenAPI
+        url: vocabularies-openapi-v0.1.0.yml
+      - type: Examples
+        url: vocabularies-example-v0.1.0.yml
+      - type: JSONSchema
+        url: vocabularies-schema-v0.1.0.yml    
+
+    contact:
+      - FN: Kin Lane
+        email: kinlane@naftiko.io
+
+common:
+
+  - type: Website
+    url: http://apievangelist.com
+
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io
