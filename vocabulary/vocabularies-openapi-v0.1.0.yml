@@ -1,0 +1,323 @@
+openapi: 3.1.0
+info:
+
+  title: Vocabulary API
+  description: |
+    This is the inbox for all schema present in this repository, beginning with a word or phrase and a definition, then fleshing out with properties, APIs, and other details.
+  
+  version: 0.1.0
+
+  contact:
+    name: Kin Lane
+    url: https:/naftiko.io
+    email: kinlane@naftiko.com
+
+  license: 
+    name: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+    identifier: CC-BY-NC-SA-4.0
+    url: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
+
+externalDocs:
+  description: Vocabulary API Landing Page
+  url: http://example.com/products
+
+servers:
+
+  - url: https://api.example.com
+    description: Production
+
+tags:
+
+  - name: Vocabulary
+    description: | 
+      Placing and managing of products placed for products.
+
+paths:
+
+  /products:
+    get:
+      operationId: getVocabulary
+      summary: Retrieves Vocabulary
+      description: Returns a list of all the current vocabulary.
+      tags:
+        - Vocabulary
+      responses:
+        '200':
+          description: A list of vocabulary.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vocabularies'
+              examples:
+                ProductCollection:
+                  $ref: '#/components/examples/Vocabulary'            
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+
+  examples:
+
+    Vocabulary:
+      value:              
+        name: APIs
+        definition: An application programming interface, which is often shortened to just API.
+        notes: A pretty top-level and ubiquitous term that regularly gets applied across operations.
+        related:
+          - Application Programming Interface
+          - Application Programming Interfaces
+          - API
+        children:
+          - REST APIs
+          - Hypermedia APIs
+        singular: API
+        plural: APIs
+        noun: true
+        verb: false
+        path: true
+        use: true                  
+
+  schemas:    
+
+    Vocabularies:
+      type: object
+      description: A list of vocabulary words and phrases.     
+      items:
+        $ref: '#/components/schemas/Vocabulary'
+
+    Vocabulary:
+      type: object
+      description: A vocabulary object for managing words and phrases.
+      xml:
+        name: vocabulary
+      required:
+        - name
+        - definition
+      properties:
+        name:
+          type: string
+          description: The name of the word or phrase that is part of vocabulary.
+        definition:
+          type: string
+          description: A short definition of what a word or phrase means.
+        notes:
+          description: Extra notes about the word that help define the context.
+          type: string
+        related:
+          description: Any related words that are used, but should be transformed.
+          type: array
+          items:
+            type: string   
+        children:
+          description: Any words or phrases that are children underneath this word or phrase.
+          type: array
+          items:
+            type: string         
+        singular:
+          description: What the singular representation of the word or phrase is.
+          type: string
+        plural:
+          description: What the plural representation of the word or phrase is.
+          type: string
+        noun:
+          description: Is the word a noun, describing a person, place, or thing.
+          type: boolean
+        verb:
+          description: Is the word a verb, providing some sort of action.
+          type: boolean
+        path:
+          description: Can the word or phrase be used as part of the API path.
+          type: boolean  
+        use:
+          description: Should this word or phrase be used or not used.
+          type: boolean                                  
+
+    Problem:
+      type: object
+      description: This is a Problem Details for HTTP APIs object.
+      required:
+        - title
+        - status
+      xml:
+        name: problem
+        namespace: urn:ietf:rfc:7807
+      properties:
+        type:
+          type: string
+          description: A URI reference that identifies the problem type
+          example: https://example.com/probs/out-of-credit
+          minLength: 10
+          maxLength: 2048            
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type
+          example: You do not have enough credit.
+          minLength: 10
+          maxLength: 250            
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem
+          example: Your current balance is 30, but that costs 50.
+          minLength: 10
+          maxLength: 1000            
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurrence of the problem
+          example: /account/12345/msgs/abc
+          minLength: 10
+          maxLength: 250            
+        status:
+          type: integer
+          description: The HTTP status code
+          example: 400        
+          minLength: 3
+          maxLength: 3                 
+  responses:
+
+    BadRequest:
+      description: Bad Request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/bad-request
+            title: Bad Request
+            status: 400
+            detail: The request is invalid or missing required parameters.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/bad-request
+            title: Bad Request
+            status: 400
+            detail: The request is invalid or missing required parameters.
+
+    Conflict:
+      description: Conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/conflict
+            title: Conflict
+            status: 409
+            detail: There is a conflict with an existing resource.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/conflict
+            title: Conflict
+            status: 409
+            detail: There is a conflict with an existing resource.
+
+    Forbidden:
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/forbidden
+            title: Forbidden
+            status: 403
+            detail: Access is forbidden with the provided credentials.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/forbidden
+            title: Forbidden
+            status: 403
+            detail: Access is forbidden with the provided credentials.
+
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/internal-server-error
+            title: Internal Server Error
+            status: 500
+            detail: An unexpected error occurred.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/internal-server-error
+            title: Internal Server Error
+            status: 500
+            detail: An unexpected error occurred.
+
+    NotFound:
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/not-found
+            title: Not Found
+            status: 404
+            detail: The requested resource was not found.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/not-found
+            title: Not Found
+            status: 404
+            detail: The requested resource was not found.
+
+    TooManyRequests:
+      description: Too Many Requests
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/too-many-requests
+            title: Too Many Requests
+            status: 429
+            detail: You have exceeded the rate limit.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/too-many-requests
+            title: Too Many Requests
+            status: 429
+            detail: You have exceeded the rate limit.
+
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/unauthorized
+            title: Unauthorized
+            status: 401
+            detail: You do not have the necessary permissions.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/unauthorized
+            title: Unauthorized
+            status: 401
+            detail: You do not have the necessary permissions.
