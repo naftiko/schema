@@ -1,0 +1,18 @@
+aid: kubernetes
+name: Kubernetes
+type: Index
+description: |-
+  Kubernetes is an open-source platform for automating the deployment, scaling, and management of containerized applications across distributed infrastructure.
+tags:
+  - Schema
+  - Validation
+created: '2025-11-16'
+modified: '2025-11-16'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/kubernetes/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: kubernetes-schema-v1.yml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

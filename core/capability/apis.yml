@@ -4,10 +4,10 @@ type: Index
 description: |-
   Capabilities are open-source, declarative, standards-based integrations that are aligned with business outcomes within specific domains, providing what is needed to deliver and automate integrations across a variety of use cases.
 tags:
-- Capabilities
+  - Capabilities
 created: '2025-11-15'
 modified: '2025-11-15'
-url: url: https://github.com/naftiko/schema/blob/main/capability/apis.yml
+url: https://github.com/naftiko/schema/blob/main/capability/apis.yml
 specificationVersion: '0.19'
 common:
   - type: JSONSchema

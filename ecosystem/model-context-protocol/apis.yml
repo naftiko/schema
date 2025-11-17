@@ -1,0 +1,18 @@
+aid: model-context-protocol
+name: Model Context Protocol (MCP)
+type: Index
+description: |-
+  MCP (Model Context Protocol) is an open specification that standardizes how AI models communicate with tools, APIs, and data sources, enabling secure, consistent, and extensible integrations across systems.
+tags:
+  - Artificial Intelligence
+  - AI
+created: '2025-11-16'
+modified: '2025-11-16'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/model-context-protocol/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: model-context-protocol-schema-v2025-06-18.yaml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

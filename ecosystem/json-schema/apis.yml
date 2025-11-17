@@ -1,0 +1,18 @@
+aid: json-schema
+name: JSON Schema
+type: Index
+description: |-
+  JSON Schema is a standard for describing the structure, validation rules, and semantics of JSON data, enabling consistent data modeling, validation, and interoperability across systems.
+tags:
+  - Schema
+  - Validation
+created: '2025-11-16'
+modified: '2025-11-16'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/json-schema/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: json-schema-2012-12.yml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

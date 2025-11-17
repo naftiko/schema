@@ -4,10 +4,10 @@ type: Index
 description: |-
   Bringing together the capabilities across your domains into a single fabric that allows you to observe, control, and understand traffic across internal and 3rd-party API consumption across different applications.
 tags:
-- Capabilities
+  - Fabric
 created: '2025-11-15'
 modified: '2025-11-15'
-url: url: https://github.com/naftiko/schema/blob/main/fabric/apis.yml
+url: https://github.com/naftiko/schema/blob/main/fabric/apis.yml
 specificationVersion: '0.19'
 common:
   - type: JSONSchema

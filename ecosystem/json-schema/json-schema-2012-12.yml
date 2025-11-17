@@ -1,0 +1,52 @@
+---
+"$schema": https://json-schema.org/draft/2020-12/schema
+"$id": https://schemas.sourcemeta.com/jsonschema/2020-12/schema
+"$vocabulary":
+  https://json-schema.org/draft/2020-12/vocab/core: true
+  https://json-schema.org/draft/2020-12/vocab/applicator: true
+  https://json-schema.org/draft/2020-12/vocab/unevaluated: true
+  https://json-schema.org/draft/2020-12/vocab/validation: true
+  https://json-schema.org/draft/2020-12/vocab/meta-data: true
+  https://json-schema.org/draft/2020-12/vocab/format-annotation: true
+  https://json-schema.org/draft/2020-12/vocab/content: true
+"$dynamicAnchor": meta
+title: Core and Validation specifications meta-schema
+"$comment": This meta-schema also defines keywords that have appeared in previous
+  drafts in order to prevent incompatible extensions as they remain in common use.
+type:
+- object
+- boolean
+allOf:
+- "$ref": meta/core
+- "$ref": meta/applicator
+- "$ref": meta/unevaluated
+- "$ref": meta/validation
+- "$ref": meta/meta-data
+- "$ref": meta/format-annotation
+- "$ref": meta/content
+properties:
+  definitions:
+    "$comment": '"definitions" has been replaced by "$defs".'
+    deprecated: true
+    default: {}
+    type: object
+    additionalProperties:
+      "$dynamicRef": "#meta"
+  dependencies:
+    "$comment": '"dependencies" has been split and replaced by "dependentSchemas"
+      and "dependentRequired" in order to serve their differing semantics.'
+    deprecated: true
+    default: {}
+    type: object
+    additionalProperties:
+      anyOf:
+      - "$dynamicRef": "#meta"
+      - "$ref": meta/validation#/$defs/stringArray
+  "$recursiveAnchor":
+    "$comment": '"$recursiveAnchor" has been replaced by "$dynamicAnchor".'
+    deprecated: true
+    "$ref": meta/core#/$defs/anchorString
+  "$recursiveRef":
+    "$comment": '"$recursiveRef" has been replaced by "$dynamicRef".'
+    deprecated: true
+    "$ref": meta/core#/$defs/uriReferenceString
