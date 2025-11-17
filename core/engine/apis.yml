@@ -4,10 +4,10 @@ type: Index
 description: |-
   Performant and scalable engine for executing capabilities while controlling inbound and outbound traffic, managing encryption, key and token issueing and rotation, rate limiting, and other runtime needs.
 tags:
-- Capabilities
+- Engine
 created: '2025-11-15'
 modified: '2025-11-15'
-url: url: https://github.com/naftiko/schema/blob/main/engine/apis.yml
+url: https://github.com/naftiko/schema/blob/main/engine/apis.yml
 specificationVersion: '0.19'
 common:
   - type: JSONSchema

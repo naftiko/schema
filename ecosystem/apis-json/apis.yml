@@ -1,0 +1,17 @@
+aid: apis-json
+name: APIs.json
+type: Index
+description: |-
+  APIs.json is an open standard for describing collections of APIs in a machine-readable way, making it easier to discover, catalog, and automate interactions with API ecosystems.
+tags:
+  - Discovery
+created: '2025-11-16'
+modified: '2025-11-16'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/apis-json/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: apis-json-schema-v1.0.0.yml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

@@ -1,0 +1,16 @@
+aid: spectral
+name: Spectral
+type: Index
+description: |-
+  Spectral is a flexible API linter that checks API descriptions—like OpenAPI or AsyncAPI—against style guides and rules to ensure consistency, quality, and best practices across your API definitions.
+tags:
+  - Overlays
+created: '2025-11-16'
+modified: '2025-11-16'
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: spectral-schema-v6.15.0.yml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

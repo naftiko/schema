@@ -1,0 +1,38 @@
+aid: ecosystem
+type: Index
+title: Ecosystem
+description: |-
+  These are the schema from the standards and tooling that Naftiko is built on.
+tags:
+  - Overlays
+created: '2025-11-16'
+modified: '2025-11-16'
+specificationVersion: '0.19'
+include:
+  - name: Agent-to-agent (A2A)
+    url: agent-2-agent/apis.yml
+  - name: Airbyte
+    url: airbyte/apis.yml
+  - name: APIs.json
+    url: apis-json/apis.yml
+  - name: Arazzo
+    url: arazzo/apis.yml
+  - name: AsyncAPI
+    url: asyncapi/apis.yml
+  - name: CloudEvents
+    url: cloudevents/apis.yml
+  - name: JSON Schema
+    url: json-schema/apis.yml
+  - name: Kubernetes
+    url: kubernetes/apis.yml
+  - name: Model Context Protocol (MCP)
+    url: model-context-protocol/apis.yml
+  - name: OpenAPI
+    url: openapi/apis.yml
+  - name: OpenAPI Overlays
+    url: openapi-overlays/apis.yml
+  - name: Spectral
+    url: spectral/apis.yml                                              
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

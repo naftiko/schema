@@ -1,0 +1,18 @@
+aid: openapi
+name: OpenAPI
+type: Index
+description: |-
+  OpenAPI is a specification for describing RESTful APIs in a standardized, machine-readable way, enabling consistent documentation, tooling, and automation across the API lifecycle.
+tags:
+  - HTTP APIs
+  - APIs
+created: '2025-11-16'
+modified: '2025-11-16'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/openapi/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: openapi-schema-3.1.0.yml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

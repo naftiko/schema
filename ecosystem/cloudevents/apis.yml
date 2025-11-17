@@ -1,0 +1,17 @@
+aid: cloudevents
+name: CloudEvents
+type: Index
+description: |-
+  CloudEvents is a specification that provides a common, structured format for describing event data across services, making it easier to route, process, and integrate events consistently across diverse systems.
+tags:
+  - Event-Driven
+created: '2025-11-16'
+modified: '2025-11-16'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/cloudevents/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: cloudevents-schema-v3.0.0.yml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

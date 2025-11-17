@@ -1,0 +1,20 @@
+aid: core
+type: Index
+title: Core
+description: |-
+  These are the core schema guiding the Naftiko product.
+tags:
+  - Overlays
+created: '2025-11-16'
+modified: '2025-11-16'
+specificationVersion: '0.19'
+include:
+  - name: Capability
+    url: capability/apis.yml
+  - name: Engine
+    url: engine/apis.yml
+  - name: Fabric
+    url: fabric/apis.yml                                             
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

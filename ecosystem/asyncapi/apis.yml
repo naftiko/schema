@@ -1,0 +1,17 @@
+aid: asyncapi
+name: AsyncAPI
+type: Index
+description: |-
+  AsyncAPI is an open-source specification that standardizes how to describe, document, and manage event-driven APIs and asynchronous messaging systems.
+tags:
+  - Event-Driven
+created: '2025-11-16'
+modified: '2025-11-16'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/asyncapi/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: asyncapi-schema-v3.0.0.yml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

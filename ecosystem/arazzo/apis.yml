@@ -1,0 +1,17 @@
+aid: arazzo
+name: Arazzo
+type: Index
+description: |-
+  The OpenAPI Arazzo Specification is a standard for defining multi-step API workflows in a clear, machine-readable format so that complex API sequences can be automated and executed reliably.
+tags:
+  - Workflows
+created: '2025-11-16'
+modified: '2025-11-16'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/arazzo/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: arrazzo-schema-v1.0.0.yml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

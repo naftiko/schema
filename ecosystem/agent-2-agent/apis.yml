@@ -1,0 +1,17 @@
+aid: agent-to-agent
+name: Agent-to-agent (A2A)
+type: Index
+description: |-
+  Agent-to-agent (A2A) refers to autonomous systems or software agents communicating and collaborating directly with each other to complete tasks, make decisions, or share information without human intervention.
+tags:
+  - Agents
+created: '2025-11-16'
+modified: '2025-11-16'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/agent-2-agent/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: agent-2-agent-schema-v0.3.0.yaml
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io
