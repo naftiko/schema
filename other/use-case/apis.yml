@@ -1,0 +1,46 @@
+---
+aid: naftiko-vocabularies
+name: Use Cases
+
+type: Template
+description: |-
+  This is the API, schema, and other artifacts for defining Naftiko use cases.
+
+tags:
+  - Use Cases
+
+created: '2025-11-16'
+modified: '2025-11-16'
+
+url: https://github.com/naftiko/capabilities/blob/main/use-cases/apis.yml
+specificationVersion: '0.19'
+apis:
+
+  - aid: naftiko-use-cases:use-cases-api
+    name: Use Cases API
+    description: This is a single listing of all the use cases we are developing for Naftiko. 
+    humanURL: https://example.com/apis.yml
+    baseURL: http://apis.example.com
+    tags:
+      - Use Cases
+
+    properties:
+      - type: OpenAPI
+        url: use-case-openapi-v0.1.0.yml
+      - type: Examples
+        url: use-case-example-v0.1.0.yml
+      - type: JSONSchema
+        url: use-case-schema-v0.1.0.yml    
+
+    contact:
+      - FN: Kin Lane
+        email: kinlane@naftiko.io
+
+common:
+
+  - type: Website
+    url: http://apievangelist.com
+
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io
