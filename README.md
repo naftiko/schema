@@ -17,11 +17,29 @@ We are taking a mono repo strategy with each schema being defined within a singl
 ### Core Schemas
 These are the schemas used at the core of Naftiko, which will be used across operations.
 
-- **Capability** - The schema, examples, and other artifacts to support a capability.
-- **Engine** - The schema, examples, and other artifacts to support an engine.
-- **Fabric** - The schema, examples, and other artifacts to support the fabric.
+- [**Capability**](core/capability/) - The schema, examples, and other artifacts to support a capability.
+- [**Engine**](core/engine/) - The schema, examples, and other artifacts to support an engine.
+- [**Fabric**](core/fabric/) - The schema, examples, and other artifacts to support the fabric.
 
 We will keep adding to this list of core schemas, but also eventually additional schemas.
+
+### Ecosystem Schemas
+These are the schemas that define what Naftiko will be adapting to when using our product.
+
+- [**Agent-to-agent (A2A)**](ecosystem/agent-2-agent/) - Schema for Agent-to-agent (A2A).
+- [**Airbyte**](ecosystem/airbyte/) - Schema for Airbyte.
+- [**APIs.json**](ecosystem/apis-json/) - Schema for APIs.json.
+- [**Arazzo**](ecosystem/arazzo/) - Schema for Arazzo.
+- [**AsyncAPI**](ecosystem/asyncapi/) - Schema for AsyncAPI.
+- [**CloudEvents**](ecosystem/cloudevents/) - Schema for CloudEvents.
+- [**JSON Schema**](ecosystem/json-schema/) - Schema for JSON Schema.
+- [**Kubernetes**](ecosystem/kubernetes/) - Schema for Kubernetes.
+- [**Model Context Protocol**](ecosystem/model-context-protocol/) - Schema for MCP.
+- [**OpenAPI**](ecosystem/openapi/) - Schema for OpenAPI.
+- [**OpenAPI Overlays**](ecosystem/openapi-overlays/) - Schema for OpenAPI overlays.
+- [**Spectral**](ecosystem/spectral/) - Schema for Spectral.
+
+These schema should inform, shape, and be mapped to the core Naftiko schema we are defining.
 
 ## Standards
 This work intentionally focuses on using only Git and a handful of standards.
