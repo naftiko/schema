@@ -1,0 +1,58 @@
+---
+# A unique identifier
+"$id": https://github.com/naftiko/capabilities/blob/main/account/account-schema-v0.1.0.yml
+
+# We use latest draft of JSON Schema
+"$schema": https://json-schema.org/draft/2020-12/schema
+
+title: Accounts
+description: An account in the Naftiko system.
+type: object
+
+properties:
+  FirstName:
+    type: string
+  LastName:
+    type: string
+  Description:
+    type: string
+  GithubUrl:
+    type: string
+    format: uri
+  LinkedInUrl:
+    type: string
+    format: uri
+  Fabrics:
+    type: array
+    items:
+      type: string
+  Roles:
+    type: array
+    items:
+      type: string
+  Teams:
+    type: array
+    items:
+      type: string
+  Domains:
+    type: array
+    items:
+      type: string
+  Watches:
+    type: integer
+    minimum: 0
+  Forks:
+    type: integer
+    minimum: 0
+  Likes:
+    type: integer
+    minimum: 0
+  Tags:
+    type: array
+    items:
+      type: string
+required:
+  - FirstName
+  - LastName
+  - Description
+additionalProperties: false

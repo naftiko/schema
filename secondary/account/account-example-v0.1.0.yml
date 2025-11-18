@@ -1,0 +1,45 @@
+- FirstName: Tim
+  LastName: Lane
+  Description: this is an example account.
+  GithubUrl: http://github.com/user
+  LinkedInUrl: http://linkedin.com/user
+  Fabrics: []
+  Roles: []
+  Teams: []
+  Domains: []
+  Watches: 1
+  Forks: 2
+  Likes: 3
+  Tags:
+    - Developer
+    - Java
+- FirstName: Sarah
+  LastName: Mitchell
+  Description: another example account for testing.
+  GithubUrl: http://github.com/smitchell
+  LinkedInUrl: http://linkedin.com/in/smitchell
+  Fabrics: []
+  Roles: []
+  Teams: []
+  Domains: []
+  Watches: 4
+  Forks: 1
+  Likes: 7
+  Tags:
+    - Engineer
+    - Python    
+- FirstName: Carlos
+  LastName: Nguyen
+  Description: sample account record for demonstration.
+  GithubUrl: http://github.com/cnguyen
+  LinkedInUrl: http://linkedin.com/in/cnguyen
+  Fabrics: []
+  Roles: []
+  Teams: []
+  Domains: []
+  Watches: 2
+  Forks: 5
+  Likes: 1
+  Tags:
+    - Architect
+    - Go    

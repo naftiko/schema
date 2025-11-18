@@ -1,0 +1,41 @@
+---
+# A unique identifier for the use case schema
+"$id": https://github.com/naftiko/capabilities/blob/main/ artifact/ artifacts-schema-v0.1.0.yml
+
+# We use latest draft of JSON Schema
+"$schema": https://json-schema.org/draft/2020-12/schema
+
+title: Artifacts
+description: A specific artifact.
+type: object
+
+properties:
+  Name:
+    type: string
+    description: The name of the artifact
+  Description:
+    type: string
+    description: A description of the artifact
+  Tags:
+    type: array
+    items:
+      type: string
+    description: List of tags associated with the artifact
+  Type:
+    type: string
+    description: The type of artifact
+  Schemas:
+    type: array
+    items: {}
+    description: Array of schemas (structure not specified)
+  Examples:
+    type: array
+    items: {}
+    description: Array of examples (structure not specified)
+required:
+  - Name
+  - Description
+  - Tags
+  - Type
+  - Schemas
+  - Examples

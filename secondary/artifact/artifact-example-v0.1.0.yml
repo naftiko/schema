@@ -1,0 +1,8 @@
+- Name: OpenAPI
+  Description: This is n OpenAPI artifact.
+  Tags:
+    - HTTP
+    - APIs
+  Type: OpenAPI
+  Schemas: []
+  Examples: [] 

@@ -1,0 +1,46 @@
+---
+aid: naftiko-vocabularies
+name: History
+
+type: Template
+description: |-
+  Needs description.
+
+tags:
+  - History
+
+created: '2025-11-18'
+modified: '2025-11-18'
+
+url: https://github.com/naftiko/capabilities/blob/main/organizations/apis.yml
+specificationVersion: '0.19'
+apis:
+
+  - aid: naftiko-organizations:organizations-api
+    name: History API
+    description: Needs description.
+    humanURL: https://example.com/apis.yml
+    baseURL: http://apis.example.com
+    tags:
+      - History
+
+    properties:
+      - type: OpenAPI
+        url: organization-openapi-v0.1.0.yml
+      - type: Examples
+        url: organization-example-v0.1.0.yml
+      - type: JSONSchema
+        url: organization-schema-v0.1.0.yml    
+
+    contact:
+      - FN: Kin Lane
+        email: kinlane@naftiko.io
+
+common:
+
+  - type: Website
+    url: http://apievangelist.com
+
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

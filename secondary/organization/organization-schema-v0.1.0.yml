@@ -1,0 +1,18 @@
+---
+# A unique identifier for the use case schema
+"$id": https://github.com/naftiko/capabilities/blob/main/organization/organizations-schema-v0.1.0.yml
+
+# We use latest draft of JSON Schema
+"$schema": https://json-schema.org/draft/2020-12/schema
+
+title: Organizations
+description: A specific business use case of Naftiko.
+type: object
+
+properties:
+  name:
+    type: string
+    description: The name of the use case.
+  description:
+    type: string
+    description: A short description of the use cases.

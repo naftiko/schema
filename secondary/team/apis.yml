@@ -1,0 +1,46 @@
+---
+aid: naftiko-vocabularies
+name: Teams
+
+type: Template
+description: |-
+  Needs description.
+
+tags:
+  - Teams
+
+created: '2025-11-18'
+modified: '2025-11-18'
+
+url: https://github.com/naftiko/capabilities/blob/main/organizations/apis.yml
+specificationVersion: '0.19'
+apis:
+
+  - aid: naftiko-organizations:organizations-api
+    name: Teams API
+    description: Needs description.
+    humanURL: https://example.com/apis.yml
+    baseURL: http://apis.example.com
+    tags:
+      - Teams
+
+    properties:
+      - type: OpenAPI
+        url: organization-openapi-v0.1.0.yml
+      - type: Examples
+        url: organization-example-v0.1.0.yml
+      - type: JSONSchema
+        url: organization-schema-v0.1.0.yml    
+
+    contact:
+      - FN: Kin Lane
+        email: kinlane@naftiko.io
+
+common:
+
+  - type: Website
+    url: http://apievangelist.com
+
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

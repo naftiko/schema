@@ -1,0 +1,316 @@
+openapi: 3.1.0
+info:
+
+  title: Tag API
+  description: |
+    This is a simple API for accessing the use cases, which are currently stored in the examples folder, but used across different documents, decks, diagrams, and websites.
+  
+  version: 0.1.0
+
+  contact:
+    name: Kin Lane
+    url: https:/naftiko.io
+    email: kinlane@naftiko.com
+
+  license: 
+    name: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+    identifier: CC-BY-NC-SA-4.0
+    url: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en
+
+externalDocs:
+  description: Tag Landing Page
+  url: https://urban-adventure-6l4jvje.pages.github.io/docs/organizations/
+
+servers:
+
+  - url: https://api.example.com
+    description: Production
+
+tags:
+
+  - name: Tag
+    description: | 
+      A description of how a user interacts with a system to achieve a specific goal.
+
+paths:
+
+  /organizations:
+    get:
+      operationId: getUseCases
+      summary: Retrieves Tag
+      description: Returns a list of all the current use cases.
+      tags:
+        - Tag
+      responses:
+        '200':
+          description: A list of use cases.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UseCases'
+              examples:
+                ProductCollection:
+                  $ref: '#/components/examples/UseCase'            
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+
+  examples:
+
+    UseCase:
+      value:       
+
+        - name: AI Model Context
+          description: |-
+
+            This use focuses on providing Model Context Protocol (MCP) servers on top of common third-party engineering, business, marketing, and financial APIs using declarative capabilities that simplify onboarding and configuration, saving time. These simple, easy-to-use MCP servers have security and governance built in.
+
+            Teams need a reliable way to deliver MCP servers from internal and third-party APIs without having to discover and learn about each API and the technical details of integration. This use case provides the fundamentals for integrating legacy data and systems into artificial intelligence copilots and agents.
+
+        - name: SQL Data Access
+          description: |-
+
+            This use case seeks to consistently unlock the data companies currently depend upon across multiple third-party SaaS providers and a variety of existing database connections via JDBC and ODBC to ensure AI integrations have the data they require. Data today is spread across many internal and external systems, and making it consistently available as part of AI integrations has significantly slowed the delivery of new products and features.
+
+            Teams benefit from consistent SQL access to data sources via ODBC/JDBC interfaces, and expanding this access to third-party SaaS will help teams provide the context, resources, tooling, and data needed to deliver AI integrations across the enterprise. The capability and resulting engine deployment for this use case provides a unified, consolidated, and simplified approach to providing the data needed to power individual AI integrations within specific business domains.
+
+        - name: AI Model Mediation
+          description: |-
+
+            This use case focuses on managing different artificial intelligence models, providing an open-source alternative to OpenRouter that helps teams manage development across multiple public and private API models. Model routing is primarily done using the APIs of leading AI service providers, which has led to the emergence of companies like OpenRouter that broker the usage of different AI models from various providers for diverse business use cases.
+
+            Teams need a reliable way to deliver applications and automation using many different public or private, open-source or commercial models. This use case provides the fundamentals for integrating across multiple AI model providers and immediately gaining more control over how small and large language models are being used as part of applications, automation, and direct integrations—optimizing cost, velocity, and risk across AI integrations.
+
+        - name: Data Sovereignty
+          description: |-
+
+            This use case focuses on empowering companies to take control of their data that resides across the third-party SaaS solutions they use regularly. The data sovereignty movement is centered on establishing more control over the data generated across the different services you depend on, ensuring data is integrated, migrated, and synced to data and object stores where a company has full control and access.
+
+            Data sovereignty enables teams to localize data and train local AI models using the data they produce across third-party platforms. This use case may be aligned with country or regional regulations, or it may simply be part of enterprise compliance programs. Data sovereignty investments have increased as part of the growth of AI integrations and the need for context across third-party systems, as well as the increasing value of data itself.
+
+        - name: API Reusability
+          description: |-
+
+            This use case is concerned with encouraging the discoverability and reuse of existing APIs, leveraging existing API infrastructure to quantify what API, schema, and tooling reuse looks like, and incentivizing reuse of APIs and schema across the software development lifecycle—reducing API sprawl and hardening the APIs that already exist.
+
+            Teams need to be able to easily use existing API paths and operations as part of new integrations and automation, ensuring that paths, operations, and schema are available within IDE and copilot tooling—meeting developers where they already work. API reusability enables developers while also informing leadership regarding what API reuse looks like and where opportunities to refine exist.
+
+        - name: Capability Consumption
+          description: |-      
+
+            This use case is designed to cover the general needs of the enterprise when it comes to integration with third-party SaaS. This use case allows for the widest possible definition of what is needed within a single domain, enabling exploration of which third-party services are required. This use case tends to focus specifically on the cost, velocity, and risk concerns of leadership, then identifying the services that are of particular concern.
+
+            Teams need a way to centralize and standardize the usage and billing for third-party SaaS used as part of web, mobile, AI, or other types of applications. There is no consistent way to manage tokens, ensure encryption is used, and address other areas of concern when it comes to the risk across APIs. The capability consumption use case helps abstract away the general concerns of developers while providing the oversight leadership needs over different SaaS services.               
+
+  schemas:    
+
+    UseCases:
+      type: object
+      description: A list of vocabulary words and phrases.     
+      items:
+        $ref: '#/components/schemas/UseCase'
+
+    UseCase:
+      type: object
+      description: A business use case.
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          description: The name of the use case.
+        description:
+          type: string
+          description: A short description of the use cases.                         
+
+    Problem:
+      type: object
+      description: This is a Problem Details for HTTP APIs object.
+      required:
+        - title
+        - status
+      xml:
+        name: problem
+        namespace: urn:ietf:rfc:7807
+      properties:
+        type:
+          type: string
+          description: A URI reference that identifies the problem type
+          example: https://example.com/probs/out-of-credit
+          minLength: 10
+          maxLength: 2048            
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type
+          example: You do not have enough credit.
+          minLength: 10
+          maxLength: 250            
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem
+          example: Your current balance is 30, but that costs 50.
+          minLength: 10
+          maxLength: 1000            
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurrence of the problem
+          example: /account/12345/msgs/abc
+          minLength: 10
+          maxLength: 250            
+        status:
+          type: integer
+          description: The HTTP status code
+          example: 400        
+          minLength: 3
+          maxLength: 3                 
+  responses:
+
+    BadRequest:
+      description: Bad Request
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/bad-request
+            title: Bad Request
+            status: 400
+            detail: The request is invalid or missing required parameters.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/bad-request
+            title: Bad Request
+            status: 400
+            detail: The request is invalid or missing required parameters.
+
+    Conflict:
+      description: Conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/conflict
+            title: Conflict
+            status: 409
+            detail: There is a conflict with an existing resource.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/conflict
+            title: Conflict
+            status: 409
+            detail: There is a conflict with an existing resource.
+
+    Forbidden:
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/forbidden
+            title: Forbidden
+            status: 403
+            detail: Access is forbidden with the provided credentials.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/forbidden
+            title: Forbidden
+            status: 403
+            detail: Access is forbidden with the provided credentials.
+
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/internal-server-error
+            title: Internal Server Error
+            status: 500
+            detail: An unexpected error occurred.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/internal-server-error
+            title: Internal Server Error
+            status: 500
+            detail: An unexpected error occurred.
+
+    NotFound:
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/not-found
+            title: Not Found
+            status: 404
+            detail: The requested resource was not found.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/not-found
+            title: Not Found
+            status: 404
+            detail: The requested resource was not found.
+
+    TooManyRequests:
+      description: Too Many Requests
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/too-many-requests
+            title: Too Many Requests
+            status: 429
+            detail: You have exceeded the rate limit.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/too-many-requests
+            title: Too Many Requests
+            status: 429
+            detail: You have exceeded the rate limit.
+
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/unauthorized
+            title: Unauthorized
+            status: 401
+            detail: You do not have the necessary permissions.
+        application/problem+xml:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://example.com/errors/unauthorized
+            title: Unauthorized
+            status: 401
+            detail: You do not have the necessary permissions.
