@@ -4,14 +4,14 @@
 
 info:
 
-  name: Event AI - Attendee Context
-  description: This is an capability for managing event attendees context.
+  name: Event AI - Speaker Context
+  description: This is an capability for managing event speaker context.
   icon: https://example.com/icon.jpg
 
   tags:
 
     - Events
-    - Attendees
+    - Speakers
 
   pinned: true
   featured: true
