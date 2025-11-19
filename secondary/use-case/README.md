@@ -7,7 +7,8 @@ These are the artificats available to manage the use cases, providing a consiste
 - [APIs.json](apis.yml) - Provides an index for all the use cases API artifacts.
 - [OpenAPI](use-case-openapi-v0.1.0.yml) - Defines access for the use cases API.
 - [JSON Schema](use-case-schema-v0.1.0.yml) - Defines the schema for use cases.
-- [Spectral](https://psychic-bassoon-z2vjvn4.pages.github.io/docs/standards/json-schema/) - Provides governance rules for schema.
+- [Examples](use-case-example-v0.1.0.yml) - Using examples as a use case data store.
+- [Spectral](use-case-rules-v0.1.0.yml) - Provides governance rules for schema.
 - Bruno Collections
     - [Use Cases JSON](use-cases-json.bru) - Returns a list of use cases as JSON.
     - [Use Cases YAML](use-cases-yaml.bru) - Returns a list of use cases as YAML.    
