@@ -1,17 +1,22 @@
 
-# This is our top use case
+#-----------------------------------------------------
+# These are our top 3 use cases we are focused on.
+# These will be printed and available at APIDays booth
+#-----------------------------------------------------
+
 - name: AI Context
-  description: |-
-    This use case focuses on providing Model Context Protocol (MCP) servers on top of common third-party engineering, business, marketing, and financial APIs using declarative capabilities that simplify onboarding and configuration, saving time. These simple, easy-to-use MCP servers have security and governance built in.
+  description: |- # Description provides a summary, plus what teams are needing.
+    This use case focuses on providing Model Context Protocol (MCP) servers on top of common third-party, public, and private APIs, employing a domain-driven, declarative, and governed approach to right-sizing the context windows via MCP while providing integrations for us across AI copilots and agents. 
 
-    Teams need a reliable way to deliver MCP servers from internal and third-party APIs without having to discover and learn about each API and the technical details of integration. This use case provides the fundamentals for integrating legacy data and systems into artificial intelligence copilots and agents.
+    Teams need a reliable way to deliver MCP servers from internal and third-party APIs without having to discover and learn about each API and the technical details of integration. This use case provides the fundamentals for safely integrating existing data and systems into artificial intelligence copilots and agents.
 
-  benefits:
+  benefits: # Benefits used in docks, decks, and diagrams
+
     - Add data and tools to agents
     - Compose MCP servers
     - Aggregate & curate context
 
-  pain:
+  pain: # Used to align pain with Signals targets
 
     - title: Copilot Leadership Mandate
       targets:
@@ -19,9 +24,11 @@
     - title: MCP Leadership Mandate
       targets:
         - Ford    
+    - title: Unmanaged Authentication        
     - title: Unmanaged Usage
-    - title: Unmanaged Spend
-    - title: Unmanaged API Tokens
+    - title: Unmanaged Cost
+      targets:
+        - Ford       
     - title: Unmanaged Encryption
       targets:
         - Ford    
@@ -30,19 +37,18 @@
         - Cvent
         - Ford
 
-  gains:
+  gains: # Used to align gains with Signals targets
 
-    - Copilot Source of 3rd-party
-    - 3rd-Party MCP Available
-    - Manage Budget Across
-    - Managed Risk Involved
-    - Optimize SaaS Usage
-    - Create More Visibility (Ford)
-    - Create More Discovery (Ford)
-    - Create More Reusability (Chase)  
+    - title: 3rd-Pary Data in Copilot
+    - title: 3rd-Party MCP Available
+    - title: Manage Budget Across
+    - title: Managed Risk Involved
+    - title: Optimize SaaS Usage
+    - title: Create More Visibility (Ford)
+    - title: Create More Discovery (Ford)
+    - title: Create More Reusability (Chase)  
 
-  # These are the narratives for this use case
-  narratives:
+  narratives: # These are the narratives for this use case - published to blog.
 
     - title: Our Partners and Customers Need an AI Copilot
       body:
@@ -66,17 +72,18 @@
 
 # This is our second top use case
 - name: API Reusability
-  description: |-
+  description: |- # Description provides a summary, plus what teams are needing.
     This use case is concerned with encouraging the discoverability and reuse of existing APIs, leveraging existing API infrastructure to quantify what API, schema, and tooling reuse looks like, and incentivizing reuse of APIs and schema across the software development lifecycle—reducing API sprawl and hardening the APIs that already exist.
 
     Teams need to be able to easily use existing API paths and operations as part of new integrations and automation, ensuring that paths, operations, and schema are available within IDE and copilot tooling—meeting developers where they already work. API reusability enables developers while also informing leadership regarding what API reuse looks like and where opportunities to refine exist.
 
-  benefits:
+  benefits: # Benefits used in docks, decks, and diagrams
+
     - Unlock access to legacy data
     - Right-size & unify APIs
     - Foundation for AI initiatives
 
-  pain:
+  pain: # Used to align pain with Signals targets
 
     - title: Build on existing internal APIs
       targets:
@@ -86,42 +93,85 @@
       targets:
         - Cvent
         - Chase
-    - title: Need to use existing OpenAPIs
+    - title: Need to leverage existing OpenAPIs
       targets:
         - Cvent   
         - Chase         
-    - title: Need to use existing Bruno Collections
+    - title: We do not understand what API reuse is
       targets:
-        - Cvent    
+        - Chase   
+    - title: We aren't able to communicate API reuse
+      targets:
+        - Chase            
+    - title: Need to incentivize reuse within IDEs and copilots
+      targets:
+        - Chase           
 
-  gains:
+  gains: # Used to align gains with Signals targets
 
-    - Leverage existing internal API catalog
-    - Establish API catalog for 3rd-party APIs
-    - Extend existing OpennAPI for MCP delivery
-    - Discover and use extising Bruno collections
+    - title: Leverage existing internal API catalog
+    - title: Establish API catalog for 3rd-party APIs
+    - title: Extend existing OpenAPI for MCP delivery
+    - title: We are able to communicate reuse to leadership
+    - title: We are able to meet developers where they work
+
+  narratives: # These are the narratives for this use case - published to blog.
+
+    - title: API Reuse Has Helped Stabilize Our Investment in Artificial Intellience
+      body:
+
+        A central team has done the hard work to organize all of the internal and public APIs our company produces into a central catalog that we can access via portal, API, and even Git. We are beginning the work to do the same with all of the 3rd-party APIs like Microsoft Graph, Claude, and Stripe. Now that we have all of this in motion, we want to understand and incentivize the reuse of these APIs across teams and integrations.
+
+        Now that we have access to our internal, public, and 3rd-party APIs, we need to define what reuse means. Through mapping of the existing API landscape, we can identify the API paths, parameters, headers, schemas, and other common components being used. To do this, we need to aggregate these properties across APIs, beginning with our HTTP APIs, but then expanding from there—currently we do not have a common definition of what API reuse means.
+
+        We have established an initial understanding of what API reuse looks like across lines of business, different domains, and teams. Now we need to find an effective way of communicating this across teams, but also, more importantly, with leadership. We have begun publishing aggregate information about API paths, parameters, headers, schemas, and other properties into our existing observability tools, providing real-time dashboards for how APIs are being reused or not across our company.
+
+        Significant progress has been made in quantifying and communicating what API reuse is all about. Next we need to incentivize the reuse of internal, public, and 3rd-party APIs across teams. We've opted to inject common patterns needing reuse into existing developer workflows via IDE and copilot, meeting developers where they are when it comes to incentivizing reuse. Next, we'll measure the impact of these incentives as part of our overall understanding.
+
+        API reuse began as a problem across our web and mobile applications, but has grown unmanageable as part of our cloud and SaaS integrations. As we saw this problem further exploding because of artificial intelligence, we recognized an opportunity to use AI to understand, communicate, and incentivize the reuse of data and APIs across our company. Investing in API reuse has saved us time and money in just a couple of months, and these benefits will continue to grow over time.
+
+      targets: 
+
+        - Cvent
+        - Chase  
+        - Bloomberg  
 
 # This is our third top use case
 - name: AI Orchestration
-  description: |-
+  description: |- # Description provides a summary, plus what teams are needing.
     This use case provides the data, skills, and capabilities that artificial intelligence agents used internally can use to automate and orchestrate tasks while discovering and negotiating with other agents to accomplish specific goals. This use case employs the open-source Agent-2-Agent specification to securely and confidently enable agentic activity across operations.
 
     As teams focus on responding to this AI moment and deploying MCP servers on top of existing APIs and other tooling, they need to begin understanding how to implement agentic automation and orchestration on top of MCP servers. Teams need structure and guidance when it comes to authentication and authorization, discovery, governance, and all the standardization required to deploy agents at scale.
 
-  benefits:
+  benefits: # Benefits used in docks, decks, and diagrams
+
     - Discover skills & capabilities
     - Internal & external agents
     - Implement A2A protocol
 
-  pain:
+  pain: # Used to align pain with Signals targets
 
-    - Need to do AI agents
+    - title: Need to do AI agents
 
   gains:
 
-    - Get to do AI Agents
+    - title: Get to do AI Agents
 
+  narratives: # These are the narratives for this use case - published to blog.
+
+    - title: Need Title
+      body:
+
+        Need narrative body.
+
+      targets: 
+
+        - Need Signals Targets  
+
+#------------------------------------------------------------
 # These are the rest of the use cases we have been working on.
+#------------------------------------------------------------
+
 - name: SQL Data Access
   description: |-
     This use case seeks to consistently unlock the data companies currently depend upon across multiple third-party SaaS providers and a variety of existing database connections via JDBC and ODBC to ensure AI integrations have the data they require. Data today is spread across many internal and external systems, and making it consistently available as part of AI integrations has significantly slowed the delivery of new products and features.
@@ -143,7 +193,7 @@
     - Unmanaged Encryption
     - Unmanaged Discovery  
 
-  gains: []    
+  gains:  
 
     - Access to SaaS Data via SQL
     - Access to Data Sources via SQL
@@ -171,7 +221,7 @@
     - Standards-driven integrations with OpenAPI, etc.
     - FinOps Framework standardized price controls
 
-  pain: []
+  pain:
 
     - Bring AI Model Usage In-House (Ford, Cvent)
     - Unmanaged Usage
@@ -179,7 +229,7 @@
     - Unmanaged API Tokens
     - Unmanaged Encryption
 
-  gains: []    
+  gains:  
 
     - Optimize Model Usage
     - Manage Budget Across
@@ -204,7 +254,7 @@
     - Regulatory Mandate for Data Sovereignty
     - Unmanaged Discovery  
 
-  gains: []   
+  gains: 
 
     - Aggregate 3rd-Party SaaS data
     - Create More Visibility
