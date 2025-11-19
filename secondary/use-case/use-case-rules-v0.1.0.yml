@@ -1,0 +1,22 @@
+---
+rules:
+
+  ## These rules should be run individuall for use cases.
+
+  use-cases-name:
+    description: Each use case should have a name.
+    given: $
+    severity: error
+    then:
+      field: "name"
+      function: truthy
+      
+  use-cases-description:
+    description: Each use case should have a description.
+    given: $
+    severity: error
+    then:
+      field: "description"
+      function: truthy      
+      
+      

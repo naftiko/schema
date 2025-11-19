@@ -1,0 +1,28 @@
+meta {
+  name: Use Cases (JSON)
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://raw.githubusercontent.com/naftiko/schema/refs/heads/add-use-cases/secondary/use-case/use-case-example-v0.1.0.yml?token={{token}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  token: {{token}}
+}
+
+script:post-response {
+  const yaml = require('js-yaml');
+  let useCaseYAML = res.getBody({ raw: true });
+  let useCase = yaml.load(useCaseYAML);
+  let useCaseJSON = JSON.stringify(useCase);
+  res.setBody(useCaseJSON, null, 2);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

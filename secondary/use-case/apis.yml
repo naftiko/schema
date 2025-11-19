@@ -2,15 +2,17 @@
 aid: naftiko-vocabularies
 name: Use Cases
 
-type: Template
+type: Index
+
 description: |-
-  This is the API, schema, and other artifacts for defining Naftiko use cases.
+  This is the API, schema, and other artifacts for defining Naftiko use cases. We are using examples as a data store at this stage, using the OpenAPI and Bruno to automate around this design, which eventually can be turned into an API.
 
 tags:
+
   - Use Cases
 
-created: '2025-11-16'
-modified: '2025-11-16'
+created: '2025-11-18'
+modified: '2025-11-18'
 
 url: https://github.com/naftiko/capabilities/blob/main/use-cases/apis.yml
 specificationVersion: '0.19'
@@ -25,12 +27,21 @@ apis:
       - Use Cases
 
     properties:
+
       - type: OpenAPI
         url: use-case-openapi-v0.1.0.yml
       - type: Examples
         url: use-case-example-v0.1.0.yml
       - type: JSONSchema
         url: use-case-schema-v0.1.0.yml    
+
+      - type: BrunoCollection
+        url: use-cases-json.bru 
+      - type: BrunoCollection
+        url: use-cases-yaml.bru          
+
+      - type: SpectralRules
+        url: use-case-rules-v0.1.0.yml           
 
     contact:
       - FN: Kin Lane
