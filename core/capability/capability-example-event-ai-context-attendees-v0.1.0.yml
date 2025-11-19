@@ -1,0 +1,37 @@
+---
+# This a capability to express the aggregate event AI context.
+
+Domain: 
+  Aggregate:
+    EntityType: {}
+    EventType: {}
+  UseCase:
+    Benefit: {}
+  Service:
+    Procedure: {} 
+  Actor: {}
+  Language:
+    Term: {}
+    Prompt: {}
+Lifecycle: {}
+Adapters:
+  Ports: {}  
+
+
+  * Attendees
+    * API - https://developers.cvent.com/documentation#tag/Attendees
+    * LinkedIn
+* Events
+    * API - https://developers.cvent.com/documentation#tag/Events
+    * Google Calendar
+    * LinkedIn
+* Exhibitors
+    * API - https://developers.cvent.com/documentation#tag/Exhibitors
+    * LinkedIn
+* Sessions
+    * API - https://developers.cvent.com/documentation#tag/Sessions
+    * Youtube
+    * S3
+* Speakers
+    * API - https://developers.cvent.com/documentation#tag/Speakers
+    * LinkedIn

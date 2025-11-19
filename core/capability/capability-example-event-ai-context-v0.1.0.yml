@@ -1,0 +1,47 @@
+---
+# This an aggregate capability to express the aggregate event AI context.
+# I am using this explore pilot customer capabilities for the Ai context use case.
+# This will vary radically from the current classes, but is meant to explore variations.
+
+info
+  name: Event AI Context
+  description: This is an aggregate capability for managing AI context.
+  icon: https://example.com/icon.jpg
+  
+* Use Case
+* Capabilities
+* Weaving Score
+* Maturity Score
+* Rating
+* Number of Downloads
+* Version
+* Contributors
+* Updated
+* Created
+* Adapters
+* Inputs
+* Outputs
+* Preconditions
+* Postconditions
+* Events
+* Dependencies (Capabilities)
+* Policies
+* State (New / Updated)
+* Visibility (Public, Private)
+* Tags (Metadata)
+* Roles (Access Control)
+* Forks (Metric)
+* Watches (Metric)
+* Likes (Metric)
+* Featured (Important)
+* Repository (Git)
+* Image (DockerHub)
+* Workspace (Postman)
+* Environments
+* Sandbox (Microcks)
+* Issues (Git)
+* Updates
+* Discussions (Git, Slack, Teams, Discord)
+* Licenses
+* Insights
+* Pin
