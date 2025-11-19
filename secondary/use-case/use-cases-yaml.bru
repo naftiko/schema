@@ -1,0 +1,20 @@
+meta {
+  name: Use Cases (YAML)
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://raw.githubusercontent.com/naftiko/schema/refs/heads/add-use-cases/secondary/use-case/use-case-example-v0.1.0.yml?token={{token}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  token: {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
