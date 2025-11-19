@@ -5,8 +5,8 @@
 #-----------------------------------------------------
 
 - name: AI Context
-  description: |- # Description provides a summary, plus what teams are needing.
-    This use case focuses on providing Model Context Protocol (MCP) servers on top of common third-party, public, and private APIs, employing a domain-driven, declarative, and governed approach to right-sizing the context windows via MCP while providing integrations for us across AI copilots and agents. 
+  description: |- # Description provides a summary, plus what teams are needing. 
+    This use case focuses on providing Model Context Protocol (MCP) servers on top of common private, public/1st party and 3rd party APIs, as well as local SQL databases, employing a domain-driven, declarative, and governed approach to right-sizing the context windows via MCP while providing integrations for us across AI copilots and agents. 
 
     Teams need a reliable way to deliver MCP servers from internal and third-party APIs without having to discover and learn about each API and the technical details of integration. This use case provides the fundamentals for safely integrating existing data and systems into artificial intelligence copilots and agents.
 
@@ -23,10 +23,7 @@
         - Cvent
     - title: MCP Leadership Mandate
       targets:
-        - Ford    
-    - title: Unmanaged Authentication        
-    - title: Unmanaged Usage
-    - title: Unmanaged Cost
+        - Ford
       targets:
         - Ford       
     - title: Unmanaged Encryption
@@ -36,6 +33,9 @@
       targets:
         - Cvent
         - Ford
+    - title: Unmanaged Authentication        
+    - title: Unmanaged Usage
+    - title: Unmanaged Cost        
 
   gains: # Used to align gains with Signals targets
 
@@ -59,7 +59,7 @@
 
         Clearly we needed MCP servers. Teams published many different solutions using existing OpenAPI and AsyncAPI specifications to generate MCP servers in various programming languages. As it stands today, there isn't any notion of discovery across these MCP servers. Teams don't have any consistent or organized way of doing MCP. Everything is only used internally so far, with mixed results across the copilots and agents being deployed on top of MCP servers. Like with our federated API development and our recent investment in our API platform, we need more standardization of MCP deployment alongside SDKs, Jupyter Notebooks, and other clients.
 
-        Nothing has made it to production—well, a handful of very safe, low-risk projects, but nothing customer-facing. The result of eight months of exploration is that we need more context to make our AI integrations work. We need the real-world context present in the third-party services we use each day available as part of our AI chats and agentic workflows. We also find that AI integrations are much more useful and relevant when they have a JDBC adapter to connect local databases in addition to source HTTP adapters, providing access to data they need—leaving us realizing we need more legacy data access as well. Right now, we are most concerned with giving teams guidance on how to consistently and dynamically generate MCP servers from existing OpenAPI and AsyncAPI artifacts—work that would benefit from guided, declarative, and composite set of capabilities that are mapped to various sources as defined by the consumers of our AI integrations.
+        Nothing has made it to production—well, a handful of very safe, low-risk projects, but nothing customer-facing. The result of eight months of exploration is that we need more context to make our AI integrations work. We need the real-world context present in the third-party services we use each day available as part of our AI chats and agentic workflows. We also find that AI integrations are much more useful and relevant when they connect local SQL databases in addition to HTTP APIs, providing access to data they need—leaving us realizing we need more legacy data access as well. Right now, we are most concerned with giving teams guidance on how to consistently and dynamically generate MCP servers from existing OpenAPI and AsyncAPI artifacts—work that would benefit from guided, declarative, and composite set of capabilities that are mapped to various sources as defined by the consumers of our AI integrations.
 
         Once we standardize how we deliver MCP servers across teams, we need a way to make them discoverable alongside other API resources. We need to encourage more reuse and interoperability, as well as discovery and onboarding across APIs and MCP servers—taking the base of OpenAPI-defined HTTP APIs, with Webhooks, GraphQL, gRPC, and Kafka APIs, and aggregating or splitting them up depending on their shape and form as reusable source capabilities that can be assembled into use-case and domain-specific composite capabilities. We are just learning and adapting right now, trying to do as much as we can with fewer team members by leveraging open-source solutions. In these uncertain times, we are most concerned with the complexity of our operations, maximizing productivity across short-handed teams, and managing risk and cost by leveraging AI automation. We need to be able to do more with less and do not have the time to learn new processes or purchase new services—we just need help.
 
@@ -185,13 +185,15 @@
 
   pain:
 
-    - No Access to SaaS Data for AI Integration
+    - Limited or No Access to SaaS Data for AI Integration
     - No Access to Data Sources for AIN Integration
     - Unmanaged Usage
     - Unmanaged Spend
     - Unmanaged API Tokens
     - Unmanaged Encryption
     - Unmanaged Discovery  
+    - Demand for 3rd-Party Data for Business Intelligence in Dashboards
+    - Demand for 3rd-Party Data by Data Science for ML Engineering
 
   gains:  
 
@@ -247,6 +249,7 @@
     - Increase visibility of SaaS data
     - Allow for more SaaS data discovery
     - Encourage the reusability of SaaS data
+    - Enable ETL/ELT access to SaaS data
 
   pain:
 
@@ -272,6 +275,7 @@
     - Unlock access to legacy data
     - Right-size & unify APIs
     - Prepare foundation for AI future
+    - Enterprise agility & composability
 
   pain: []
 
