@@ -12,7 +12,7 @@ These are the artificats available to manage the use cases, providing a consiste
 - Bruno Collections
     - [Use Cases JSON](use-cases-json.bru) - Returns a list of use cases as JSON.
     - [Use Cases YAML](use-cases-yaml.bru) - Returns a list of use cases as YAML.    
-- [Bruno Environments](environments/Use Cases.bru) - Provides client environment.
+- [Bruno Environments](environment/Use%20Cases.bru) - Provides client environment.
 
 These can be forked and used to manage use cases and submit changes via a pull request.
 
@@ -27,3 +27,6 @@ This API uses the following standards to make a forkable way to manage use cases
 - [Bruno Environments](https://psychic-bassoon-z2vjvn4.pages.github.io/docs/standards/bruno-environments/) - Provides client environment.
 
 The goal of these standards is to make management of use cases easy to syndicate.
+
+## Contribute
+Feel free to contribute to this API, making changes via pull request using a new branch, or just submitt an issue with any questions, comments, or updates.
