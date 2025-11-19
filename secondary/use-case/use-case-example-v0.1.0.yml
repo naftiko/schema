@@ -1,3 +1,5 @@
+
+# This is our top use case
 - name: AI Context
   description: |-
     This use case focuses on providing Model Context Protocol (MCP) servers on top of common third-party engineering, business, marketing, and financial APIs using declarative capabilities that simplify onboarding and configuration, saving time. These simple, easy-to-use MCP servers have security and governance built in.
@@ -9,6 +11,60 @@
     - Compose MCP servers
     - Aggregate & curate context
 
+  pain:
+
+    - title: Copilot Leadership Mandate
+      targets:
+        - Cvent
+    - title: MCP Leadership Mandate
+      targets:
+        - Ford    
+    - title: Unmanaged Usage
+    - title: Unmanaged Spend
+    - title: Unmanaged API Tokens
+    - title: Unmanaged Encryption
+      targets:
+        - Ford    
+    - title: Unmanaged Discovery
+      targets:
+        - Cvent
+        - Ford
+
+  gains:
+
+    - Copilot Source of 3rd-party
+    - 3rd-Party MCP Available
+    - Manage Budget Across
+    - Managed Risk Involved
+    - Optimize SaaS Usage
+    - Create More Visibility (Ford)
+    - Create More Discovery (Ford)
+    - Create More Reusability (Chase)  
+
+  # These are the narratives for this use case
+  narratives:
+
+    - title: Our Partners and Customers Need an AI Copilot
+      body:
+
+        We have been extremely successful with our API-first transformation over the last decade here at Acme Corp.. Our 500+ distributed engineers are roughly 75% design-first and are producing a solid base of OpenAPI-defined HTTP APIs, with Webhooks, GraphQL, gRPC, and Kafka APIs. Then earlier this year, the boss came and said we were going all-in on AI, and we needed a copilot for our partners and eventually our customers.
+
+        We didn't know what to do. We've spent the last six months rallying teams to produce compelling prototypes that would get us closer to something meeting our leadership's mandate for an AI copilot. Luckily, we've had a somewhat centralized API governance effort in motion for the last five years and were beginning to consider how we would also govern third-party APIs—the usage of Claude, ChatGPT, Gemini APIs, Hugging Face, Ollama, and local SLM/LLMs but also other third-party APIs delivered to any of those LLMs. This demonstrated that the problem was growing.
+
+        Clearly we needed MCP servers. Teams published many different solutions using existing OpenAPI and AsyncAPI specifications to generate MCP servers in various programming languages. As it stands today, there isn't any notion of discovery across these MCP servers. Teams don't have any consistent or organized way of doing MCP. Everything is only used internally so far, with mixed results across the copilots and agents being deployed on top of MCP servers. Like with our federated API development and our recent investment in our API platform, we need more standardization of MCP deployment alongside SDKs, Jupyter Notebooks, and other clients.
+
+        Nothing has made it to production—well, a handful of very safe, low-risk projects, but nothing customer-facing. The result of eight months of exploration is that we need more context to make our AI integrations work. We need the real-world context present in the third-party services we use each day available as part of our AI chats and agentic workflows. We also find that AI integrations are much more useful and relevant when they have a JDBC adapter to connect local databases in addition to source HTTP adapters, providing access to data they need—leaving us realizing we need more legacy data access as well. Right now, we are most concerned with giving teams guidance on how to consistently and dynamically generate MCP servers from existing OpenAPI and AsyncAPI artifacts—work that would benefit from guided, declarative, and composite set of capabilities that are mapped to various sources as defined by the consumers of our AI integrations.
+
+        Once we standardize how we deliver MCP servers across teams, we need a way to make them discoverable alongside other API resources. We need to encourage more reuse and interoperability, as well as discovery and onboarding across APIs and MCP servers—taking the base of OpenAPI-defined HTTP APIs, with Webhooks, GraphQL, gRPC, and Kafka APIs, and aggregating or splitting them up depending on their shape and form as reusable source capabilities that can be assembled into use-case and domain-specific composite capabilities. We are just learning and adapting right now, trying to do as much as we can with fewer team members by leveraging open-source solutions. In these uncertain times, we are most concerned with the complexity of our operations, maximizing productivity across short-handed teams, and managing risk and cost by leveraging AI automation. We need to be able to do more with less and do not have the time to learn new processes or purchase new services—we just need help.
+
+      targets: 
+
+        - Ford
+        - Cvent
+        - Goldman Sachs
+        - Chase      
+
+# This is our second top use case
 - name: API Reusability
   description: |-
     This use case is concerned with encouraging the discoverability and reuse of existing APIs, leveraging existing API infrastructure to quantify what API, schema, and tooling reuse looks like, and incentivizing reuse of APIs and schema across the software development lifecycle—reducing API sprawl and hardening the APIs that already exist.
@@ -20,6 +76,32 @@
     - Right-size & unify APIs
     - Foundation for AI initiatives
 
+  pain:
+
+    - title: Build on existing internal APIs
+      targets:
+        - Cvent
+        - Chase
+    - title: Reuse 3rd-party APIs already used
+      targets:
+        - Cvent
+        - Chase
+    - title: Need to use existing OpenAPIs
+      targets:
+        - Cvent   
+        - Chase         
+    - title: Need to use existing Bruno Collections
+      targets:
+        - Cvent    
+
+  gains:
+
+    - Leverage existing internal API catalog
+    - Establish API catalog for 3rd-party APIs
+    - Extend existing OpennAPI for MCP delivery
+    - Discover and use extising Bruno collections
+
+# This is our third top use case
 - name: AI Orchestration
   description: |-
     This use case provides the data, skills, and capabilities that artificial intelligence agents used internally can use to automate and orchestrate tasks while discovering and negotiating with other agents to accomplish specific goals. This use case employs the open-source Agent-2-Agent specification to securely and confidently enable agentic activity across operations.
@@ -31,6 +113,15 @@
     - Internal & external agents
     - Implement A2A protocol
 
+  pain:
+
+    - Need to do AI agents
+
+  gains:
+
+    - Get to do AI Agents
+
+# These are the rest of the use cases we have been working on.
 - name: SQL Data Access
   description: |-
     This use case seeks to consistently unlock the data companies currently depend upon across multiple third-party SaaS providers and a variety of existing database connections via JDBC and ODBC to ensure AI integrations have the data they require. Data today is spread across many internal and external systems, and making it consistently available as part of AI integrations has significantly slowed the delivery of new products and features.
@@ -41,6 +132,27 @@
     - Unlock SaaS data
     - JDBC / ODBC drivers
     - Federated SQL processing
+
+  pain:
+
+    - No Access to SaaS Data for AI Integration
+    - No Access to Data Sources for AIN Integration
+    - Unmanaged Usage
+    - Unmanaged Spend
+    - Unmanaged API Tokens
+    - Unmanaged Encryption
+    - Unmanaged Discovery  
+
+  gains: []    
+
+    - Access to SaaS Data via SQL
+    - Access to Data Sources via SQL
+    - Manage Budget Across
+    - Managed Risk Involved
+    - Optimize SaaS Usage
+    - Create More Visibility
+    - Create More Discovery
+    - Create More Reusability
 
 - name: AI Model Mediation
   description: |-
@@ -59,6 +171,21 @@
     - Standards-driven integrations with OpenAPI, etc.
     - FinOps Framework standardized price controls
 
+  pain: []
+
+    - Bring AI Model Usage In-House (Ford, Cvent)
+    - Unmanaged Usage
+    - Unmanaged Spend
+    - Unmanaged API Tokens
+    - Unmanaged Encryption
+
+  gains: []    
+
+    - Optimize Model Usage
+    - Manage Budget Across
+    - Managed Risk Involved
+    - Create More Visibility
+
 - name: Data Sovereignty
   description: |-
     This use case focuses on empowering companies to take control of their data that resides across the third-party SaaS solutions they use regularly. The data sovereignty movement is centered on establishing more control over the data generated across the different services you depend on, ensuring data is integrated, migrated, and synced to data and object stores where a company has full control and access.
@@ -71,6 +198,20 @@
     - Allow for more SaaS data discovery
     - Encourage the reusability of SaaS data
 
+  pain:
+
+    - Regulatory Mandate for Data Sovereignty
+    - Regulatory Mandate for Data Sovereignty
+    - Unmanaged Discovery  
+
+  gains: []   
+
+    - Aggregate 3rd-Party SaaS data
+    - Create More Visibility
+    - Create More Discovery
+    - Create More Reusability 
+
+
 - name: Capability Consumption
   description: |-
     This use case is designed to cover the general needs of the enterprise when it comes to integration with third-party SaaS. This use case allows for the widest possible definition of what is needed within a single domain, enabling exploration of which third-party services are required. This use case tends to focus specifically on the cost, velocity, and risk concerns of leadership, then identifying the services that are of particular concern.
@@ -81,3 +222,7 @@
     - Unlock access to legacy data
     - Right-size & unify APIs
     - Prepare foundation for AI future
+
+  pain: []
+
+  gains: []    
