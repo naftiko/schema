@@ -1,0 +1,33 @@
+name: SQL Data Access
+description: |-
+  This use case seeks to consistently unlock the data companies currently depend upon across multiple third-party SaaS providers and a variety of existing database connections via JDBC and ODBC to ensure AI integrations have the data they require. Data today is spread across many internal and external systems, and making it consistently available as part of AI integrations has significantly slowed the delivery of new products and features.
+
+  Teams benefit from consistent SQL access to data sources via ODBC/JDBC interfaces, and expanding this access to third-party SaaS will help teams provide the context, resources, tooling, and data needed to deliver AI integrations across the enterprise. The capability and resulting engine deployment for this use case provides a unified, consolidated, and simplified approach to providing the data needed to power individual AI integrations within specific business domains.
+
+benefits:
+  - Unlock SaaS data
+  - JDBC / ODBC drivers
+  - Federated SQL processing
+
+pain:
+
+  - Limited or No Access to SaaS Data for AI Integration
+  - No Access to Data Sources for AIN Integration
+  - Unmanaged Usage
+  - Unmanaged Spend
+  - Unmanaged API Tokens
+  - Unmanaged Encryption
+  - Unmanaged Discovery  
+  - Demand for 3rd-Party Data for Business Intelligence in Dashboards
+  - Demand for 3rd-Party Data by Data Science for ML Engineering
+
+gains:  
+
+  - Access to SaaS Data via SQL
+  - Access to Data Sources via SQL
+  - Manage Budget Across
+  - Managed Risk Involved
+  - Optimize SaaS Usage
+  - Create More Visibility
+  - Create More Discovery
+  - Create More Reusability

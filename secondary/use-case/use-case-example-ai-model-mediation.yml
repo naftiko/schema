@@ -1,0 +1,57 @@
+name: AI Model Mediation
+description: |-
+  This use case focuses on managing different artificial intelligence models, providing an open-source alternative to OpenRouter that helps teams manage development across multiple public and private AI models. Model routing is primarily done using the APIs of leading AI service providers, which has led to the emergence of companies like OpenRouter that broker the usage of different AI models from various providers for diverse business use cases.
+
+  Teams need a reliable way to deliver applications and automation using many different public or private, open-source or commercial models. This use case provides the fundamentals for integrating across multiple AI model providers and immediately gaining more control over how small and large language models are being used as part of applications, automation, and direct integrations—optimizing cost, velocity, and risk across AI integrations.
+
+benefits:
+  - Open-source implementation of model engine
+  - On-premise implementation of model engine
+  - Not limited to large language model domain
+  - Capability routing over model or service routing
+  - Business alignment with domain-driven consumption
+  - Makes all APIs and data sources first-class citizens
+  - Sovereign on-premise input and output controls
+  - Standards-driven integrations with OpenAPI, etc.
+  - FinOps Framework standardized price controls
+
+pain:
+
+  - Bring AI Model Usage In-House (Ford, Cvent)
+  - Unmanaged Usage
+  - Unmanaged Spend
+  - Unmanaged API Tokens
+  - Unmanaged Encryption
+
+gains:  
+
+  - Optimize Model Usage
+  - Manage Budget Across
+  - Managed Risk Involved
+  - Create More Visibility
+
+- name: Data Sovereignty
+description: |-
+  This use case focuses on empowering companies to take control of their data that resides across the third-party SaaS solutions they use regularly. The data sovereignty movement is centered on establishing more control over the data generated across the different services you depend on, ensuring data is integrated, migrated, and synced to data and object stores where a company has full control and access.
+
+  Data sovereignty enables teams to localize data and train local AI models using the data they produce across third-party platforms. This use case may be aligned with country or regional regulations, or it may simply be part of enterprise compliance programs. Data sovereignty investments have increased as part of the growth of AI integrations and the need for context across third-party systems, as well as the increasing value of data itself.
+
+benefits:
+  - Aggregate 3rd-party SaaS data
+  - Increase visibility of SaaS data
+  - Allow for more SaaS data discovery
+  - Encourage the reusability of SaaS data
+  - Enable ETL/ELT access to SaaS data
+
+pain:
+
+  - Regulatory Mandate for Data Sovereignty
+  - Regulatory Mandate for Data Sovereignty
+  - Unmanaged Discovery  
+
+gains: 
+
+  - Aggregate 3rd-Party SaaS data
+  - Create More Visibility
+  - Create More Discovery
+  - Create More Reusability 

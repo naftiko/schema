@@ -1,0 +1,67 @@
+name: AI Context
+description: |- # Description provides a summary, plus what teams are needing. 
+  This use case focuses on providing Model Context Protocol (MCP) servers on top of common private, public/1st party and 3rd party APIs, as well as local SQL databases, employing a domain-driven, declarative, and governed approach to right-sizing the context windows via MCP while providing integrations for us across AI copilots and agents. 
+
+  Teams need a reliable way to deliver MCP servers from internal and third-party APIs without having to discover and learn about each API and the technical details of integration. This use case provides the fundamentals for safely integrating existing data and systems into artificial intelligence copilots and agents.
+
+benefits: # Benefits used in docks, decks, and diagrams
+
+  - Add data and tools to agents
+  - Compose MCP servers
+  - Aggregate & curate context
+
+pain: # Used to align pain with Signals targets
+
+  - title: Copilot Leadership Mandate
+    targets:
+      - Cvent
+  - title: MCP Leadership Mandate
+    targets:
+      - Ford       
+  - title: Unmanaged Encryption
+    targets:
+      - Ford    
+  - title: Unmanaged Discovery
+    targets:
+      - Cvent
+      - Ford
+  - title: Unmanaged Authentication    
+    targets:
+      - Ford          
+  - title: Unmanaged Usage
+    targets:
+      - Ford      
+  - title: Unmanaged Cost        
+
+gains: # Used to align gains with Signals targets
+
+  - title: 3rd-Pary Data in Copilot
+  - title: 3rd-Party MCP Available
+  - title: Manage Budget Across
+  - title: Managed Risk Involved
+  - title: Optimize SaaS Usage
+  - title: Create More Visibility (Ford)
+  - title: Create More Discovery (Ford)
+  - title: Create More Reusability (Chase)  
+
+narratives: # These are the narratives for this use case - published to blog.
+
+  - title: Our Partners and Customers Need an AI Copilot
+    body:
+
+      We have been extremely successful with our API-first transformation over the last decade here at Acme Corp.. Our 500+ distributed engineers are roughly 75% design-first and are producing a solid base of OpenAPI-defined HTTP APIs, with Webhooks, GraphQL, gRPC, and Kafka APIs. Then earlier this year, the boss came and said we were going all-in on AI, and we needed a copilot for our partners and eventually our customers.
+
+      We didn't know what to do. We've spent the last six months rallying teams to produce compelling prototypes that would get us closer to something meeting our leadership's mandate for an AI copilot. Luckily, we've had a somewhat centralized API governance effort in motion for the last five years and were beginning to consider how we would also govern third-party APIs—the usage of Claude, ChatGPT, Gemini APIs, Hugging Face, Ollama, and local SLM/LLMs but also other third-party APIs delivered to any of those LLMs. This demonstrated that the problem was growing.
+
+      Clearly we needed MCP servers. Teams published many different solutions using existing OpenAPI and AsyncAPI specifications to generate MCP servers in various programming languages. As it stands today, there isn't any notion of discovery across these MCP servers. Teams don't have any consistent or organized way of doing MCP. Everything is only used internally so far, with mixed results across the copilots and agents being deployed on top of MCP servers. Like with our federated API development and our recent investment in our API platform, we need more standardization of MCP deployment alongside SDKs, Jupyter Notebooks, and other clients.
+
+      Nothing has made it to production—well, a handful of very safe, low-risk projects, but nothing customer-facing. The result of eight months of exploration is that we need more context to make our AI integrations work. We need the real-world context present in the third-party services we use each day available as part of our AI chats and agentic workflows. We also find that AI integrations are much more useful and relevant when they connect local SQL databases in addition to HTTP APIs, providing access to data they need—leaving us realizing we need more legacy data access as well. Right now, we are most concerned with giving teams guidance on how to consistently and dynamically generate MCP servers from existing OpenAPI and AsyncAPI artifacts—work that would benefit from guided, declarative, and composite set of capabilities that are mapped to various sources as defined by the consumers of our AI integrations.
+
+      Once we standardize how we deliver MCP servers across teams, we need a way to make them discoverable alongside other API resources. We need to encourage more reuse and interoperability, as well as discovery and onboarding across APIs and MCP servers—taking the base of OpenAPI-defined HTTP APIs, with Webhooks, GraphQL, gRPC, and Kafka APIs, and aggregating or splitting them up depending on their shape and form as reusable source capabilities that can be assembled into use-case and domain-specific composite capabilities. We are just learning and adapting right now, trying to do as much as we can with fewer team members by leveraging open-source solutions. In these uncertain times, we are most concerned with the complexity of our operations, maximizing productivity across short-handed teams, and managing risk and cost by leveraging AI automation. We need to be able to do more with less and do not have the time to learn new processes or purchase new services—we just need help.
+
+    targets: 
+
+      - Ford
+      - Cvent
+      - Goldman Sachs
+      - Chase      

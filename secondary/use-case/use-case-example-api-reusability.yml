@@ -1,0 +1,65 @@
+
+name: API Reusability
+description: |- # Description provides a summary, plus what teams are needing.
+  This use case is concerned with encouraging the discoverability and reuse of existing APIs, leveraging existing API infrastructure to quantify what API, schema, and tooling reuse looks like, and incentivizing reuse of APIs and schema across the software development lifecycle—reducing API sprawl and hardening the APIs that already exist.
+
+  Teams need to be able to easily use existing API paths and operations as part of new integrations and automation, ensuring that paths, operations, and schema are available within IDE and copilot tooling—meeting developers where they already work. API reusability enables developers while also informing leadership regarding what API reuse looks like and where opportunities to refine exist.
+
+benefits: # Benefits used in docks, decks, and diagrams
+
+  - Unlock access to legacy data
+  - Right-size & unify APIs
+  - Foundation for AI initiatives
+
+pain: # Used to align pain with Signals targets
+
+  - title: Build on existing internal APIs
+    targets:
+      - Cvent
+      - Chase
+  - title: Reuse 3rd-party APIs already used
+    targets:
+      - Cvent
+      - Chase
+  - title: Need to leverage existing OpenAPIs
+    targets:
+      - Cvent   
+      - Chase         
+  - title: We do not understand what API reuse is
+    targets:
+      - Chase   
+  - title: We aren't able to communicate API reuse
+    targets:
+      - Chase            
+  - title: Need to incentivize reuse within IDEs and copilots
+    targets:
+      - Chase           
+
+gains: # Used to align gains with Signals targets
+
+  - title: Leverage existing internal API catalog
+  - title: Establish API catalog for 3rd-party APIs
+  - title: Extend existing OpenAPI for MCP delivery
+  - title: We are able to communicate reuse to leadership
+  - title: We are able to meet developers where they work
+
+narratives: # These are the narratives for this use case - published to blog.
+
+  - title: API Reuse Has Helped Stabilize Our Investment in Artificial Intellience
+    body:
+
+      A central team has done the hard work to organize all of the internal and public APIs our company produces into a central catalog that we can access via portal, API, and even Git. We are beginning the work to do the same with all of the 3rd-party APIs like Microsoft Graph, Claude, and Stripe. Now that we have all of this in motion, we want to understand and incentivize the reuse of these APIs across teams and integrations.
+
+      Now that we have access to our internal, public, and 3rd-party APIs, we need to define what reuse means. Through mapping of the existing API landscape, we can identify the API paths, parameters, headers, schemas, and other common components being used. To do this, we need to aggregate these properties across APIs, beginning with our HTTP APIs, but then expanding from there—currently we do not have a common definition of what API reuse means.
+
+      We have established an initial understanding of what API reuse looks like across lines of business, different domains, and teams. Now we need to find an effective way of communicating this across teams, but also, more importantly, with leadership. We have begun publishing aggregate information about API paths, parameters, headers, schemas, and other properties into our existing observability tools, providing real-time dashboards for how APIs are being reused or not across our company.
+
+      Significant progress has been made in quantifying and communicating what API reuse is all about. Next we need to incentivize the reuse of internal, public, and 3rd-party APIs across teams. We've opted to inject common patterns needing reuse into existing developer workflows via IDE and copilot, meeting developers where they are when it comes to incentivizing reuse. Next, we'll measure the impact of these incentives as part of our overall understanding.
+
+      API reuse began as a problem across our web and mobile applications, but has grown unmanageable as part of our cloud and SaaS integrations. As we saw this problem further exploding because of artificial intelligence, we recognized an opportunity to use AI to understand, communicate, and incentivize the reuse of data and APIs across our company. Investing in API reuse has saved us time and money in just a couple of months, and these benefits will continue to grow over time.
+
+    targets: 
+
+      - Cvent
+      - Chase  
+      - Bloomberg  
