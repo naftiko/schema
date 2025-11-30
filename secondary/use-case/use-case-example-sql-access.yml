@@ -4,30 +4,51 @@ description: |-
 
   Teams benefit from consistent SQL access to data sources via ODBC/JDBC interfaces, and expanding this access to third-party SaaS will help teams provide the context, resources, tooling, and data needed to deliver AI integrations across the enterprise. The capability and resulting engine deployment for this use case provides a unified, consolidated, and simplified approach to providing the data needed to power individual AI integrations within specific business domains.
 
+tags: 
+
+  - SQL
+  - Data
+  - SaaS
+  - Dashboards
+  - Analytics
+  - Copilots
+
 benefits:
+
   - Unlock SaaS data
   - JDBC / ODBC drivers
   - Federated SQL processing
 
 pain:
 
-  - Limited or No Access to SaaS Data for AI Integration
-  - No Access to Data Sources for AIN Integration
-  - Unmanaged Usage
-  - Unmanaged Spend
-  - Unmanaged API Tokens
-  - Unmanaged Encryption
-  - Unmanaged Discovery  
+  - Limited or No Access to SaaS Data for Analytics Teams
+  - No Access to Data Sources Across MCP-Enabled AI Integration
   - Demand for 3rd-Party Data for Business Intelligence in Dashboards
   - Demand for 3rd-Party Data by Data Science for ML Engineering
 
 gains:  
 
   - Access to SaaS Data via SQL
-  - Access to Data Sources via SQL
-  - Manage Budget Across
-  - Managed Risk Involved
-  - Optimize SaaS Usage
-  - Create More Visibility
-  - Create More Discovery
-  - Create More Reusability
+  - Access to Internal APIs via SQL
+  - Easy Connections to Existing Dashboards
+  - Plug-and-Play Connectors for Data Science
+
+
+narratives: # These are the narratives for this use case - published to blog.
+
+  - title: Balancing Our Data Access Needs to Support AI Innovation
+    body:
+
+      Our company has invested heavily in data and API infrastructure over the years. Providing secure, fine-grained access control to relevant enterprise data has long been a priority. Yet despite this investment, we continue to struggle in two key areas. (1) accessing the 3rd-party data we generate across many platforms, and (2) ensuring that both our internal data and this 3rd-party data are readily available to support our broader AI initiatives.
+
+      Business and engineering teams have become accustomed to pulling the data they need from 3rd-party services. Product and marketing teams, for example, regularly extract data from tools like Figma, Jira, and others—but doing so often requires ad hoc, specialized integrations that some teams simply aren’t equipped to build or maintain. Ideally, we would enable access to this data using common languages such as SQL, allowing teams to work with external data in the same way they have long worked with internal data sources. Teams already trust and understand SQL.
+
+      Providing SQL access to data from Stripe, Figma, Jira, GitHub, and other cornerstone services would be a game changer for our organization. SQL is used across technical and non-technical groups and is native to many of the dashboards, observability tools, and analytics platforms our teams rely on. Translating the 3rd-party services we depend on into accessible SQL endpoints would significantly improve how external data fits into our internal operations.
+
+      Achieving this balance between internal and external data sources would empower data, analytics, and engineering teams to do more with less. The real opportunity lies in making both internal and external data available via SQL for use in the MCP servers that power our business and engineering copilots. Unlocking SQL access at this layer would enrich the context available to Office Copilot and GitHub Copilot, while also establishing a more durable foundation for our agent-based automation efforts.
+
+      Universal SQL access across our entire data landscape—leveraging existing role-based access controls—would help us mitigate risk while increasing application velocity and improving the viability of our AI initiatives. A lack of access to relevant data has been the top reason teams cite when explaining why their proofs of concept fail—either because they cannot access needed data or because they cannot satisfy compliance requirements. SQL-based access could meaningfully change that trajectory.
+
+    targets: 
+
+      - Ford 
