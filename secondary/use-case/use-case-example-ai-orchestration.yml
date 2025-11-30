@@ -24,15 +24,23 @@ gains:
   - title: Universal connectivity; "Write once, talk to many."
   - title: Removal of human bottlenecks in approval chains.
   - title: Access to dynamic markets and real-time supply chains.
-  - title:  Modular system; easy to swap out underperforming agents.           
+  - title: Modular system; easy to swap out underperforming agents.           
 
 narratives: # These are the narratives for this use case - published to blog.
 
-  - title: Preparing 
-    body:
+  - title: Preparing for Our Agentic Future by Understanding What We Are Capable Of
+    body:      
 
-      Need narrative body.
+      Automation is a top priority for our leadership, and properly defining and preparing for automation is a priority for our teams. Teams are hard at work translating relevant API infrastructure into the MCP servers they need, while our data, API, and compliance teams collaborate to standardize how MCP solutions are delivered across internal and external integrations. Although centralized resources exist to help teams prepare for the agentic future emerging around the corner, teams must also prepare using the skills and resources they currently have.
 
+      While teams focus on delivering, sustaining, and governing the API resources they produce and consume—as well as ensuring their copilots, whether business- or engineering-centric, are supported—we aim to provide the guidance, standards, and tooling they need to automate the resources and tasks central to their work. Agent-to-Agent (A2A) provides a blueprint for this effort, supplying the standards-based, governed framework needed to consistently and effectively automate using agentic approaches, as well as the other automation strategies already in use.
+
+      Discovery of MCP servers, APIs, and existing data sources is a top priority. Standardizing the messages, tasks, and other artifacts in motion across teams comes next. Our partners in compliance are deeply focused on authentication, authorization, and the overall scope of enterprise tooling being accessed via agentic automation. Most teams aren’t thinking about discovery or how the resources, tasks, and tooling they use fit into the bigger picture—and we know we can't expect individual teams to be fully aware of the security and risk implications of what they produce day to day.
+
+      Our goal with our investment in agentic infrastructure and guidance is to reduce complexity and risk for teams while removing bottlenecks related to risk and compliance. We are very aware of the impact that risk and compliance processes can have on team velocity. We know A2A provides the scaffolding we need; now we need a deeper understanding of how it fits into our existing enterprise landscape. Ideally, we can look to our more progressive teams—those leading in MCP deployment and copilot usage—and map A2A to their practices to better understand what is possible.
+
+      If you ask different roles and different levels of leadership what is needed for AI orchestration, you’ll get many different answers. Our goal is to narrow that context window and begin establishing a clearer definition of what AI agents are and what they do across our enterprise infrastructure. We all agree that agents are coming and that significant change is ahead, but we are not always aligned on what that means or how we should prepare. As we move into the new year, preparing for our agentic future by defining what we are—and aren’t—capable of is rapidly becoming a top priority.
+    
     targets: 
 
-      - Ford 
+      - Ford
