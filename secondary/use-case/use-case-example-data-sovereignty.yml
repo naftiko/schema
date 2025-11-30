@@ -4,7 +4,16 @@ description: |-
 
   Data sovereignty enables teams to localize data and train local AI models using the data they produce across third-party platforms. This use case may be aligned with country or regional regulations, or it may simply be part of enterprise compliance programs. Data sovereignty investments have increased as part of the growth of AI integrations and the need for context across third-party systems, as well as the increasing value of data itself.
 
+tags:
+
+  - Data
+  - Regulation
+  - Compliance
+  - Sovereignty
+  - Control
+
 benefits:
+
   - Aggregate 3rd-party SaaS data
   - Increase visibility of SaaS data
   - Allow for more SaaS data discovery
@@ -13,13 +22,34 @@ benefits:
 
 pain:
 
-  - Regulatory Mandate for Data Sovereignty
-  - Regulatory Mandate for Data Sovereignty
-  - Unmanaged Discovery  
+  - Difficulty in Accessing 3rd-Party Data Sources
+  - Regulatory Mandate for Control Over All Data
+  - GraphQL Was Difficult to Adopt Across Teams
+  - Lack of Data Available for AI Pilot Projects
 
 gains: 
 
-  - Aggregate 3rd-Party SaaS data
-  - Create More Visibility
-  - Create More Discovery
-  - Create More Reusability 
+  - Provide SQL Access Across 3rd-Party Data Sources
+  - Satisfy Government Regulatory Compliance Requirements
+  - Speak SQL Across All Data Sources For Any Teams
+  - Universal Access to Data for Use in AI Projects
+
+narratives: # These are the narratives for this use case - published to blog.
+
+  - title: Making Progress on GDPR, but Also DORA, Open-Source, and Upcoming AI Regulation
+    body:
+
+      The waves of government regulation seem unending. We were just getting a handle on our GDPR requirements when DORA, along with the most recent open-source and artificial intelligence mandates, were brought to our attention. While we welcome the guidance, we struggle to satisfy these regulatory requirements consistently across teams and domains. We felt confident in our governance over internal data, but once we examined the scope of the 3rd-party data we use, it became clear that we had significant work ahead of us.
+
+      The regulatory environment in the EU is rapidly evolving, with GDPR and DORA forming the backbone of data protection and digital operational resilience requirements that organizations must meet as they adopt artificial intelligence and open-source technologies. GDPR establishes strict rules around personal data collection, processing, transparency, and user consent—all of which directly affect how AI models are trained, deployed, and governed. DORA complements this by requiring financial and digital service organizations to maintain resilient, secure, and well-documented technology supply chains—including open-source components and AI-driven systems—while ensuring continuous monitoring, incident reporting, and third-party risk management.
+
+      As organizations increasingly rely on open-source libraries, models, and platforms to power their AI capabilities, they must demonstrate compliance with both frameworks by ensuring traceability, auditability, and secure lifecycle management of every component. Together, GDPR, DORA, and the expanding body of EU AI-related guidance underscore the need for transparent, accountable, and well-governed AI ecosystems that respect user privacy, mitigate systemic risk, and maintain operational integrity. We are finally gaining a clearer understanding of each of these requirements and beginning to see where these mandates overlap across the European Union’s regulatory landscape.
+
+      A significant portion of our business is conducted in the EU, but the global reach of these regulations—extending to Australia, Hong Kong, Brazil, and other regions—is shaping the scale of our investment. Most of the 3rd-party services we rely on are also working to comply with these regulations, but no one is looking at the collective impact across all the services we use, spanning all the countries and regions we operate in. This is where our concern lies. We need additional support to help connect these dots.
+
+      Digital and data sovereignty mean different things depending on who you talk to and where they do business. For us, data sovereignty is about maintaining control over our data as we build out our platforms and work to protect the privacy and security of our customers. We must negotiate what this looks like across every region we operate in and across every 3rd-party platform we depend on. Data sovereignty efforts have already begun within specific groups, and our aim in the coming years is to scale and standardize these practices across all business domains—no matter where they operate.
+
+    targets: 
+
+      - Cvent
+      - Avalara
