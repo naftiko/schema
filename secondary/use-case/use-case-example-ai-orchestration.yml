@@ -1,0 +1,38 @@
+
+name: AI Orchestration
+description: |- # Description provides a summary, plus what teams are needing.
+  This use case provides the data, skills, and capabilities that artificial intelligence agents used internally can use to automate and orchestrate tasks while discovering and negotiating with other agents to accomplish specific goals. This use case employs the open-source Agent-2-Agent specification to securely and confidently enable agentic activity across operations.
+
+  As teams focus on responding to this AI moment and deploying MCP servers on top of existing APIs and other tooling, they need to begin understanding how to implement agentic automation and orchestration on top of MCP servers. Teams need structure and guidance when it comes to authentication and authorization, discovery, governance, and all the standardization required to deploy agents at scale.
+
+benefits: # Benefits used in docks, decks, and diagrams
+
+  - Discover skills & capabilities
+  - Internal & external agents
+  - Implement A2A protocol
+  - Apply policy-driven governance
+
+pain: # Used to align pain with Signals targets
+
+  - title: High complexity in standardizing message formats and handshakes.	
+  - title: Difficult to cap liability; risk of hallucinated agreements.	
+  - title: Requires vetting external agents; security risks.	
+  - title: High debugging difficulty; "Black Box" interactions.	
+
+gains:
+
+  - title: Universal connectivity; "Write once, talk to many."
+  - title: Removal of human bottlenecks in approval chains.
+  - title: Access to dynamic markets and real-time supply chains.
+  - title:  Modular system; easy to swap out underperforming agents.           
+
+narratives: # These are the narratives for this use case - published to blog.
+
+  - title: Preparing 
+    body:
+
+      Need narrative body.
+
+    targets: 
+
+      - Ford 
