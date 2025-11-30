@@ -23,8 +23,6 @@
         - Cvent
     - title: MCP Leadership Mandate
       targets:
-        - Ford
-      targets:
         - Ford       
     - title: Unmanaged Encryption
       targets:
@@ -33,8 +31,12 @@
       targets:
         - Cvent
         - Ford
-    - title: Unmanaged Authentication        
+    - title: Unmanaged Authentication    
+      targets:
+        - Ford          
     - title: Unmanaged Usage
+      targets:
+        - Ford      
     - title: Unmanaged Cost        
 
   gains: # Used to align gains with Signals targets
@@ -148,25 +150,32 @@
     - Discover skills & capabilities
     - Internal & external agents
     - Implement A2A protocol
+    - Apply policy-driven governance
 
   pain: # Used to align pain with Signals targets
 
-    - title: Need to do AI agents
+    - title: High complexity in standardizing message formats and handshakes.	
+    - title: Difficult to cap liability; risk of hallucinated agreements.	
+    - title: Requires vetting external agents; security risks.	
+    - title: High debugging difficulty; "Black Box" interactions.	
 
   gains:
 
-    - title: Get to do AI Agents
+    - title: Universal connectivity; "Write once, talk to many."
+    - title: Removal of human bottlenecks in approval chains.
+    - title: Access to dynamic markets and real-time supply chains.
+    - title:  Modular system; easy to swap out underperforming agents.           
 
   narratives: # These are the narratives for this use case - published to blog.
 
-    - title: Need Title
+    - title: Preparing 
       body:
 
         Need narrative body.
 
       targets: 
 
-        - Need Signals Targets  
+        - Ford 
 
 #------------------------------------------------------------
 # These are the rest of the use cases we have been working on.
