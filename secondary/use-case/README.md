@@ -7,7 +7,6 @@ These are the artificats available to manage the use cases, providing a consiste
 - [APIs.json](apis.yml) - Provides an index for all the use cases API artifacts.
 - [OpenAPI](use-case-openapi-v0.1.0.yml) - Defines access for the use cases API.
 - [JSON Schema](use-case-schema-v0.1.0.yml) - Defines the schema for use cases.
-- [Examples](use-case-example-v0.1.0.yml) - Using examples as a use case data store.
 - [Spectral](use-case-rules-v0.1.0.yml) - Provides governance rules for schema.
 - Bruno Collections
     - [Use Cases JSON](use-cases-json.bru) - Returns a list of use cases as JSON.
@@ -15,6 +14,16 @@ These are the artificats available to manage the use cases, providing a consiste
 - [Bruno Environments](environment/Use%20Cases.bru) - Provides client environment.
 
 These can be forked and used to manage use cases and submit changes via a pull request.
+
+## Examples
+Examples are simultaneously used to provide examples, but also manage real use cases for Nafitko Signals participants -- here are the use cases we currently have.
+
+- [use-case-example-ai-context.yml](AI Context)
+- [use-case-example-api-reusability.yml](API Reusability)
+- [use-case-example-ai-orchestration.yml](AI Orchestration)
+- [use-case-example-sql-access.yml](SQL Data Acess)
+- [use-case-example-data-sovereignty.yml](Data Sovereignty)
+- [use-case-example-ai-model-mediation.yml](AI Model Mediation)
 
 ## Standards
 This API uses the following standards to make a forkable way to manage use cases.
