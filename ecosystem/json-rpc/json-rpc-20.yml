@@ -1,0 +1,131 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://json-rpc.dev/schemas/jsonrpc-2.0-complete.json
+title: JSON-RPC 2.0 Complete Schema
+description: >-
+  Complete schema definitions for JSON-RPC 2.0 protocol including requests,
+  responses, errors, and batch operations
+
+oneOf:
+  - title: Single Request
+    $ref: '#/definitions/request'
+  - title: Single Notification
+    $ref: '#/definitions/notification'
+  - title: Single Response
+    $ref: '#/definitions/response'
+  - title: Batch Request
+    $ref: '#/definitions/batch-request'
+  - title: Batch Response
+    $ref: '#/definitions/batch-response'
+
+definitions:
+  jsonrpc-version:
+    type: string
+    enum:
+      - '2.0'
+    description: JSON-RPC version string
+  id:
+    description: Request/Response identifier established by the client
+    oneOf:
+      - type: string
+      - type: number
+      - type: 'null'
+  method:
+    type: string
+    description: The name of the method to be invoked
+  params:
+    description: Parameter values to be used during the invocation of the method
+    oneOf:
+      - type: array
+        description: Positional parameters
+      - type: object
+        description: Named parameters
+  error:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        description: Error code indicating the type of error that occurred
+      message:
+        type: string
+        description: A short description of the error
+      data:
+        description: Additional information about the error (optional)
+    additionalProperties: false
+  request:
+    type: object
+    required:
+      - jsonrpc
+      - method
+    properties:
+      jsonrpc:
+        $ref: '#/definitions/jsonrpc-version'
+      method:
+        $ref: '#/definitions/method'
+      params:
+        $ref: '#/definitions/params'
+      id:
+        $ref: '#/definitions/id'
+    additionalProperties: false
+  notification:
+    type: object
+    required:
+      - jsonrpc
+      - method
+    properties:
+      jsonrpc:
+        $ref: '#/definitions/jsonrpc-version'
+      method:
+        $ref: '#/definitions/method'
+      params:
+        $ref: '#/definitions/params'
+    not:
+      required:
+        - id
+    additionalProperties: false
+  response-success:
+    type: object
+    required:
+      - jsonrpc
+      - result
+      - id
+    properties:
+      jsonrpc:
+        $ref: '#/definitions/jsonrpc-version'
+      result:
+        description: The result of the RPC call if successful
+      id:
+        $ref: '#/definitions/id'
+    additionalProperties: false
+  response-error:
+    type: object
+    required:
+      - jsonrpc
+      - error
+      - id
+    properties:
+      jsonrpc:
+        $ref: '#/definitions/jsonrpc-version'
+      error:
+        $ref: '#/definitions/error'
+      id:
+        $ref: '#/definitions/id'
+    additionalProperties: false
+  response:
+    oneOf:
+      - $ref: '#/definitions/response-success'
+      - $ref: '#/definitions/response-error'
+  batch-request:
+    type: array
+    items:
+      oneOf:
+        - $ref: '#/definitions/request'
+        - $ref: '#/definitions/notification'
+    minItems: 1
+  batch-response:
+    type: array
+    items:
+      $ref: '#/definitions/response'
+    minItems: 1
