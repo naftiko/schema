@@ -28,12 +28,12 @@ Examples are simultaneously used to provide examples, but also manage real use c
 ## Standards
 This API uses the following standards to make a forkable way to manage use cases.
 
-- [APIs.json](https://psychic-bassoon-z2vjvn4.pages.github.io/docs/standards/apis-json/) - Provides an index for the API.
-- [OpenAPI](https://psychic-bassoon-z2vjvn4.pages.github.io/docs/standards/openapi/) - Provides access to use cases via API.
-- [JSON Schema](https://psychic-bassoon-z2vjvn4.pages.github.io/docs/standards/json-schema/) - Provides a JSON Schema.
-- [Spectral](https://psychic-bassoon-z2vjvn4.pages.github.io/docs/standards/json-schema/) - Provides governance rules for schema.
-- [Bruno Collections](https://psychic-bassoon-z2vjvn4.pages.github.io/docs/standards/bruno-collections/) - Provides client collection.
-- [Bruno Environments](https://psychic-bassoon-z2vjvn4.pages.github.io/docs/standards/bruno-environments/) - Provides client environment.
+- [APIs.json](https://naftiko.github.io/technology/docs/standards/apis-json/) - Provides an index for the API.
+- [OpenAPI](https://naftiko.github.io/technology/docs/standards/openapi/) - Provides access to use cases via API.
+- [JSON Schema](https://naftiko.github.io/technology/docs/standards/json-schema/) - Provides a JSON Schema.
+- [Spectral](https://naftiko.github.io/technology/docs/standards/json-schema/) - Provides governance rules for schema.
+- [Bruno Collections](https://naftiko.github.io/technology/docs/standards/bruno-collections/) - Provides client collection.
+- [Bruno Environments](https://naftiko.github.io/technology/docs/standards/bruno-environments/) - Provides client environment.
 
 The goal of these standards is to make management of use cases easy to syndicate.
 
