@@ -26,7 +26,7 @@ We will keep adding to this list of core schemas, but also eventually additional
 ### Secondary Schemas
 These are the schemas used to manage Naftiko schema, APIs, and other artifacts, and across operations.
 
-- [**Use Cases**](secondary/use-cases/) - This is where we are managing Naftiko use cases.
+- [**Use Cases**](secondary/use-case/) - This is where we are managing Naftiko use cases.
 
 As they mature, some of these can be moved into the core schema category when it makes sense.
 
