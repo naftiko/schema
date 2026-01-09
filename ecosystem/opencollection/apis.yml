@@ -1,0 +1,18 @@
+aid: opencollection
+name: OpenCollection
+type: Index
+description: |-
+  OpenCollection is a specification for describing collections of API requests in a in a standardized, machine-readable way, enabling consistent testing, documentation, tooling, and automation across the API lifecycle.
+tags:
+  - HTTP APIs
+  - APIs
+created: '2026-01-09'
+modified: '2026-01-09'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/opencollection/apis.yml
+specificationVersion: '1.0'
+common:
+  - type: JSONSchema
+    url: opencollection-schema-1.0.0.yml
+maintainers:
+  - FN: Jerome Louvel
+    email: jeromelouvel@naftiko.io
