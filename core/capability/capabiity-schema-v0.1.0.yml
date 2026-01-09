@@ -1,62 +1,395 @@
----
-"$id": https://github.com/naftiko/capabilities/blob/main/schema.yml
-"$schema": https://json-schema.org/draft/2020-12/schema
-title: Capability
-description: Capabilities are open-source, declarative, standards-based integrations that are aligned with business outcomes within specific domains, providing what is needed to deliver and automate integrations across a variety of use cases.
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://naftiko.io/schemas/capability-incentivize.json
+title: Capablities
+description: This is a draft schema for Naftiko capabilities as informed by market research and signals research and conversations, providing an exhaustive list of what could be considered to be part of the core Naftiko capabilities schema.
 type: object
-
-# Core Properties - This is all just placeholder right now. Casing, types, and other work will come next.
 properties:
-  Domain:
+  naftiko:
     type: object
-    description: The domain.
+    description: Naftiko-specific metadata
     properties:
-      Aggregate:
-        "$ref": "#/$defs/Aggregate"
-      UseCase:
-        "$ref": "#/$defs/UseCase"
-      Service:
-        "$ref": "#/$defs/Service"  
-      Actor:
-        "$ref": "#/$defs/Actor"  
-      Language:
-        "$ref": "#/$defs/Language"             
-  Lifecycle:
-    "$ref": "#/$defs/Lifecycle"  
-  Adapter:
-    "$ref": "#/$defs/Adapter"       
-
-# Individual Reusable Objects - Developing all objects as individual definitions and reusing across manifest.
+      schema:
+        type: string
+        description: Reference to the Naftiko schema definition
+  info:
+    $ref: '#/$defs/info'
+  ports:
+    $ref: '#/$defs/ports'
+  useCase:
+    type: array
+    description: Use case references
+    items:
+      $ref: '#/$defs/reference'
+  capabilities:
+    type: array
+    description: Sub-capabilities that compose this aggregate capability
+    items:
+      $ref: '#/$defs/reference'
+  events:
+    type: array
+    description: CloudEvents specification for capability events
+    items:
+      $ref: '#/$defs/cloudEvent'
+  stakeholders:
+    type: array
+    description: List of stakeholders involved in the capability
+    items:
+      $ref: '#/$defs/stakeholder'
+  metrics:
+    $ref: '#/$defs/metrics'
+  change:
+    $ref: '#/$defs/change'
+  source:
+    $ref: '#/$defs/source'
+  support:
+    $ref: '#/$defs/support'
+  license:
+    $ref: '#/$defs/license'
+  standards:
+    type: array
+    description: Standards and specifications used
+    items:
+      $ref: '#/$defs/standard'
+  services:
+    type: array
+    description: External services used by this capability
+    items:
+      $ref: '#/$defs/service'
+  observability:
+    $ref: '#/$defs/observability'
+required:
+  - info
+  - change
+  - observability
 $defs:
-  Entity:
-    type: string
-    description: The aggregate entity.
-  UseCase:
-    type: string
-    description: The use case.   
-  Service:
-    type: string
-    description: The service.    
-  Actor:
-    type: string
-    description: The actor.   
-  Language:
+  reference:
     type: object
-    description: The language.  
+    description: Reference to an external file
     properties:
-      Prompt:
+      $ref:
         type: string
-        description: The prompt.                            
-      Term:
-        type: string
-        description: The term.
-  Lifecycle:
-    type: string
-    description: The lifecycle.
-  Adapter:
-    description: The adapter
+        description: Reference path to external file
+    required:
+      - $ref
+  info:
     type: object
+    description: Basic information about the capability
     properties:
-      Port:
+      name:
         type: string
-        description: The port. 
+        description: The name of the capability
+      description:
+        type: string
+        description: Detailed description of the capability
+      icon:
+        type: string
+        format: uri
+        description: URL to the capability icon
+      tags:
+        type: array
+        description: Tags for categorizing the capability
+        items:
+          type: string
+        uniqueItems: true
+      jsonLd:
+        type: string
+        description: JSON-LD context for semantic web integration
+        contentMediaType: application/ld+json
+      pinned:
+        type: boolean
+        description: Whether this capability is pinned
+      featured:
+        type: boolean
+        description: Whether this capability is featured
+    required:
+      - name
+      - description
+  ports:
+    type: object
+    description: Integration ports for different systems
+    properties:
+      artificialIntelligence:
+        type: array
+        description: AI integration adapters
+        items:
+          $ref: '#/$defs/aiAdapter'
+  aiAdapter:
+    type: object
+    description: AI adapter configuration
+    properties:
+      adapter:
+        type: string
+        description: Type of adapter (e.g., MCP)
+        enum:
+          - MCP
+      title:
+        type: string
+        description: Title of the adapter
+      description:
+        type: string
+        description: Description of the adapter functionality
+      jsonSchema:
+        type: array
+        description: JSON Schema references for the adapter
+        items:
+          $ref: '#/$defs/reference'
+    required:
+      - adapter
+      - title
+      - description
+  cloudEvent:
+    type: object
+    description: CloudEvents specification event
+    properties:
+      specversion:
+        type: string
+        description: CloudEvents specification version
+        pattern: ^\d+\.\d+$
+      type:
+        type: string
+        description: Event type in reverse-DNS format
+      source:
+        type: string
+        format: uri
+        description: Event source URI
+      datacontenttype:
+        type: string
+        description: Content type of the event data
+      dataschema:
+        type: string
+        format: uri
+        description: URI of the schema for event data
+    required:
+      - specversion
+      - type
+      - source
+  stakeholder:
+    type: object
+    description: Stakeholder information
+    properties:
+      FN:
+        type: string
+        description: Full name of the stakeholder
+      ROLE:
+        type: string
+        description: Role of the stakeholder
+      EMAIL:
+        type: string
+        format: email
+        description: Email address of the stakeholder
+      SOCIALPROFILE:
+        type: string
+        format: uri
+        description: Social profile URL of the stakeholder
+    required:
+      - FN
+      - ROLE
+  metrics:
+    type: object
+    description: Performance and engagement metrics
+    properties:
+      weavingScore:
+        type: integer
+        description: Weaving score metric
+        minimum: 0
+        maximum: 100
+      maturityScore:
+        type: integer
+        description: Maturity score metric
+        minimum: 0
+        maximum: 100
+      rating:
+        type: number
+        description: User rating
+        minimum: 0
+        maximum: 10
+      numberOfDownloads:
+        type: integer
+        description: Total number of downloads
+        minimum: 0
+      forks:
+        type: integer
+        description: Number of repository forks
+        minimum: 0
+      watches:
+        type: integer
+        description: Number of repository watchers
+        minimum: 0
+      likes:
+        type: integer
+        description: Number of likes
+        minimum: 0
+  change:
+    type: object
+    description: Change management information
+    properties:
+      state:
+        type: string
+        description: Current state of the capability
+        enum:
+          - New
+          - Active
+          - Deprecated
+          - Archived
+      schemaVersion:
+        type: string
+        description: Version of the schema
+        pattern: ^\d+\.\d+\.\d+$
+      capabilityVersion:
+        type: string
+        description: Version of the capability
+        pattern: ^\d+\.\d+\.\d+$
+      updated:
+        type: string
+        format: date-time
+        description: Last update timestamp
+      created:
+        type: string
+        format: date-time
+        description: Creation timestamp
+    required:
+      - state
+      - schemaVersion
+      - capabilityVersion
+      - updated
+      - created
+  source:
+    type: object
+    description: Source code repository information
+    properties:
+      httpUrl:
+        type: string
+        format: uri
+        description: HTTPS URL for the repository
+      sshUrl:
+        type: string
+        description: SSH URL for the repository
+      dockertHub:
+        type: string
+        format: uri
+        description: Docker Hub URL
+  support:
+    type: object
+    description: Support channels
+    properties:
+      issues:
+        type: string
+        format: uri
+        description: URL for issue tracking
+      discussions:
+        type: string
+        format: uri
+        description: URL for discussions
+      slack:
+        type: string
+        format: uri
+        description: Slack channel URL
+  license:
+    type: object
+    description: Licensing information
+    properties:
+      data:
+        $ref: '#/$defs/licenseDetail'
+      code:
+        $ref: '#/$defs/licenseDetail'
+      api:
+        $ref: '#/$defs/licenseDetail'
+  licenseDetail:
+    type: object
+    description: License details
+    properties:
+      type:
+        type: string
+        format: uri
+        description: URL to the license type
+      attribution:
+        type: string
+        description: Attribution text for the license
+      instance:
+        type: string
+        format: uri
+        description: URL to the specific license instance
+    required:
+      - type
+      - attribution
+  standard:
+    type: object
+    description: Standard or specification information
+    properties:
+      name:
+        type: string
+        description: Name of the standard
+      description:
+        type: string
+        description: Description of how the standard is used
+      docUrl:
+        type: string
+        format: uri
+        description: URL to standard documentation
+    required:
+      - name
+      - description
+  service:
+    type: object
+    description: External service configuration
+    properties:
+      aid:
+        type: string
+        description: Unique identifier for the service
+      name:
+        type: string
+        description: Name of the service
+      description:
+        type: string
+        description: Description of the service
+      docUrl:
+        type: string
+        format: uri
+        description: URL to service documentation
+      apisJson:
+        type: string
+        format: uri
+        description: URL to APIs.json file for the service
+      loginUrl:
+        type: string
+        format: uri
+        description: Login URL for the service
+      signUpUrl:
+        type: string
+        format: uri
+        description: Sign up URL for the service
+      termsOfServiceUrl:
+        type: string
+        format: uri
+        description: Terms of service URL
+      privacyPolicyUrl:
+        type: string
+        format: uri
+        description: Privacy policy URL
+      plans:
+        type: array
+        description: Service plans and pricing information
+        items:
+          $ref: '#/$defs/reference'
+      rateLimits:
+        type: array
+        description: Rate limiting information
+        items:
+          $ref: '#/$defs/reference'
+    required:
+      - aid
+      - name
+      - description
+  observability:
+    type: object
+    description: Observability configuration
+    properties:
+      visibility:
+        type: string
+        description: Visibility level of the capability
+        enum:
+          - Public
+          - Private
+          - Internal
+    required:
+      - visibility

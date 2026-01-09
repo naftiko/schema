@@ -6,18 +6,49 @@ description: |-
 tags:
   - Capabilities
 created: '2025-11-15'
-modified: '2025-11-15'
-url: https://github.com/naftiko/schema/blob/main/capability/apis.yml
+modified: '2026-01-09'
+url: https://github.com/naftiko/schema/blob/main/core/capability/apis.yml
 specificationVersion: '0.19'
 common:
   - type: JSONSchema
     url: capabiity-schema-v0.1.0.yml
-  - type: Example
-    url: capability-example-v0.1.0.yml  
   - type: SpectralRules
     url: capability-rules-v0.1.0.yml  
   - type: DiagramImage
     url: capability-metamodel-v0.1.0.png   
+
+  # EXAMPLES - API REUSABILITY CAPABILITY
+  - type: Example
+    name: API Reusability
+    url: https://github.com/naftiko/api-reusability/blob/main/capability-api-reusability.yml    
+  - type: Example
+    name: API Reusability
+    url: https://github.com/naftiko/api-reusability/blob/main/capability-api-reusability-incentivize.yml
+  - type: Example
+    name: API Reusability
+    url: https://github.com/naftiko/api-reusability/blob/main/capability-api-reusability-definition.yml
+  - type: Example
+    name: API Reusability
+    url: https://github.com/naftiko/api-reusability/blob/main/capability-api-reusability-communicate.yml
+  - type: Example
+    name: API Reusability
+    url: https://github.com/naftiko/api-reusability/blob/main/capability-api-reusability-catalog.yml            
+
+  # EXAMPLES - MANAGE EVENTS CAPABILITY
+  - type: Example
+    name: Manage Events
+    url: https://github.com/naftiko/manage-events/blob/main/capability-event-context.yml
+  - type: Example
+    url: https://github.com/naftiko/manage-events/blob/main/capability-event-context-attendees.yml
+  - type: Example
+    url: https://github.com/naftiko/manage-events/blob/main/capability-event-context-events.yml
+  - type: Example
+    url: https://github.com/naftiko/manage-events/blob/main/capability-event-context-exhibitors.yml
+  - type: Example
+    url: https://github.com/naftiko/manage-events/blob/main/capability-event-context-sessions.yml
+  - type: Example
+    url: https://github.com/naftiko/manage-events/blob/main/capability-event-context-speakers.yml   
+
 maintainers:
   - FN: Kin Lane
     email: kinlane@naftiko.io

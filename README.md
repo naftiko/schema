@@ -39,6 +39,7 @@ These are the schemas that define what Naftiko will be adapting to when using ou
 - [**Arazzo**](ecosystem/arazzo/) - Schema for Arazzo.
 - [**AsyncAPI**](ecosystem/asyncapi/) - Schema for AsyncAPI.
 - [**CloudEvents**](ecosystem/cloudevents/) - Schema for CloudEvents.
+- [**JSON RPC**](ecosystem/json-rpc/) - Schema for JSON RPC 2.0.
 - [**JSON Schema**](ecosystem/json-schema/) - Schema for JSON Schema.
 - [**Kubernetes**](ecosystem/kubernetes/) - Schema for Kubernetes.
 - [**Model Context Protocol**](ecosystem/model-context-protocol/) - Schema for MCP.
@@ -57,6 +58,26 @@ This work intentionally focuses on using only Git and a handful of standards.
 - **AsyncAPI** - Used to describe the surface area of TCP APIs accessing data.
 
 We will add new standards here as they are added to the repo to support ongoing work.
+
+## Folder Structure
+Working towards a normalized structure for managing these schema as monorepository.
+
+- **Top Level Folders**
+   - **Core** - These are the primary schema we are hoping to develop for Naftiko products.
+   - **Secondary** - These are the secondar schema we are evolving that shape Naftiko.
+   - **Ecosystem** - These are all of the relevant schema which we do not have control of.
+- **Second Level Folders**
+    - **Environments** - Some schema will have an environments folder to work with APIs.
+    - **Examples** - Some schema have examples folders to accomodate real and synthetic.
+    - **Node Modules** - Some schema have node modules to support Bruno automation.
+
+I will keep updating this and iterating as we add the folders needed to automate things.
+
+## Open Tasks
+Here are a few of the items currently in motion as part of the work on this repository:
+
+- **Pipeline Validation** - We need JSON Schema validation on all schema in GitHub action.
+- **Sandbox** - We need sandbox mocked API for each schema using examples and Microcks.
 
 ## Contribute
 Feel free to contribute to this work in the following ways that leverage GitHub.
