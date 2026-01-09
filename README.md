@@ -45,6 +45,7 @@ These are the schemas that define what Naftiko will be adapting to when using ou
 - [**Model Context Protocol**](ecosystem/model-context-protocol/) - Schema for MCP.
 - [**OpenAPI**](ecosystem/openapi/) - Schema for OpenAPI.
 - [**OpenAPI Overlays**](ecosystem/openapi-overlays/) - Schema for OpenAPI overlays.
+- [**OpenCollection**](ecosystem/opencollection/) - Schema for API testing collections.
 - [**Spectral**](ecosystem/spectral/) - Schema for Spectral.
 
 These schema should inform, shape, and be mapped to the core Naftiko schema we are defining.
