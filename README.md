@@ -27,6 +27,9 @@ We will keep adding to this list of core schemas, but also eventually additional
 These are the schemas used to manage Naftiko schema, APIs, and other artifacts, and across operations.
 
 - [**Use Cases**](secondary/use-case/) - This is where we are managing Naftiko use cases.
+    - [**API Reusability**](secondary/use-case/examples/use-case-example-api-reusability.yml)
+    - [**Context Engineering**](secondary/use-case/examples/use-case-example-context-engineering.yml)
+    - [**Agent Orchestration**](secondary/use-case/examples/use-case-example-agent-orchestration.yml)
 
 As they mature, some of these can be moved into the core schema category when it makes sense.
 

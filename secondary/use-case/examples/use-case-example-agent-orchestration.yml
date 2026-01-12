@@ -1,5 +1,5 @@
 
-name: AI Orchestration
+name: Agent Orchestration
 description: |- # Description provides a summary, plus what teams are needing.
   This use case provides the data, skills, and capabilities that artificial intelligence agents used internally can use to automate and orchestrate tasks while discovering and negotiating with other agents to accomplish specific goals. This use case employs the open-source Agent-2-Agent specification to securely and confidently enable agentic activity across operations.
 

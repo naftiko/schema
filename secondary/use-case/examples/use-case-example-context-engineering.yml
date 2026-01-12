@@ -1,4 +1,4 @@
-name: AI Context
+name: Context Engineering
 description: |- # Description provides a summary, plus what teams are needing. 
   This use case focuses on providing Model Context Protocol (MCP) servers on top of common private, public/1st party and 3rd party APIs, as well as local SQL databases, employing a domain-driven, declarative, and governed approach to right-sizing the context windows via MCP while providing integrations for us across AI copilots and agents. 
 
