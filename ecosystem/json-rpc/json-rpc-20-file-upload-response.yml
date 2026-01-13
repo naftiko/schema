@@ -1,0 +1,9 @@
+jsonrpc: '2.0'
+result:
+  fileId: file_abc123def456
+  url: https://storage.example.com/files/file_abc123def456
+  uploadedAt: '2026-01-12T16:30:00Z'
+  size: 2048576
+  checksum: sha256:a7b8c9d0e1f2...
+  expiresAt: null
+id: upload-001

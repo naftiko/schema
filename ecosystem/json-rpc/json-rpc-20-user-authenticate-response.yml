@@ -1,0 +1,14 @@
+jsonrpc: '2.0'
+result:
+  authenticated: true
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+  refreshToken: rt_abc123def456
+  expiresIn: 3600
+  user:
+    id: usr_98765
+    username: alice
+    email: alice@example.com
+    roles:
+      - user
+      - premium
+id: auth-req-550e8400

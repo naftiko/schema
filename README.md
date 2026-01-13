@@ -37,6 +37,7 @@ As they mature, some of these can be moved into the core schema category when it
 These are the schemas that define what Naftiko will be adapting to when using our product.
 
 - [**Agent-to-agent (A2A)**](ecosystem/agent-2-agent/) - Schema for Agent-to-agent (A2A).
+- [**APIOps cycles**](ecosystem/apiops-cycles/) - Schema for the APIOps Cycles.
 - [**Airbyte**](ecosystem/airbyte/) - Schema for Airbyte.
 - [**APIs.json**](ecosystem/apis-json/) - Schema for APIs.json.
 - [**Arazzo**](ecosystem/arazzo/) - Schema for Arazzo.

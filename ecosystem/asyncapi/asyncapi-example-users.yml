@@ -1,0 +1,516 @@
+asyncapi: 3.0.0
+id: urn:com:example:user-service
+info:
+  title: User Service API
+  version: 1.0.0
+  description: >-
+    This service is responsible for managing user registration, authentication,
+    and profile updates through asynchronous messaging.
+  contact:
+    name: API Support Team
+    url: https://www.example.com/support
+    email: support@example.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  tags:
+    - name: user-management
+      description: Operations related to user management
+    - name: authentication
+      description: Authentication and authorization events
+  externalDocs:
+    description: Find more information here
+    url: https://docs.example.com/user-service
+  x-custom-info: Custom extension for additional metadata
+defaultContentType: application/json
+servers:
+  production:
+    host: kafka.prod.example.com:9092
+    protocol: kafka
+    protocolVersion: '3.2'
+    description: Production Kafka cluster
+    tags:
+      - name: env:production
+        description: Production environment
+    bindings:
+      kafka:
+        schemaRegistryUrl: https://schema-registry.prod.example.com
+        schemaRegistryVendor: confluent
+        bindingVersion: 0.5.0
+  staging:
+    host: '{environment}.rabbitmq.example.com:{port}'
+    pathname: /staging
+    protocol: amqp
+    protocolVersion: 0-9-1
+    description: Staging RabbitMQ broker with variable configuration
+    variables:
+      environment:
+        enum:
+          - stage
+          - test
+        default: stage
+        description: Environment identifier
+        examples:
+          - stage
+          - test
+      port:
+        enum:
+          - '5672'
+          - '5671'
+        default: '5672'
+        description: Port number for AMQP connection
+    security:
+      - type: userPassword
+        description: Username and password authentication
+    bindings:
+      amqp:
+        is: routingKey
+        exchange:
+          name: user-events
+          type: topic
+          durable: true
+          autoDelete: false
+          vhost: /
+        bindingVersion: 0.3.0
+  development:
+    host: mqtt.dev.example.com:1883
+    protocol: mqtt
+    protocolVersion: '5.0'
+    description: Development MQTT broker
+    bindings:
+      mqtt:
+        clientId: user-service-dev
+        cleanSession: true
+        keepAlive: 60
+        sessionExpiryInterval: 3600
+        bindingVersion: 0.2.0
+channels:
+  user/signedup:
+    address: user.events.signedup
+    title: User Signup Channel
+    summary: Channel for user signup events
+    description: This channel handles all user signup events with user profile information
+    messages:
+      userSignedUp:
+        $ref: '#/components/messages/UserSignedUp'
+    parameters:
+      userId:
+        $ref: '#/components/parameters/userId'
+    servers:
+      - $ref: '#/servers/production'
+      - $ref: '#/servers/staging'
+    bindings:
+      kafka:
+        topic: user-signup-events
+        partitions: 20
+        replicas: 3
+        topicConfiguration:
+          cleanup.policy:
+            - delete
+          retention.ms: 604800000
+          retention.bytes: 1073741824
+          max.message.bytes: 1048576
+        bindingVersion: 0.5.0
+    tags:
+      - name: user-management
+  user/updated:
+    address: user.events.updated.{userId}
+    title: User Profile Update Channel
+    description: Channel for user profile update events
+    messages:
+      userProfileUpdated:
+        $ref: '#/components/messages/UserProfileUpdated'
+    parameters:
+      userId:
+        description: The unique identifier for a user
+        location: $message.payload#/userId
+    bindings:
+      amqp:
+        is: queue
+        queue:
+          name: user-profile-updates
+          durable: true
+          exclusive: false
+          autoDelete: false
+          vhost: /
+        bindingVersion: 0.3.0
+  user/deleted:
+    address: user.events.deleted
+    messages:
+      userDeleted:
+        name: UserDeleted
+        title: User Deleted Event
+        summary: Event when a user account is deleted
+        contentType: application/json
+        payload:
+          type: object
+          properties:
+            userId:
+              type: string
+              format: uuid
+            deletedAt:
+              type: string
+              format: date-time
+            reason:
+              type: string
+          required:
+            - userId
+            - deletedAt
+  notification/email:
+    address: notifications.email
+    messages:
+      emailNotification:
+        $ref: '#/components/messages/EmailNotification'
+    bindings:
+      mqtt:
+        qos: 2
+        retain: false
+        bindingVersion: 0.2.0
+operations:
+  onUserSignUp:
+    action: send
+    title: Send User Signup Event
+    summary: Publishes an event when a user signs up
+    description: >-
+      This operation is triggered when a new user successfully completes the
+      signup process
+    channel:
+      $ref: '#/channels/user/signedup'
+    messages:
+      - $ref: '#/channels/user~1signedup/messages/userSignedUp'
+    security:
+      - type: oauth2
+        description: OAuth2 authentication
+        flows:
+          clientCredentials:
+            tokenUrl: https://auth.example.com/oauth/token
+            availableScopes:
+              write:users: Write access to user data
+              read:users: Read access to user data
+    tags:
+      - name: user-management
+      - name: signup
+    bindings:
+      kafka:
+        groupId:
+          type: string
+          enum:
+            - user-service-group
+        clientId:
+          type: string
+          enum:
+            - user-service-client
+        bindingVersion: 0.5.0
+    traits:
+      - $ref: '#/components/operationTraits/commonHeaders'
+  onUserProfileUpdate:
+    action: receive
+    title: Receive User Profile Update
+    summary: Subscribes to user profile update events
+    channel:
+      $ref: '#/channels/user/updated'
+    messages:
+      - $ref: '#/channels/user~1updated/messages/userProfileUpdated'
+    reply:
+      address:
+        location: $message.header#/replyTo
+        description: Reply address for acknowledgment
+      channel:
+        $ref: '#/channels/notification/email'
+      messages:
+        - $ref: '#/components/messages/UpdateAcknowledgment'
+    bindings:
+      amqp:
+        expiration: 100000
+        userId: guest
+        cc:
+          - user.logs
+        priority: 5
+        deliveryMode: 2
+        mandatory: false
+        ack: true
+        bindingVersion: 0.3.0
+  onUserDeletion:
+    action: receive
+    channel:
+      $ref: '#/channels/user/deleted'
+    messages:
+      - $ref: '#/channels/user~1deleted/messages/userDeleted'
+  sendEmailNotification:
+    action: send
+    channel:
+      $ref: '#/channels/notification/email'
+    messages:
+      - $ref: '#/components/messages/EmailNotification'
+    bindings:
+      mqtt:
+        qos: 2
+        retain: false
+        messageExpiryInterval: 3600
+        bindingVersion: 0.2.0
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique user identifier
+        email:
+          type: string
+          format: email
+          description: User's email address
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+          description: User's username
+        firstName:
+          type: string
+        lastName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        roles:
+          type: array
+          items:
+            type: string
+            enum:
+              - admin
+              - user
+              - moderator
+      required:
+        - id
+        - email
+        - username
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+          pattern: ^[0-9]{5}$
+        country:
+          type: string
+    UserProfile:
+      type: object
+      properties:
+        bio:
+          type: string
+          maxLength: 500
+        avatar:
+          type: string
+          format: uri
+        dateOfBirth:
+          type: string
+          format: date
+        address:
+          $ref: '#/components/schemas/Address'
+        preferences:
+          type: object
+          properties:
+            notifications:
+              type: boolean
+            newsletter:
+              type: boolean
+  messages:
+    UserSignedUp:
+      name: UserSignedUp
+      title: User Signed Up
+      summary: Event triggered when a user signs up
+      contentType: application/json
+      tags:
+        - name: user
+        - name: signup
+      headers:
+        type: object
+        properties:
+          correlationId:
+            type: string
+            format: uuid
+            description: Correlation ID for tracking
+          timestamp:
+            type: string
+            format: date-time
+          source:
+            type: string
+            description: Source service name
+        required:
+          - correlationId
+          - timestamp
+      payload:
+        type: object
+        properties:
+          user:
+            $ref: '#/components/schemas/User'
+          registrationMethod:
+            type: string
+            enum:
+              - email
+              - social
+              - oauth
+          ipAddress:
+            type: string
+            format: ipv4
+          userAgent:
+            type: string
+        required:
+          - user
+          - registrationMethod
+      correlationId:
+        $ref: '#/components/correlationIds/default'
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      examples:
+        - name: EmailSignup
+          summary: User signs up via email
+          headers:
+            correlationId: 550e8400-e29b-41d4-a716-446655440000
+            timestamp: '2026-01-12T10:30:00Z'
+            source: user-service
+          payload:
+            user:
+              id: 123e4567-e89b-12d3-a456-426614174000
+              email: john.doe@example.com
+              username: johndoe
+              firstName: John
+              lastName: Doe
+              createdAt: '2026-01-12T10:30:00Z'
+              roles:
+                - user
+            registrationMethod: email
+            ipAddress: 192.168.1.1
+            userAgent: Mozilla/5.0
+      bindings:
+        kafka:
+          key:
+            type: string
+            description: User ID as partition key
+          schemaIdLocation: payload
+          schemaIdPayloadEncoding: '4'
+          bindingVersion: 0.5.0
+    UserProfileUpdated:
+      name: UserProfileUpdated
+      title: User Profile Updated
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          userId:
+            type: string
+            format: uuid
+          updatedFields:
+            type: array
+            items:
+              type: string
+          profile:
+            $ref: '#/components/schemas/UserProfile'
+          updatedAt:
+            type: string
+            format: date-time
+        required:
+          - userId
+          - updatedFields
+          - updatedAt
+      bindings:
+        amqp:
+          contentEncoding: gzip
+          messageType: user.profile.updated
+          bindingVersion: 0.3.0
+    EmailNotification:
+      name: EmailNotification
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          to:
+            type: string
+            format: email
+          subject:
+            type: string
+          body:
+            type: string
+          template:
+            type: string
+        required:
+          - to
+          - subject
+          - body
+    UpdateAcknowledgment:
+      name: UpdateAcknowledgment
+      payload:
+        type: object
+        properties:
+          success:
+            type: boolean
+          message:
+            type: string
+          processedAt:
+            type: string
+            format: date-time
+  parameters:
+    userId:
+      description: The ID of the user
+      location: $message.payload#/userId
+  correlationIds:
+    default:
+      description: Default Correlation ID
+      location: $message.header#/correlationId
+  messageTraits:
+    commonHeaders:
+      headers:
+        type: object
+        properties:
+          x-request-id:
+            type: string
+            format: uuid
+          x-service-name:
+            type: string
+          x-trace-id:
+            type: string
+  operationTraits:
+    commonHeaders:
+      bindings:
+        kafka:
+          groupId:
+            type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth2 authentication flows
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.example.com/oauth/token
+          availableScopes:
+            write:users: Write access to user data
+            read:users: Read access to user data
+            admin:users: Administrative access to user data
+        authorizationCode:
+          authorizationUrl: https://auth.example.com/oauth/authorize
+          tokenUrl: https://auth.example.com/oauth/token
+          refreshUrl: https://auth.example.com/oauth/refresh
+          availableScopes:
+            write:users: Write access to user data
+            read:users: Read access to user data
+    apiKey:
+      type: apiKey
+      in: user
+      description: API Key authentication
+  tags:
+    userManagement:
+      name: user-management
+      description: All operations related to user management
+      externalDocs:
+        description: User management documentation
+        url: https://docs.example.com/user-management
+x-custom-metadata:
+  service-owner: User Management Team
+  deployment-region: us-east-1
+  monitoring-dashboard: https://monitoring.example.com/user-service

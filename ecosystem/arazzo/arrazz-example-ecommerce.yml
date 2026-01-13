@@ -1,0 +1,378 @@
+arazzo: 1.0.0
+info:
+  title: E-commerce Order Management Workflow
+  summary: Complete workflow for processing customer orders from cart to delivery
+  description: >-
+    This workflow orchestrates multiple API calls to handle the complete order
+    lifecycle including cart management, payment processing, inventory updates,
+    and shipment tracking.
+  version: 2.1.0
+  x-internal-id: workflow-ecommerce-001
+sourceDescriptions:
+  - name: ecommerceAPI
+    url: https://api.example.com/openapi/ecommerce-v3.json
+    type: openapi
+    x-environment: production
+  - name: paymentAPI
+    url: https://api.payment-provider.com/openapi/v2.yaml
+    type: openapi
+  - name: shippingAPI
+    url: https://api.shipping-service.com/openapi.json
+    type: openapi
+  - name: notificationWorkflows
+    url: https://api.example.com/arazzo/notifications.json
+    type: arazzo
+workflows:
+  - workflowId: complete-order-flow
+    summary: Complete order processing from cart to delivery
+    description: >-
+      This workflow handles the entire order process including validation,
+      payment, inventory management, and shipping coordination.
+    inputs:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Unique customer identifier
+        cartId:
+          type: string
+          description: Shopping cart identifier
+        paymentMethodId:
+          type: string
+          description: Customer's payment method
+        shippingAddress:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipCode:
+              type: string
+            country:
+              type: string
+          required:
+            - street
+            - city
+            - zipCode
+            - country
+      required:
+        - customerId
+        - cartId
+        - paymentMethodId
+        - shippingAddress
+    steps:
+      - stepId: validate-cart
+        description: Validate cart contents and check inventory availability
+        operationId: getCart
+        parameters:
+          - name: cartId
+            in: path
+            value: $inputs.cartId
+        successCriteria:
+          - context: $statusCode
+            condition: '200'
+            type: simple
+          - context: $response.body#/items
+            condition: length($) > 0
+            type: jsonpath
+            version: draft-goessner-dispatch-jsonpath-00
+        onSuccess:
+          - name: proceed-to-payment
+            type: goto
+            stepId: process-payment
+        onFailure:
+          - name: retry-cart-validation
+            type: retry
+            retryAfter: 2
+            retryLimit: 3
+            criteria:
+              - context: $statusCode
+                condition: '503'
+          - name: terminate-empty-cart
+            type: end
+            criteria:
+              - context: $response.body#/items
+                condition: length($) == 0
+                type: jsonpath
+                version: draft-goessner-dispatch-jsonpath-00
+        outputs:
+          cartTotal: $response.body#/total
+          itemCount: $response.body#/itemCount
+          cartItems: $response.body#/items
+      - stepId: process-payment
+        description: Process payment using the payment provider API
+        operationPath: $sourceDescriptions.paymentAPI#/paths/~1payments/post
+        parameters:
+          - name: Authorization
+            in: header
+            value: Bearer $auth.paymentToken
+        requestBody:
+          contentType: application/json
+          payload:
+            amount: $steps.validate-cart.outputs.cartTotal
+            currency: USD
+            paymentMethodId: $inputs.paymentMethodId
+            customerId: $inputs.customerId
+        successCriteria:
+          - context: $statusCode
+            condition: '200'
+          - context: $response.body#/status
+            condition: succeeded
+        onSuccess:
+          - name: create-order
+            type: goto
+            stepId: create-order-record
+        onFailure:
+          - name: retry-payment
+            type: retry
+            retryAfter: 5
+            retryLimit: 2
+            criteria:
+              - context: $response.body#/errorCode
+                condition: temporary_failure
+          - name: payment-failed-end
+            type: end
+            criteria:
+              - context: $response.body#/errorCode
+                condition: insufficient_funds|card_declined
+                type: regex
+        outputs:
+          paymentId: $response.body#/id
+          transactionId: $response.body#/transactionId
+          paymentStatus: $response.body#/status
+      - stepId: create-order-record
+        description: Create the order record in the e-commerce system
+        operationId: createOrder
+        requestBody:
+          contentType: application/json
+          payload:
+            customerId: $inputs.customerId
+            items: []
+            paymentId: ''
+            shippingAddress: {}
+            status: pending
+          replacements:
+            - target: /items
+              value: $steps.validate-cart.outputs.cartItems
+            - target: /paymentId
+              value: $steps.process-payment.outputs.paymentId
+            - target: /shippingAddress
+              value: $inputs.shippingAddress
+        successCriteria:
+          - context: $statusCode
+            condition: '201'
+        onSuccess:
+          - name: proceed-to-inventory
+            type: goto
+            stepId: update-inventory
+        outputs:
+          orderId: $response.body#/orderId
+          orderNumber: $response.body#/orderNumber
+          createdAt: $response.body#/createdAt
+      - stepId: update-inventory
+        description: Update inventory levels for ordered items
+        operationId: updateInventory
+        parameters:
+          - name: orderId
+            in: path
+            value: $steps.create-order-record.outputs.orderId
+        requestBody:
+          contentType: application/json
+          payload:
+            items: $steps.validate-cart.outputs.cartItems
+            operation: decrement
+        successCriteria:
+          - context: $statusCode
+            condition: '200'
+        onSuccess:
+          - name: arrange-shipping
+            type: goto
+            stepId: create-shipment
+        onFailure:
+          - name: retry-inventory-update
+            type: retry
+            retryAfter: 3
+            retryLimit: 5
+        outputs:
+          inventoryUpdated: $response.body#/success
+          updatedItems: $response.body#/items
+      - stepId: create-shipment
+        description: Create shipment with shipping provider
+        operationPath: $sourceDescriptions.shippingAPI#/paths/~1shipments/post
+        requestBody:
+          contentType: application/json
+          payload:
+            orderId: $steps.create-order-record.outputs.orderId
+            address: $inputs.shippingAddress
+            items: $steps.validate-cart.outputs.cartItems
+            serviceLevel: standard
+        successCriteria:
+          - context: $statusCode
+            condition: '201'
+        onSuccess:
+          - name: send-notifications
+            type: goto
+            stepId: notify-customer
+        outputs:
+          shipmentId: $response.body#/shipmentId
+          trackingNumber: $response.body#/trackingNumber
+          estimatedDelivery: $response.body#/estimatedDeliveryDate
+      - stepId: notify-customer
+        description: Send order confirmation to customer
+        workflowId: send-order-confirmation
+        parameters:
+          - name: customerId
+            value: $inputs.customerId
+          - name: orderDetails
+            value:
+              orderId: $steps.create-order-record.outputs.orderId
+              orderNumber: $steps.create-order-record.outputs.orderNumber
+              trackingNumber: $steps.create-shipment.outputs.trackingNumber
+              estimatedDelivery: $steps.create-shipment.outputs.estimatedDelivery
+        successCriteria:
+          - context: $statusCode
+            condition: '200'
+        outputs:
+          notificationSent: $response.body#/sent
+          notificationId: $response.body#/notificationId
+    successActions:
+      - name: log-success
+        type: end
+    failureActions:
+      - name: rollback-payment
+        type: goto
+        workflowId: refund-payment-workflow
+        criteria:
+          - context: $steps.process-payment.outputs.paymentStatus
+            condition: succeeded
+    outputs:
+      finalOrderId: $steps.create-order-record.outputs.orderId
+      finalOrderNumber: $steps.create-order-record.outputs.orderNumber
+      finalTrackingNumber: $steps.create-shipment.outputs.trackingNumber
+      finalPaymentId: $steps.process-payment.outputs.paymentId
+    parameters:
+      - name: X-Request-ID
+        in: header
+        value: $context.requestId
+      - name: timeout
+        in: query
+        value: '30'
+  - workflowId: refund-payment-workflow
+    summary: Process refund for failed orders
+    description: Handle payment refunds when order processing fails after payment
+    dependsOn:
+      - complete-order-flow
+    inputs:
+      type: object
+      properties:
+        paymentId:
+          type: string
+        reason:
+          type: string
+      required:
+        - paymentId
+    steps:
+      - stepId: initiate-refund
+        description: Initiate refund with payment provider
+        operationPath: $sourceDescriptions.paymentAPI#/paths/~1refunds/post
+        requestBody:
+          contentType: application/json
+          payload:
+            paymentId: $inputs.paymentId
+            reason: $inputs.reason
+        successCriteria:
+          - context: $statusCode
+            condition: 200|201
+            type: regex
+        onFailure:
+          - name: retry-refund
+            type: retry
+            retryAfter: 10
+            retryLimit: 5
+        outputs:
+          refundId: $response.body#/refundId
+          refundStatus: $response.body#/status
+    outputs:
+      refundCompleted: $steps.initiate-refund.outputs.refundStatus
+  - workflowId: send-order-confirmation
+    summary: Send order confirmation notification
+    description: Send email and SMS notifications for order confirmation
+    inputs:
+      type: object
+      properties:
+        customerId:
+          type: string
+        orderDetails:
+          type: object
+      required:
+        - customerId
+        - orderDetails
+    steps:
+      - stepId: send-email
+        operationId: sendEmail
+        requestBody:
+          contentType: application/json
+          payload:
+            to: $inputs.customerId
+            template: order-confirmation
+            data: $inputs.orderDetails
+        successCriteria:
+          - context: $statusCode
+            condition: '200'
+        outputs:
+          emailSent: $response.body#/sent
+    outputs:
+      sent: $steps.send-email.outputs.emailSent
+components:
+  inputs:
+    AddressSchema:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+        country:
+          type: string
+      required:
+        - street
+        - city
+        - zipCode
+        - country
+  parameters:
+    authHeader:
+      name: Authorization
+      in: header
+      value: Bearer $auth.token
+    contentTypeJson:
+      name: Content-Type
+      in: header
+      value: application/json
+  successActions:
+    logAndContinue:
+      name: log-success-continue
+      type: goto
+      stepId: next-step
+  failureActions:
+    standardRetry:
+      name: standard-retry-action
+      type: retry
+      retryAfter: 5
+      retryLimit: 3
+    escalateToSupport:
+      name: escalate-failure
+      type: end
+x-workflow-metadata:
+  author: API Team
+  created: '2024-01-15'
+  tags:
+    - e-commerce
+    - order-processing
+    - payments

@@ -1,0 +1,285 @@
+canvasType: eventCanvas
+
+userTaskOrTrigger: >
+  Event: payment.succeeded
+  Trigger: Customer completes checkout and submits payment through payment form.
+  Payment processor (Stripe, etc.) confirms transaction success and returns authorization code.
+  
+  Event: payment.failed
+  Trigger: Payment processor declines transaction due to insufficient funds, card decline, or validation failure.
+  
+  Event: refund.processed
+  Trigger: Merchant initiates refund request via dashboard or API, or automated refund rule triggers.
+  Refund batch processor completes fund return to customer's original payment method.
+  
+  Event: fraud.alert
+  Trigger: Fraud detection system flags suspicious activity based on velocity checks, IP analysis,
+  or behavioral patterns. Risk score exceeds threshold (>80).
+
+inputOrEventPayload: >
+  payment.succeeded Event Payload:
+  {
+    "event_id": "evt_1a2b3c4d",
+    "event_type": "payment.succeeded",
+    "api_version": "2024-01-01",
+    "created_at": "2024-01-15T14:30:00Z",
+    "data": {
+      "transaction_id": "txn_abc123",
+      "amount": 99.99,
+      "currency": "USD",
+      "customer_id": "cust_xyz789",
+      "customer_email": "customer@example.com",
+      "payment_method_id": "pm_def456",
+      "payment_method": {
+        "type": "card",
+        "last4": "4242",
+        "brand": "visa"
+      },
+      "merchant_id": "mch_ghi012",
+      "status": "completed",
+      "description": "Order #12345",
+      "metadata": {
+        "order_id": "12345",
+        "source": "web",
+        "customer_ip": "192.0.2.1"
+      },
+      "authorization_code": "ABC123",
+      "risk_score": 15,
+      "fee": 3.20
+    }
+  }
+  
+  payment.failed Event Payload:
+  {
+    "event_id": "evt_5e6f7g8h",
+    "event_type": "payment.failed",
+    "created_at": "2024-01-15T14:28:00Z",
+    "data": {
+      "transaction_id": "txn_xyz789",
+      "amount": 199.99,
+      "currency": "USD",
+      "customer_id": "cust_abc123",
+      "payment_method_id": "pm_qrs456",
+      "status": "failed",
+      "failure_code": "card_declined",
+      "failure_message": "Your card was declined",
+      "decline_code": "insufficient_funds"
+    }
+  }
+  
+  refund.processed Event Payload:
+  {
+    "event_id": "evt_9i0j1k2l",
+    "event_type": "refund.processed",
+    "created_at": "2024-01-16T10:05:00Z",
+    "data": {
+      "refund_id": "rfd_mno345",
+      "transaction_id": "txn_abc123",
+      "amount": 49.99,
+      "currency": "USD",
+      "status": "succeeded",
+      "reason": "requested_by_customer",
+      "customer_id": "cust_xyz789",
+      "customer_email": "customer@example.com",
+      "merchant_id": "mch_ghi012",
+      "estimated_arrival": "2024-01-19"
+    }
+  }
+  
+  fraud.alert Event Payload:
+  {
+    "event_id": "evt_3m4n5o6p",
+    "event_type": "fraud.alert",
+    "created_at": "2024-01-15T14:29:55Z",
+    "data": {
+      "transaction_id": "txn_tuv678",
+      "customer_id": "cust_wxy901",
+      "risk_score": 85,
+      "risk_level": "high",
+      "risk_factors": [
+        "velocity_check_failed",
+        "ip_mismatch",
+        "new_payment_method",
+        "suspicious_email_pattern"
+      ],
+      "recommended_action": "review",
+      "details": {
+        "transactions_last_hour": 15,
+        "customer_ip": "198.51.100.42",
+        "billing_ip": "203.0.113.7",
+        "ip_country": "US",
+        "billing_country": "RU"
+      }
+    }
+  }
+
+processingOrLogic: >
+  payment.succeeded Processing:
+  1. Validate event signature using HMAC-SHA256 to ensure authenticity
+  2. Check event_id against processed events cache (Redis, 24-hour TTL) for idempotency
+  3. If duplicate event_id found, return 200 OK without reprocessing
+  4. Acquire distributed lock on transaction_id to prevent concurrent processing
+  5. Verify transaction_id exists in database and matches expected status
+  6. Update order status to 'paid' in order management system
+  7. Trigger inventory reduction for purchased items (async queue)
+  8. Send confirmation email to customer with receipt (async)
+  9. Update customer lifetime value and transaction count metrics
+  10. Emit 'order.completed' event to event bus for downstream systems
+  11. Record event processing in audit log
+  12. Release distributed lock
+  13. Return HTTP 200 with acknowledgment
+  
+  payment.failed Processing:
+  1. Verify webhook signature
+  2. Check for duplicate event
+  3. Update transaction status to 'failed' in database
+  4. Log failure reason and decline code for analytics
+  5. Check if retry is appropriate based on failure_code:
+     - 'insufficient_funds': Schedule retry in 24 hours (if customer opted in)
+     - 'card_declined': Do not retry, notify customer
+     - 'expired_card': Prompt customer to update payment method
+  6. Send payment failure notification email to customer
+  7. Update order status to 'payment_failed'
+  8. Increment merchant's failed transaction counter
+  9. If fraud suspected, flag customer account for review
+  10. Return HTTP 200
+  
+  refund.processed Processing:
+  1. Verify webhook signature and check idempotency
+  2. Locate original transaction in database
+  3. Validate refund amount doesn't exceed (original - previous refunds)
+  4. Update transaction status:
+     - If full refund: Set status to 'refunded'
+     - If partial: Keep status as 'completed', add to refunds array
+  5. Update merchant balance (subtract refund + fee)
+  6. Send refund confirmation email to customer with timeline
+  7. Update inventory (return items to stock if applicable)
+  8. Record refund in financial reconciliation system
+  9. If refund due to dispute, update dispute status
+  10. Emit 'refund.completed' event for analytics
+  11. Return HTTP 200
+  
+  fraud.alert Processing:
+  1. Verify signature and idempotency
+  2. If risk_score > 80 and recommended_action = 'block':
+     - Place transaction on hold
+     - Send alert to merchant dashboard
+     - Notify merchant via email/SMS
+  3. If recommended_action = 'review':
+     - Flag transaction for manual review
+     - Add to merchant's review queue
+     - Hold funds for 24 hours pending review
+  4. Update customer risk profile
+  5. Log fraud indicators for ML model training
+  6. If velocity check failed, rate-limit customer's future attempts
+  7. Check for related suspicious transactions (same IP, card, etc.)
+  8. Return HTTP 200
+
+outputOrEventResult: >
+  payment.succeeded Output Event:
+  Event emitted to internal event bus:
+  {
+    "event_type": "order.completed",
+    "order_id": "ord_12345",
+    "transaction_id": "txn_abc123",
+    "customer_id": "cust_xyz789",
+    "amount": 99.99,
+    "status": "completed",
+    "processed_at": "2024-01-15T14:30:05Z",
+    "confirmation_number": "CONF-2024-001",
+    "items": [
+      {"sku": "PROD-001", "quantity": 2, "price": 49.99}
+    ]
+  }
+  
+  Webhook Response:
+  HTTP 200 OK
+  {
+    "received": true,
+    "event_id": "evt_1a2b3c4d",
+    "processed_at": "2024-01-15T14:30:05Z"
+  }
+  
+  Side Effects:
+  - Order status updated in database
+  - Inventory reduced by 2 units for PROD-001
+  - Customer email queued: "Payment Successful - Order #12345"
+  - Customer lifetime_value increased by $99.99
+  - Merchant balance increased by $96.79 (after fees)
+  
+  ---
+  
+  payment.failed Output:
+  Database updates:
+  - Transaction status: 'failed'
+  - Failure logged with decline_code
+  
+  Customer notification:
+  Email Subject: "Payment Failed - Action Required"
+  Body: "Your payment of $199.99 was declined. Reason: Insufficient funds.
+         Please update your payment method or try again later."
+  
+  Webhook Response:
+  HTTP 200 OK
+  {
+    "received": true,
+    "event_id": "evt_5e6f7g8h"
+  }
+  
+  ---
+  
+  refund.processed Output:
+  Database updates:
+  - Refund record created
+  - Transaction.refunds array updated
+  - Merchant balance reduced by $49.99
+  
+  Customer notification:
+  Email: "Refund Processed - $49.99"
+  Body: "Your refund of $49.99 has been processed and will appear in your account
+         within 5-10 business days."
+  
+  Event emitted:
+  {
+    "event_type": "refund.completed",
+    "refund_id": "rfd_mno345",
+    "amount": 49.99,
+    "status": "succeeded"
+  }
+  
+  Webhook Response:
+  HTTP 200 OK
+  {
+    "received": true,
+    "event_id": "evt_9i0j1k2l"
+  }
+  
+  ---
+  
+  fraud.alert Output:
+  Dashboard Alert Created:
+  - Alert ID: "alert_789"
+  - Severity: "HIGH"
+  - Status: "pending_review"
+  
+  Transaction Hold Applied:
+  - Transaction on hold for 24 hours
+  - Status: "under_review"
+  - Funds not settled to merchant
+  
+  Merchant Notification:
+  SMS: "FRAUD ALERT: Transaction txn_tuv678 flagged for review. Risk score: 85.
+        Login to dashboard to review."
+  Email: Detailed fraud report with risk factors
+  
+  Customer Action:
+  - Transaction temporarily on hold
+  - Customer receives: "Your payment is being verified. You'll receive confirmation shortly."
+  
+  Webhook Response:
+  HTTP 200 OK
+  {
+    "received": true,
+    "event_id": "evt_3m4n5o6p",
+    "action_taken": "transaction_held_for_review"
+  }

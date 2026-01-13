@@ -1,0 +1,171 @@
+---
+aid: apis-json-example-001
+type: Index
+name: Payment Processing API Collection
+description: >-
+  A comprehensive collection of payment processing APIs including transactions,
+  subscriptions, and webhooks for enterprise customers.
+url: https://api.example.com/apis.json
+image: https://api.example.com/images/logo.png
+created: '2024-01-15'
+modified: '2026-01-12'
+specificationVersion: '0.18'
+apis:
+  - aid: payment-api-v2
+    name: Payment API
+    description: >-
+      Core payment processing API supporting credit cards, digital wallets, and
+      bank transfers with PCI compliance.
+    image: https://api.example.com/images/payment-api.png
+    baseURL: https://api.example.com/v2
+    humanURL: https://developer.example.com/payment-api
+    tags:
+      - payments
+      - transactions
+      - fintech
+      - pci-compliant
+    properties:
+      - name: OpenAPI Specification
+        type: OpenAPI
+        mediaType: application/json
+        url: https://api.example.com/specs/payment-api-openapi.json
+      - name: API Documentation
+        type: Documentation
+        mediaType: text/html
+        url: https://developer.example.com/docs/payment-api
+      - name: Getting Started Guide
+        type: GettingStarted
+        mediaType: text/html
+        url: https://developer.example.com/getting-started
+      - name: Authentication Guide
+        type: Authentication
+        mediaType: text/html
+        url: https://developer.example.com/authentication
+      - name: Postman Collection
+        type: PostmanCollection
+        mediaType: application/json
+        url: https://api.example.com/postman/payment-collection.json
+      - name: Terms of Service
+        type: TermsOfService
+        mediaType: text/html
+        url: https://example.com/terms
+      - name: Privacy Policy
+        type: PrivacyPolicy
+        mediaType: text/html
+        url: https://example.com/privacy
+      - name: Service Level Agreement
+        type: ServiceLevelAgreement
+        mediaType: application/pdf
+        url: https://example.com/sla.pdf
+      - name: API Status Page
+        type: StatusPage
+        mediaType: text/html
+        url: https://status.example.com
+      - name: Pricing Information
+        type: Pricing
+        mediaType: text/html
+        url: https://example.com/pricing
+      - name: Rate Limits
+        type: RateLimits
+        mediaType: text/html
+        url: https://developer.example.com/rate-limits
+      - name: Developer Blog
+        type: Blog
+        mediaType: text/html
+        url: https://blog.example.com/developers
+      - name: Support Portal
+        type: Support
+        mediaType: text/html
+        url: https://support.example.com
+      - name: API Changelog
+        type: ChangeLog
+        mediaType: text/html
+        url: https://developer.example.com/changelog
+      - name: Product Roadmap
+        type: RoadMap
+        mediaType: text/html
+        url: https://example.com/roadmap
+      - name: SDKs and Libraries
+        type: SDKs
+        mediaType: text/html
+        url: https://developer.example.com/sdks
+      - name: Webhooks Documentation
+        type: Webhooks
+        mediaType: text/html
+        url: https://developer.example.com/webhooks
+    contact:
+      - FN: API Support Team
+        email: api-support@example.com
+        organizationName: Example Payment Corp
+        adr: 123 Tech Street, San Francisco, CA 94105
+        tel: +1-555-0123
+        X-twitter: exampleapi
+        X-github: example-payments
+        url: https://developer.example.com/contact
+    meta:
+      - key: version
+        value: 2.1.0
+      - key: stability
+        value: stable
+      - key: last-updated
+        value: '2026-01-12'
+  - aid: subscription-api-v1
+    name: Subscription Management API
+    description: >-
+      Manage recurring subscriptions, billing cycles, and customer payment
+      methods.
+    image: https://api.example.com/images/subscription-api.png
+    baseURL: https://api.example.com/subscriptions/v1
+    humanURL: https://developer.example.com/subscription-api
+    tags:
+      - subscriptions
+      - recurring-billing
+      - saas
+    properties:
+      - name: OpenAPI Specification
+        type: OpenAPI
+        mediaType: application/yaml
+        url: https://api.example.com/specs/subscription-api-openapi.yaml
+      - name: API Documentation
+        type: Documentation
+        mediaType: text/html
+        url: https://developer.example.com/docs/subscription-api
+      - name: GraphQL Schema
+        type: GraphQLSchema
+        mediaType: application/graphql
+        url: https://api.example.com/graphql/schema
+    contact:
+      - FN: Subscription Team
+        email: subscriptions@example.com
+        url: https://developer.example.com/subscription-support
+    meta:
+      - key: version
+        value: 1.5.2
+maintainers:
+  - FN: Jane Developer
+    email: jane.developer@example.com
+    organizationName: Example Payment Corp
+    X-twitter: janedev
+    X-github: janedev
+    photo: https://example.com/team/jane.jpg
+    url: https://developer.example.com/team/jane
+  - FN: API Team
+    email: api-team@example.com
+    organizationName: Example Payment Corp
+tags:
+  - payments
+  - fintech
+  - subscriptions
+  - enterprise
+include:
+  - name: Partner APIs
+    url: https://partners.example.com/apis.json
+overlays:
+  - name: Regional Customizations
+    url: https://api.example.com/overlays/regional.json
+network:
+  - name: Payment Network Directory
+    url: https://network.payments.org/apis.json
+X-custom-property:
+  internal-id: '12345'
+  department: Engineering

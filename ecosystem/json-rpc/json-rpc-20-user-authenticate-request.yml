@@ -1,0 +1,8 @@
+jsonrpc: '2.0'
+method: user.authenticate
+params:
+  username: alice@example.com
+  password: securePassword123
+  deviceId: device-12345
+  remember: true
+id: auth-req-550e8400

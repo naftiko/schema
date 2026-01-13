@@ -1,0 +1,418 @@
+canvasType: restCanvas
+
+apiResources: >
+  /transactions - Payment transaction records
+  /customers - Customer profiles and data
+  /payment-methods - Stored payment instruments
+  /refunds - Refund records
+  /disputes - Chargeback and dispute records
+  /merchants - Merchant accounts
+  /webhooks - Webhook endpoint configurations
+  /reports - Financial and analytics reports
+  /settlements - Batch fund transfers to merchants
+  /balance - Merchant balance information
+
+apiResourceModel: >
+  Transaction Resource:
+  {
+    id: "txn_1a2b3c4d",
+    object: "transaction",
+    amount: 99.99,
+    currency: "USD",
+    status: "completed",
+    description: "Order #12345",
+    customer_id: "cust_abc123",
+    payment_method_id: "pm_xyz789",
+    merchant_id: "mch_def456",
+    created_at: "2024-01-15T14:30:00Z",
+    updated_at: "2024-01-15T14:30:05Z",
+    captured_at: "2024-01-15T14:30:05Z",
+    metadata: {
+      order_id: "12345",
+      source: "web",
+      customer_ip: "192.0.2.1"
+    },
+    refunds: {
+      object: "list",
+      data: [],
+      total_count: 0
+    },
+    risk_score: 15,
+    fee: 3.20
+  }
+  
+  Customer Resource:
+  {
+    id: "cust_abc123",
+    object: "customer",
+    email: "john.doe@example.com",
+    name: "John Doe",
+    phone: "+1-555-123-4567",
+    address: {
+      line1: "123 Main St",
+      city: "San Francisco",
+      state: "CA",
+      postal_code: "94105",
+      country: "US"
+    },
+    created_at: "2024-01-10T09:00:00Z",
+    metadata: {
+      internal_id: "USER_12345"
+    },
+    payment_methods: {
+      object: "list",
+      data: [
+        {
+          id: "pm_xyz789",
+          type: "card",
+          last4: "4242"
+        }
+      ],
+      total_count: 1
+    }
+  }
+  
+  PaymentMethod Resource:
+  {
+    id: "pm_xyz789",
+    object: "payment_method",
+    type: "card",
+    card: {
+      brand: "visa",
+      last4: "4242",
+      exp_month: 12,
+      exp_year: 2025,
+      fingerprint: "fp_1a2b3c4d",
+      funding: "credit"
+    },
+    customer_id: "cust_abc123",
+    is_active: true,
+    created_at: "2024-01-10T09:15:00Z",
+    billing_details: {
+      name: "John Doe",
+      email: "john.doe@example.com"
+    }
+  }
+  
+  Refund Resource:
+  {
+    id: "rfd_ghi012",
+    object: "refund",
+    amount: 49.99,
+    currency: "USD",
+    status: "succeeded",
+    reason: "requested_by_customer",
+    transaction_id: "txn_1a2b3c4d",
+    created_at: "2024-01-16T10:00:00Z",
+    metadata: {
+      support_ticket: "TKT-9876"
+    }
+  }
+
+apiVerbs: >
+  GET - Retrieve a resource or list of resources
+    Used for: Fetching transaction details, customer profiles, payment methods, reports
+    Idempotent: Yes
+    Cacheable: Yes
+    Safe: Yes (no side effects)
+  
+  POST - Create a new resource or trigger an action
+    Used for: Creating transactions, customers, payment methods; capturing payments, processing refunds
+    Idempotent: With idempotency key
+    Cacheable: No
+    Safe: No (has side effects)
+  
+  PATCH - Partially update a resource
+    Used for: Updating customer information, transaction metadata, webhook settings
+    Idempotent: Yes
+    Cacheable: No
+    Safe: No (modifies resource)
+  
+  PUT - Replace entire resource (rarely used)
+    Used for: Complete replacement of customer profile or configuration
+    Idempotent: Yes
+    Cacheable: No
+    Safe: No (replaces resource)
+  
+  DELETE - Remove a resource
+    Used for: Deleting payment methods, webhooks, canceling subscriptions
+    Idempotent: Yes
+    Cacheable: No
+    Safe: No (removes resource)
+
+apiVerbExample: >
+  ===== GET Examples =====
+  
+  GET /v2/transactions/txn_1a2b3c4d
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+    Content-Type: application/json
+  
+  Response: 200 OK
+  {
+    id: "txn_1a2b3c4d",
+    amount: 99.99,
+    currency: "USD",
+    status: "completed",
+    customer_id: "cust_abc123",
+    created_at: "2024-01-15T14:30:00Z"
+  }
+  
+  ---
+  
+  GET /v2/transactions?status=completed&limit=10
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+  
+  Response: 200 OK
+  {
+    object: "list",
+    data: [
+      { id: "txn_1", amount: 99.99, status: "completed" },
+      { id: "txn_2", amount: 149.50, status: "completed" }
+    ],
+    has_more: true,
+    total_count: 156
+  }
+  
+  ---
+  
+  GET /v2/customers/cust_nonexistent
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+  
+  Response: 404 Not Found
+  {
+    error: {
+      type: "not_found",
+      message: "Customer cust_nonexistent not found",
+      code: "resource_not_found"
+    }
+  }
+  
+  ===== POST Examples =====
+  
+  POST /v2/transactions
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+    Content-Type: application/json
+    Idempotency-Key: key_unique123
+  Body:
+  {
+    amount: 99.99,
+    currency: "USD",
+    customer_id: "cust_abc123",
+    payment_method_id: "pm_xyz789",
+    description: "Order #12345",
+    metadata: {
+      order_id: "12345"
+    }
+  }
+  
+  Response: 201 Created
+  {
+    id: "txn_new789",
+    status: "pending",
+    amount: 99.99,
+    currency: "USD",
+    created_at: "2024-01-15T14:30:00Z"
+  }
+  
+  ---
+  
+  POST /v2/transactions/txn_1a2b3c4d/capture
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+    Content-Type: application/json
+  Body:
+  {
+    amount: 99.99
+  }
+  
+  Response: 200 OK
+  {
+    id: "txn_1a2b3c4d",
+    status: "captured",
+    amount: 99.99,
+    captured_at: "2024-01-15T14:35:00Z"
+  }
+  
+  ---
+  
+  POST /v2/transactions
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+    Content-Type: application/json
+  Body:
+  {
+    amount: -50.00,
+    currency: "USD"
+  }
+  
+  Response: 400 Bad Request
+  {
+    error: {
+      type: "invalid_request",
+      message: "Amount must be positive",
+      param: "amount",
+      code: "invalid_amount"
+    }
+  }
+  
+  ===== PATCH Examples =====
+  
+  PATCH /v2/transactions/txn_1a2b3c4d
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+    Content-Type: application/json
+  Body:
+  {
+    metadata: {
+      order_id: "12345",
+      shipped: true,
+      tracking_number: "1Z999AA1"
+    }
+  }
+  
+  Response: 200 OK
+  {
+    id: "txn_1a2b3c4d",
+    metadata: {
+      order_id: "12345",
+      shipped: true,
+      tracking_number: "1Z999AA1"
+    },
+    updated_at: "2024-01-16T11:00:00Z"
+  }
+  
+  ---
+  
+  PATCH /v2/customers/cust_abc123
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+    Content-Type: application/json
+  Body:
+  {
+    email: "john.new@example.com",
+    phone: "+1-555-987-6543"
+  }
+  
+  Response: 200 OK
+  {
+    id: "cust_abc123",
+    email: "john.new@example.com",
+    phone: "+1-555-987-6543",
+    updated_at: "2024-01-16T12:00:00Z"
+  }
+  
+  ===== PUT Examples =====
+  
+  PUT /v2/customers/cust_abc123
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+    Content-Type: application/json
+  Body:
+  {
+    email: "john.doe@example.com",
+    name: "John Doe",
+    phone: "+1-555-123-4567",
+    address: {
+      line1: "456 Oak Ave",
+      city: "Seattle",
+      state: "WA",
+      postal_code: "98101",
+      country: "US"
+    }
+  }
+  
+  Response: 200 OK
+  {
+    id: "cust_abc123",
+    email: "john.doe@example.com",
+    name: "John Doe",
+    address: {
+      line1: "456 Oak Ave",
+      city: "Seattle",
+      state: "WA",
+      postal_code: "98101",
+      country: "US"
+    },
+    updated_at: "2024-01-16T13:00:00Z"
+  }
+  
+  ===== DELETE Examples =====
+  
+  DELETE /v2/payment-methods/pm_xyz789
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+  
+  Response: 204 No Content
+  (Empty body)
+  
+  ---
+  
+  DELETE /v2/payment-methods/pm_in_use
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+  
+  Response: 409 Conflict
+  {
+    error: {
+      type: "conflict",
+      message: "Cannot delete payment method with pending transactions",
+      code: "resource_in_use"
+    }
+  }
+  
+  ---
+  
+  DELETE /v2/customers/cust_abc123
+  Headers:
+    Authorization: Bearer sk_live_abc123xyz789
+  
+  Response: 204 No Content
+  (Customer soft-deleted, payment methods removed, transaction history preserved)
+  
+  ===== Error Response Examples =====
+  
+  401 Unauthorized (Invalid API Key):
+  {
+    error: {
+      type: "authentication_error",
+      message: "Invalid API key provided",
+      code: "invalid_api_key"
+    }
+  }
+  
+  403 Forbidden (Insufficient Permissions):
+  {
+    error: {
+      type: "permission_error",
+      message: "You do not have permission to access this resource",
+      code: "insufficient_permissions"
+    }
+  }
+  
+  429 Too Many Requests (Rate Limit):
+  {
+    error: {
+      type: "rate_limit_error",
+      message: "Rate limit exceeded. Try again in 60 seconds",
+      code: "rate_limit_exceeded"
+    }
+  }
+  Headers:
+    X-RateLimit-Limit: 1000
+    X-RateLimit-Remaining: 0
+    X-RateLimit-Reset: 1705334400
+    Retry-After: 60
+  
+  500 Internal Server Error:
+  {
+    error: {
+      type: "api_error",
+      message: "An unexpected error occurred. Please try again",
+      code: "internal_error",
+      request_id: "req_abc123xyz"
+    }
+  }

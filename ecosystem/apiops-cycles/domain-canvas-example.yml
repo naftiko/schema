@@ -1,0 +1,173 @@
+canvasType: domainCanvas
+
+selectedCustomerJourneySteps: >
+  From Customer Journey Canvas steps:
+  - Step 6: Integrate API (payment authorization flows)
+  - Step 7: Test transactions (transaction processing)
+  - Step 8: Go live (production payment processing)
+  - Ongoing: Refund handling, customer notifications, payment reconciliation
+
+coreEntitiesAndBusinessMeaning: >
+  Transaction: Represents a financial exchange between a customer and merchant. Core entity
+  tracking the lifecycle of each payment from authorization through settlement. Business critical
+  for financial accuracy, reporting, and compliance.
+  
+  Customer: Individual or organization making payments through the platform. Represents the payer
+  in the transaction relationship. Important for payment method management, fraud detection, and
+  customer analytics.
+  
+  PaymentMethod: Stored payment instrument (credit card, bank account, digital wallet). Enables
+  repeat purchases without re-entering payment details. Critical for user experience and
+  tokenization security.
+  
+  Merchant: Business or individual accepting payments. Account holder who receives funds from
+  transactions. Central to platform operations, settlements, and fee calculations.
+  
+  Refund: Return of funds to customer, either full or partial. Represents reversal of original
+  transaction. Important for customer satisfaction, dispute resolution, and financial reconciliation.
+  
+  Settlement: Batch transfer of funds from platform to merchant. Aggregates multiple transactions
+  for efficient fund distribution. Critical for merchant cash flow and platform financial operations.
+  
+  Dispute: Customer-initiated challenge to a transaction (chargeback). Represents potential
+  transaction reversal with evidence requirements. Important for fraud management and merchant
+  protection.
+
+attributesAndBusinessImportance: >
+  Transaction:
+  - id (UUID, immutable): Unique identifier for tracking and reconciliation
+  - amount (Decimal, required): Critical for financial accuracy, must match authorization
+  - currency (ISO 4217, required): Essential for multi-currency support and settlement
+  - status (Enum: pending/authorized/completed/failed/refunded): Tracks payment lifecycle
+  - created_at (Timestamp, immutable): Audit trail and reporting
+  - customer_id (Foreign Key, required): Links to customer for relationship tracking
+  - payment_method_id (Foreign Key, required): References payment instrument used
+  - merchant_id (Foreign Key, required): Identifies receiving party
+  - metadata (JSON, optional): Flexible storage for merchant-specific data
+  
+  Customer:
+  - id (UUID, immutable): Unique customer identifier
+  - email (String, required, unique): Primary communication channel
+  - name (String, required): Display name for receipts and communications
+  - created_at (Timestamp): Customer lifetime tracking
+  - risk_score (Integer 0-100): Fraud detection indicator
+  
+  PaymentMethod:
+  - id (UUID, immutable): Unique payment method identifier
+  - type (Enum: card/ach/wallet): Payment instrument type
+  - last4 (String, required): Security and identification (last 4 digits)
+  - exp_month (Integer 1-12): Validity checking for cards
+  - exp_year (Integer): Validity checking for cards
+  - brand (String): Card network (Visa, Mastercard, etc.)
+  - is_active (Boolean): Controls whether method can be used
+  - customer_id (Foreign Key, required): Ownership relationship
+
+relationshipsBetweenEntities: >
+  Transaction -> Customer: Many-to-One (required)
+  - Each transaction belongs to exactly one customer
+  - Cascade behavior: Restrict delete (cannot delete customer with transactions)
+  
+  Transaction -> PaymentMethod: Many-to-One (required)
+  - Each transaction uses exactly one payment method
+  - Cascade behavior: Restrict delete (cannot delete payment method with transactions)
+  
+  Transaction -> Merchant: Many-to-One (required)
+  - Each transaction belongs to exactly one merchant
+  - Cascade behavior: Restrict delete (cannot delete merchant with transactions)
+  
+  Customer -> PaymentMethod: One-to-Many
+  - Customer can have multiple stored payment methods
+  - Cascade behavior: Delete payment methods when customer deleted (with consent)
+  
+  Merchant -> Transaction: One-to-Many
+  - Merchant can have unlimited transactions
+  - Cascade behavior: Restrict delete
+  
+  Transaction -> Refund: One-to-Many
+  - Transaction can have multiple partial refunds
+  - Cascade behavior: Restrict delete (maintain refund history)
+  
+  Transaction -> Dispute: One-to-One (optional)
+  - Transaction may have zero or one dispute
+  - Cascade behavior: Restrict delete (maintain dispute history)
+  
+  Merchant -> Settlement: One-to-Many
+  - Merchant receives periodic settlements
+  - Settlement aggregates multiple transactions
+  - Cascade behavior: Restrict delete
+
+businessComplianceAndIntegrityRules: >
+  Transaction Rules:
+  - Amount must be positive and greater than $0.50 (minimum transaction)
+  - Amount cannot exceed $999,999.99 per transaction (fraud prevention)
+  - Currency must match merchant's accepted currencies list
+  - Authorized amount must match captured amount (or be less for partial capture)
+  - Transaction must be idempotent (same idempotency key returns same result)
+  - Cannot modify transaction after 'completed' status (immutability for audit)
+  
+  Refund Rules:
+  - Total refunds cannot exceed original transaction amount
+  - Refund must be issued within 180 days of original transaction
+  - Partial refunds must maintain audit trail of all refund attempts
+  - Refund requires active merchant account
+  - Cannot refund a transaction that's already been fully refunded
+  
+  PaymentMethod Rules:
+  - Card must not be expired (exp_month/exp_year validation)
+  - Payment method must pass Luhn algorithm check for card numbers
+  - Customer can have maximum 10 active payment methods
+  - Cannot delete payment method with pending transactions
+  - Must verify payment method before first use (micro-transaction or 3DS)
+  
+  PCI-DSS Compliance:
+  - Card numbers never stored in plain text (tokenization required)
+  - CVV never stored after authorization
+  - All card data encrypted in transit (TLS 1.3+) and at rest (AES-256)
+  - Access to card data logged and monitored
+  
+  GDPR Compliance:
+  - Customer can request all data (data portability)
+  - Customer can request data deletion (right to be forgotten)
+  - Consent required for storing payment methods
+  - Transaction history maintained for 7 years minimum (financial regulations)
+
+securityAndPrivacyConsiderations: >
+  Data Encryption:
+  - All customer PII encrypted at rest using AES-256-GCM
+  - All API communication over TLS 1.3 with certificate pinning
+  - Database encryption keys rotated every 90 days
+  - Field-level encryption for sensitive data (email, name, address)
+  
+  Tokenization:
+  - Card numbers immediately tokenized upon receipt
+  - Tokens stored in isolated token vault with separate database
+  - Original card numbers never stored in application database
+  - Token format: tok_[20 random characters]
+  
+  Access Control:
+  - Role-based access control (RBAC) for all API operations
+  - Merchants can only access their own transactions and customers
+  - Platform administrators require two-factor authentication
+  - API keys tied to specific merchant accounts with scoped permissions
+  - Payment method data restricted to authorized merchants only
+  
+  Audit Logging:
+  - All customer data access logged with timestamp, user, and purpose
+  - Transaction modifications logged with before/after snapshots
+  - Failed authentication attempts logged and monitored
+  - Logs retained for 13 months, then archived for 7 years
+  
+  Data Retention:
+  - Active customer data retained indefinitely while account active
+  - Transaction data retained for 7 years (regulatory requirement)
+  - Customer can request data deletion (GDPR right to be forgotten)
+  - Deleted customer data anonymized (customer_id: 'DELETED_[hash]')
+  - Payment method data deleted 1 year after last use (unless customer objects)
+  
+  Privacy Controls:
+  - Customer can view all stored data via API endpoint
+  - Customer can download transaction history in CSV/JSON format
+  - Customer can opt-out of marketing communications
+  - Minimal data collection principle applied (only collect what's needed)
+  - Third-party sharing requires explicit consent
+  - Privacy policy updates trigger customer notification

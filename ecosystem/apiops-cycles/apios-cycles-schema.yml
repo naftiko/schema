@@ -1,0 +1,840 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://apiopscycles.com/schemas/canvases.json
+title: APIOps Cycles Canvases
+description: Comprehensive schema for all APIOps Cycles canvas templates
+anyOf:
+  - $ref: '#/$defs/customerJourneyCanvas'
+  - $ref: '#/$defs/apiBusinessModelCanvas'
+  - $ref: '#/$defs/apiValuePropositionCanvas'
+  - $ref: '#/$defs/businessImpactCanvas'
+  - $ref: '#/$defs/capacityCanvas'
+  - $ref: '#/$defs/eventCanvas'
+  - $ref: '#/$defs/graphqlCanvas'
+  - $ref: '#/$defs/interactionCanvas'
+  - $ref: '#/$defs/locationsCanvas'
+  - $ref: '#/$defs/restCanvas'
+  - $ref: '#/$defs/domainCanvas'
+$defs:
+  customerJourneyCanvas:
+    type: object
+    title: Customer Journey Canvas
+    description: >-
+      What is the customer or partner journey that the API is intended to
+      support? Describe a real-life customer or user journey — not the API usage
+      — to reveal pain points, goals, and context.
+    properties:
+      canvasType:
+        type: string
+        const: customerJourneyCanvas
+      persona:
+        type: string
+        description: Who is the typical customer experiencing this journey?
+        examples:
+          - >-
+            Small business owner seeking to integrate payment processing into
+            their e-commerce platform
+      customerDiscoversNeed:
+        type: string
+        description: How does the customer recognize their need or problem?
+        examples:
+          - >-
+            Customer realizes manual payment reconciliation is consuming 10+
+            hours per week and causing errors
+      customerNeedIsResolved:
+        type: string
+        description: How is the customer's need ultimately resolved?
+        examples:
+          - >-
+            Customer successfully integrates automated payment API, reducing
+            reconciliation time to minutes and eliminating manual errors
+      journeySteps:
+        type: string
+        description: What are the steps the customer takes in their journey?
+        examples:
+          - >-
+            1. Recognize payment inefficiency 2. Research API solutions 3.
+            Evaluate options 4. Sign up for service 5. Integrate API 6. Test
+            transactions 7. Go live
+      pains:
+        type: string
+        description: What are the customer's pain points or challenges?
+        examples:
+          - >-
+            Time-consuming manual processes, error-prone reconciliation, lack of
+            real-time payment status, difficult to scale operations
+      gains:
+        type: string
+        description: What are the customer's gains or benefits?
+        examples:
+          - >-
+            Automated payment processing, real-time transaction status, reduced
+            operational costs, scalable infrastructure, improved customer
+            experience
+      inputsAndOutputs:
+        type: string
+        description: What are the inputs and outputs at each step?
+        examples:
+          - >-
+            Step 3 Input: API documentation, pricing models, feature
+            comparisons. Output: Shortlist of 2-3 viable solutions
+      interactionAndProcessingRules:
+        type: string
+        description: What are the interaction and processing rules at each step?
+        examples:
+          - >-
+            Step 5: API key must be validated before any integration testing;
+            all test transactions use sandbox environment; production
+            credentials only issued after successful testing
+    required:
+      - canvasType
+  apiBusinessModelCanvas:
+    type: object
+    title: API Business Model Canvas
+    description: >-
+      How feasible and reusable will this API be? Do we have a business case
+      from a cost-benefit point of view? Summarize the value proposition of one
+      API from the API Value Proposition Canvas, then follow the numbered
+      sequence.
+    properties:
+      canvasType:
+        type: string
+        const: apiBusinessModelCanvas
+      apiValueProposition:
+        type: string
+        description: What value does the API offer to API consumers?
+        examples:
+          - >-
+            Enable developers to integrate real-time payment processing in under
+            30 minutes with 99.9% uptime, comprehensive documentation, and 24/7
+            support
+      apiConsumerSegments:
+        type: string
+        description: Who are the target audiences for the API?
+        examples:
+          - >-
+            E-commerce platforms, SaaS applications, mobile app developers,
+            marketplace operators, subscription-based businesses
+      developerRelations:
+        type: string
+        description: How does the API provider reach and support API consumers?
+        examples:
+          - >-
+            Developer portal with interactive documentation, technical blog,
+            GitHub code samples, Discord community, dedicated developer
+            advocates, quarterly webinars
+      channels:
+        type: string
+        description: Through which mechanisms do API consumers interact with the API?
+        examples:
+          - >-
+            RESTful HTTPS endpoints, WebSocket connections for real-time
+            updates, webhook callbacks for event notifications, sandbox
+            environment for testing
+      keyResources:
+        type: string
+        description: What unique strategic assets must the API provider acquire or build?
+        examples:
+          - >-
+            PCI-DSS compliant infrastructure, banking partnerships, fraud
+            detection algorithms, scalable cloud architecture, experienced
+            security team
+      keyActivities:
+        type: string
+        description: >-
+          What are the most important actions the API provider must take to
+          operate successfully?
+        examples:
+          - >-
+            Maintain infrastructure uptime, process transactions securely,
+            provide developer support, update documentation, monitor API
+            performance, ensure regulatory compliance
+      keyPartners:
+        type: string
+        description: Who are the key stakeholders involved?
+        examples:
+          - >-
+            Payment processors (Visa, Mastercard), banking institutions, cloud
+            infrastructure providers (AWS), security vendors, compliance
+            auditors, technology integrators
+      benefits:
+        type: string
+        description: >-
+          What are the significant benefits or revenue streams generated by the
+          API?
+        examples:
+          - >-
+            Transaction fees (2.9% + $0.30 per transaction), premium support
+            subscriptions ($299/month), enterprise licensing ($5000/month),
+            reduced operational costs for consumers
+      costs:
+        type: string
+        description: >-
+          What are the significant costs involved in building, deploying, and
+          operating the API?
+        examples:
+          - >-
+            Cloud infrastructure ($50K/month), payment processor fees, security
+            compliance ($100K annually), developer support team (5 FTEs), API
+            development and maintenance (10 FTEs)
+    required:
+      - canvasType
+  apiValuePropositionCanvas:
+    type: object
+    title: API Value Proposition Canvas
+    description: >-
+      Does this API address the jobs, pains, and gains of API consumers?
+      Describe the API consumer's perspective, starting with their tasks, then
+      their pains and gains, and finally the API's products and features.
+    properties:
+      canvasType:
+        type: string
+        const: apiValuePropositionCanvas
+      tasks:
+        type: string
+        description: What are the API consumers trying to achieve?
+        examples:
+          - >-
+            Process customer payments securely, reconcile transactions
+            automatically, handle refunds and chargebacks, comply with payment
+            regulations, provide payment status to customers
+      gainEnablingFeatures:
+        type: string
+        description: What features enable API consumers to achieve gains?
+        examples:
+          - >-
+            Instant transaction confirmation, automated reconciliation reports,
+            multi-currency support, fraud detection built-in, one-click refund
+            processing, detailed analytics dashboard
+      painRelievingFeatures:
+        type: string
+        description: What features help API consumers overcome pains?
+        examples:
+          - >-
+            Simple 3-line code integration, automatic PCI compliance, 24/7
+            monitoring and alerts, sandbox environment for testing,
+            comprehensive error handling with clear messages
+      apiProducts:
+        type: string
+        description: What API products and features address the tasks, pains, and gains?
+        examples:
+          - >-
+            Payment Processing API, Refund Management API, Transaction History
+            API, Webhook Event System, Analytics API, Customer Vault API for
+            storing payment methods
+    required:
+      - canvasType
+  businessImpactCanvas:
+    type: object
+    title: Business Impact Canvas
+    description: >-
+      What are the potential business impacts of API failure? Consider the
+      potential impact on availability, security, and data for each API.
+    properties:
+      canvasType:
+        type: string
+        const: businessImpactCanvas
+      availabilityRisks:
+        type: string
+        description: What are the potential risks to API availability?
+        examples:
+          - >-
+            DDoS attacks causing service disruption, cloud provider outages,
+            network infrastructure failures, database overload during peak
+            traffic, deployment failures during updates
+      mitigateAvailabilityRisks:
+        type: string
+        description: How can the API provider mitigate the availability risks?
+        examples:
+          - >-
+            Multi-region deployment with automatic failover, DDoS protection via
+            CDN, load balancing across availability zones, blue-green deployment
+            strategy, 99.9% SLA with status page
+      securityRisks:
+        type: string
+        description: What are the potential security risks associated with the API?
+        examples:
+          - >-
+            API key theft and unauthorized access, SQL injection attacks,
+            man-in-the-middle attacks, credential stuffing, insufficient rate
+            limiting enabling abuse, sensitive data exposure in logs
+      mitigateSecurityRisks:
+        type: string
+        description: How can the API provider mitigate the security risks?
+        examples:
+          - >-
+            OAuth 2.0 authentication with JWT tokens, TLS 1.3 encryption for all
+            traffic, API key rotation every 90 days, rate limiting (1000
+            req/hour per key), input validation and sanitization, regular
+            security audits
+      dataRisks:
+        type: string
+        description: What are the potential risks to data integrity or confidentiality?
+        examples:
+          - >-
+            Payment data breach exposing customer information, transaction data
+            corruption during processing, unauthorized access to customer
+            records, data loss during migration, compliance violations (GDPR,
+            PCI-DSS)
+      mitigateDataRisks:
+        type: string
+        description: How can the API provider mitigate the data risks?
+        examples:
+          - >-
+            End-to-end encryption for sensitive data, tokenization of payment
+            information, automated daily backups with 30-day retention,
+            role-based access control, data masking in non-production
+            environments, annual PCI-DSS certification
+    required:
+      - canvasType
+  capacityCanvas:
+    type: object
+    title: Capacity Canvas
+    description: >-
+      How much capacity is needed to support API consumption? Analyze the
+      current and future capacity requirements for each API.
+    properties:
+      canvasType:
+        type: string
+        const: capacityCanvas
+      currentBusinessVolumes:
+        type: string
+        description: What are the current business volumes and transaction rates?
+        examples:
+          - >-
+            500,000 API calls per day, 5,000 transactions per hour average, 50
+            requests per second baseline, 2TB data transfer per month, 10,000
+            active API consumers
+      futureConsumptionTrends:
+        type: string
+        description: What are the anticipated future consumption trends?
+        examples:
+          - >-
+            Expected 200% growth in next 12 months, seasonal peaks during
+            holidays (3x normal traffic), new enterprise clients adding 100K
+            transactions/day, geographic expansion into APAC market
+      peakLoadAndAvailabilityRequirements:
+        type: string
+        description: What are the peak load and availability requirements?
+        examples:
+          - >-
+            Must handle 500 requests per second during Black Friday, 99.9%
+            uptime SLA (43 minutes downtime per month), maximum response time
+            200ms at p95, support 50,000 concurrent connections
+      cachingStrategies:
+        type: string
+        description: What caching strategies can be used to optimize performance?
+        examples:
+          - >-
+            Redis cache for frequently accessed transaction data (5 min TTL),
+            CDN caching for static API documentation, database query result
+            caching for merchant profiles (1 hour TTL), API response caching for
+            read-only endpoints
+      rateLimitingStrategies:
+        type: string
+        description: What rate limiting strategies can be used to manage consumption?
+        examples:
+          - >-
+            Tiered limits: Free (100 req/hour), Basic (1,000 req/hour), Premium
+            (10,000 req/hour), Enterprise (unlimited), exponential backoff for
+            retry logic, 429 status codes with Retry-After headers
+      scalingStrategies:
+        type: string
+        description: What scaling strategies can be used to accommodate growth?
+        examples:
+          - >-
+            Horizontal auto-scaling based on CPU (>70% triggers scale-up),
+            Kubernetes cluster with 10-100 pod range, database read replicas for
+            query distribution, queue-based processing for async operations,
+            microservices architecture for independent scaling
+    required:
+      - canvasType
+  eventCanvas:
+    type: object
+    title: Event Canvas
+    description: >-
+      What events are relevant to the API, and how are they processed? Define
+      the events, their triggers, and the processing logic for each API.
+    properties:
+      canvasType:
+        type: string
+        const: eventCanvas
+      userTaskOrTrigger:
+        type: string
+        description: What user action or system event triggers this event operation?
+        examples:
+          - >-
+            Customer completes checkout and submits payment, payment processor
+            confirms transaction success, merchant initiates refund request,
+            fraud detection system flags suspicious activity
+      inputOrEventPayload:
+        type: string
+        description: >-
+          What data is included in the incoming event payload? Specify key
+          attributes.
+        examples:
+          - >-
+            { 'event_type': 'payment.succeeded', 'transaction_id': 'txn_123',
+            'amount': 99.99, 'currency': 'USD', 'customer_id': 'cust_456',
+            'timestamp': '2024-01-15T14:30:00Z', 'payment_method': 'card_789' }
+      processingOrLogic:
+        type: string
+        description: >-
+          Describe the backend processing logic, including validations,
+          transformations, or routing decisions.
+        examples:
+          - >-
+            Validate transaction_id exists, verify amount matches order total,
+            check for duplicate events using idempotency key, update order
+            status to 'paid', trigger inventory reduction, send confirmation
+            email to customer, emit 'order.completed' event
+      outputOrEventResult:
+        type: string
+        description: >-
+          What resulting event or acknowledgment is produced? Include attributes
+          of the output payload.
+        examples:
+          - >-
+            { 'event_type': 'order.completed', 'order_id': 'ord_789', 'status':
+            'completed', 'transaction_id': 'txn_123', 'processed_at':
+            '2024-01-15T14:30:05Z', 'confirmation_number': 'CONF-2024-001' } -
+            HTTP 200 response with event_id
+    required:
+      - canvasType
+  graphqlCanvas:
+    type: object
+    title: GraphQL Canvas
+    description: >-
+      How can the API be designed using GraphQL principles? Define the key
+      types, queries, mutations, and constraints for your GraphQL API.
+    properties:
+      canvasType:
+        type: string
+        const: graphqlCanvas
+      apiName:
+        type: string
+        description: What is the name of the GraphQL API or endpoint?
+        examples:
+          - Payment Platform GraphQL API v2
+      consumerGoals:
+        type: string
+        description: >-
+          What problems are API consumers trying to solve? What data do they
+          need?
+        examples:
+          - >-
+            Retrieve transaction history with customer and payment method
+            details in single query, fetch real-time payment status, access
+            nested order data without multiple API calls, reduce over-fetching
+            of data
+      keyTypes:
+        type: string
+        description: What are the core types exposed (e.g., User, Order, Product)?
+        examples:
+          - >-
+            Transaction, Customer, PaymentMethod, Merchant, Refund, Dispute,
+            Invoice, Subscription
+      relationships:
+        type: string
+        description: How do types relate to each other in nested queries?
+        examples:
+          - >-
+            Transaction has one Customer, one PaymentMethod, one Merchant;
+            Customer has many Transactions, many PaymentMethods; Merchant has
+            many Transactions, one or many Subscriptions
+      queries:
+        type: string
+        description: What common queries should be supported?
+        examples:
+          - >-
+            getTransaction(id: ID!), listTransactions(status: String, limit:
+            Int, after: String), getCustomer(id: ID!),
+            searchTransactions(filters: TransactionFilters),
+            getPaymentMethodsByCustomer(customerId: ID!)
+      mutations:
+        type: string
+        description: What operations will modify data (e.g., create, update, delete)?
+        examples:
+          - >-
+            createTransaction(input: TransactionInput!), updateTransaction(id:
+            ID!, input: TransactionUpdateInput!), processRefund(transactionId:
+            ID!, amount: Float!), deletePaymentMethod(id: ID!),
+            createCustomer(input: CustomerInput!)
+      subscriptions:
+        type: string
+        description: Are there any real-time updates or events consumers can subscribe to?
+        examples:
+          - >-
+            onTransactionStatusChange(merchantId: ID!),
+            onNewTransaction(customerId: ID!), onRefundProcessed, onDisputeFiled
+      authorizationRules:
+        type: string
+        description: Who can access which fields or types?
+        examples:
+          - >-
+            Merchants can only access their own transactions and customers;
+            Admin role can access all data; Customer role can only view their
+            own transaction history; sensitive fields like card numbers require
+            PCI_COMPLIANT permission
+      consumerConstraints:
+        type: string
+        description: Are there pagination, filtering, or rate-limiting constraints?
+        examples:
+          - >-
+            Cursor-based pagination with max 100 items per page, rate limit of
+            1000 requests per hour per API key, query depth limited to 5 levels,
+            query complexity score max 1000, filter by date range limited to 90
+            days
+      notesOrOpenQuestions:
+        type: string
+        description: Any pending decisions or integration considerations?
+        examples:
+          - >-
+            Need to decide on caching strategy for frequently accessed merchant
+            data, consider implementing DataLoader for N+1 query optimization,
+            evaluate GraphQL federation for microservices architecture, plan
+            migration path from REST to GraphQL
+    required:
+      - canvasType
+  interactionCanvas:
+    type: object
+    title: Interaction Canvas
+    description: >-
+      What are the different types of interactions supported by the API? Define
+      the CRUD, query-driven, command-driven, and event-driven interactions for
+      each API.
+    properties:
+      canvasType:
+        type: string
+        const: interactionCanvas
+      crudInteractions:
+        type: string
+        description: >-
+          What are the CRUD (Create, Read, Update, Delete) interactions
+          supported by the API?
+        examples:
+          - >-
+            Create: POST /transactions - create new payment transaction; Read:
+            GET /transactions/{id} - retrieve transaction details; Update: PATCH
+            /transactions/{id} - update transaction metadata; Delete: DELETE
+            /payment-methods/{id} - remove stored payment method
+      crudInputAndOutputModels:
+        type: string
+        description: What are the input and output models for the CRUD interactions?
+        examples:
+          - >-
+            Create Input: { amount, currency, customer_id, payment_method_id,
+            description } Output: { transaction_id, status, created_at, amount,
+            currency }; Read Output: { transaction_id, status, amount, currency,
+            customer, payment_method, created_at, updated_at }
+      crudProcessingAndValidation:
+        type: string
+        description: >-
+          What are the processing and validation rules for the CRUD
+          interactions?
+        examples:
+          - >-
+            Create: Validate amount > 0, currency is supported (USD, EUR, GBP),
+            customer_id exists, payment_method is active, check for duplicate
+            transactions; Update: Only metadata and description fields can be
+            modified, transaction must not be in 'processing' state
+      queryDrivenInteractions:
+        type: string
+        description: What are the query-driven interactions supported by the API?
+        examples:
+          - >-
+            GET
+            /transactions?status=completed&date_from=2024-01-01&date_to=2024-01-31&limit=50
+            - search transactions with filters; GET /customers/{id}/transactions
+            - get all transactions for specific customer; GET
+            /reports/daily-summary?date=2024-01-15 - retrieve aggregated
+            transaction data
+      queryDrivenInputAndOutputModels:
+        type: string
+        description: >-
+          What are the input and output models for the query-driven
+          interactions?
+        examples:
+          - >-
+            Search Input: { status, date_from, date_to, customer_id, min_amount,
+            max_amount, limit, offset } Output: { data: [transactions],
+            total_count, has_more, next_offset }; Report Output: { date,
+            total_volume, transaction_count, avg_amount, success_rate }
+      queryDrivenProcessingAndValidation:
+        type: string
+        description: >-
+          What are the processing and validation rules for the query-driven
+          interactions?
+        examples:
+          - >-
+            Date range cannot exceed 90 days, limit max 100 records, status must
+            be valid enum (pending, completed, failed, refunded), customer_id
+            must exist, amounts must be positive numbers, offset-based
+            pagination for result sets
+      commandDrivenInteractions:
+        type: string
+        description: What are the command-driven interactions supported by the API?
+        examples:
+          - >-
+            POST /transactions/{id}/capture - capture authorized payment; POST
+            /transactions/{id}/refund - process refund; POST
+            /transactions/{id}/cancel - cancel pending transaction; POST
+            /payment-methods/{id}/verify - verify payment method
+      commandDrivenInputAndOutputModels:
+        type: string
+        description: >-
+          What are the input and output models for the command-driven
+          interactions?
+        examples:
+          - >-
+            Capture Input: { amount?, description? } Output: { transaction_id,
+            status: 'captured', captured_at, amount }; Refund Input: { amount,
+            reason, refund_type: 'full'|'partial' } Output: { refund_id,
+            original_transaction_id, amount, status, created_at }
+      commandDrivenProcessingAndValidation:
+        type: string
+        description: >-
+          What are the processing and validation rules for the command-driven
+          interactions?
+        examples:
+          - >-
+            Capture: Transaction must be in 'authorized' status, capture amount
+            cannot exceed authorized amount, capture must occur within 7 days;
+            Refund: Transaction must be 'completed', refund amount cannot exceed
+            original amount minus previous refunds, reason is required
+      eventDrivenInteractions:
+        type: string
+        description: What are the event-driven interactions supported by the API?
+        examples:
+          - >-
+            Webhook: payment.succeeded - fired when payment completes; Webhook:
+            payment.failed - fired when payment fails; Webhook: refund.processed
+            - fired when refund completes; Webhook: dispute.created - fired when
+            customer files dispute
+      eventDrivenInputAndOutputModels:
+        type: string
+        description: >-
+          What are the input and output models for the event-driven
+          interactions?
+        examples:
+          - >-
+            Webhook Payload: { event_id, event_type: 'payment.succeeded',
+            created_at, data: { transaction_id, amount, currency, customer_id,
+            status } }; Webhook Response: HTTP 200 with { received: true }
+            acknowledgment
+      eventDrivenProcessingAndValidation:
+        type: string
+        description: >-
+          What are the processing and validation rules for the event-driven
+          interactions?
+        examples:
+          - >-
+            Verify webhook signature using HMAC-SHA256, implement idempotency
+            using event_id to prevent duplicate processing, retry failed
+            webhooks with exponential backoff (max 3 attempts), timeout after 30
+            seconds, return 2xx status code within 5 seconds
+    required:
+      - canvasType
+  locationsCanvas:
+    type: object
+    title: Locations Canvas
+    description: >-
+      What are the relevant locations and their characteristics? Define the
+      locations, their distances, and their endpoints for each API.
+    properties:
+      canvasType:
+        type: string
+        const: locationsCanvas
+      locationGroups:
+        type: string
+        description: What are the relevant location groups?
+        examples:
+          - >-
+            North America, Europe, Asia-Pacific, Production Environments, Edge
+            Locations
+      locationGroupCharacteristics:
+        type: string
+        description: What are the characteristics of the location groups?
+        examples:
+          - >-
+            North America: High transaction volume, 24/7 peak times, primary
+            merchant base, USD currency dominant, strict data residency
+            requirements; Europe: GDPR compliance required, multi-currency
+            support (EUR, GBP, CHF), varied peak times across time zones
+      locations:
+        type: string
+        description: What are the relevant locations within each group?
+        examples:
+          - >-
+            North America: us-east-1 (Virginia), us-west-2 (Oregon),
+            ca-central-1 (Montreal); Europe: eu-west-1 (Ireland), eu-central-1
+            (Frankfurt), eu-west-2 (London); Asia-Pacific: ap-southeast-1
+            (Singapore), ap-northeast-1 (Tokyo)
+      locationCharacteristics:
+        type: string
+        description: What are the characteristics of the locations?
+        examples:
+          - >-
+            us-east-1: Primary region, 50ms avg latency to East Coast, 99.99%
+            availability, 10Gbps bandwidth, supports all payment processors;
+            eu-west-1: GDPR-compliant data center, 30ms latency to UK, PCI-DSS
+            Level 1 certified, SEPA payment support
+      locationDistances:
+        type: string
+        description: What are the distances between the locations?
+        examples:
+          - >-
+            us-east-1 to us-west-2: 4,500km, 65ms latency; us-east-1 to
+            eu-west-1: 5,200km, 80ms latency; eu-west-1 to ap-southeast-1:
+            10,800km, 180ms latency
+      locationDistanceCharacteristics:
+        type: string
+        description: What are the characteristics of the location distances?
+        examples:
+          - >-
+            Cross-region replication latency: <100ms for NA-EU, <200ms for
+            EU-APAC; Database sync time: 2-5 seconds; CDN edge to origin:
+            10-50ms; Acceptable failover time: <30 seconds
+      locationEndpoints:
+        type: string
+        description: What are the endpoints associated with the locations?
+        examples:
+          - >-
+            us-east-1: https://api-us-east.payment.com; eu-west-1:
+            https://api-eu-west.payment.com; Global (geo-routed):
+            https://api.payment.com; Sandbox: https://sandbox-api.payment.com
+      locationEndpointCharacteristics:
+        type: string
+        description: What are the characteristics of the location endpoints?
+        examples:
+          - >-
+            Regional endpoints: Direct connection to specific data center,
+            lowest latency for regional customers, manual endpoint selection;
+            Global endpoint: Automatic geo-routing via DNS, intelligent traffic
+            distribution, single integration point, 99.99% availability SLA
+    required:
+      - canvasType
+  restCanvas:
+    type: object
+    title: REST Canvas
+    description: >-
+      How can the API be designed using RESTful principles? Define the API
+      resources, verbs, and example requests and responses.
+    properties:
+      canvasType:
+        type: string
+        const: restCanvas
+      apiResources:
+        type: string
+        description: What are the key resources exposed by the API?
+        examples:
+          - >-
+            /transactions, /customers, /payment-methods, /refunds, /disputes,
+            /merchants, /webhooks, /reports
+      apiResourceModel:
+        type: string
+        description: What is the structure of the API resource model?
+        examples:
+          - >-
+            Transaction: { id, amount, currency, status, customer_id,
+            payment_method_id, created_at, updated_at, metadata }; Customer: {
+            id, email, name, phone, address, created_at, payment_methods[] };
+            PaymentMethod: { id, type, last4, exp_month, exp_year, brand,
+            customer_id }
+      apiVerbs:
+        type: string
+        description: What HTTP verbs are used to interact with the API resources?
+        examples:
+          - >-
+            GET - Retrieve resource(s); POST - Create new resource or execute
+            action; PATCH - Partially update resource; PUT - Replace entire
+            resource; DELETE - Remove resource
+      apiVerbExample:
+        type: string
+        description: Provide an example of an API request and response for each verb.
+        examples:
+          - >-
+            GET /transactions/txn_123: Response 200 { id: 'txn_123', amount:
+            99.99, status: 'completed' }; POST /transactions: Request { amount:
+            99.99, currency: 'USD', customer_id: 'cust_456' } Response 201 { id:
+            'txn_789', status: 'pending' }; PATCH /transactions/txn_123: Request
+            { metadata: { order_id: 'ord_999' } } Response 200 { id: 'txn_123',
+            metadata: { order_id: 'ord_999' } }; DELETE /payment-methods/pm_456:
+            Response 204 (no content)
+    required:
+      - canvasType
+  domainCanvas:
+    type: object
+    title: Domain Canvas
+    description: >-
+      What are the core entities and business rules related to the API? Define
+      the domain model for each API, including entities, attributes, and
+      relationships.
+    properties:
+      canvasType:
+        type: string
+        const: domainCanvas
+      selectedCustomerJourneySteps:
+        type: string
+        description: Which customer journey steps are relevant to this domain?
+        examples:
+          - >-
+            Payment authorization, transaction processing, refund handling,
+            customer notification, payment reconciliation
+      coreEntitiesAndBusinessMeaning:
+        type: string
+        description: What are the core entities and their business meaning?
+        examples:
+          - >-
+            Transaction: Represents a financial exchange between customer and
+            merchant; Customer: Individual or organization making payments;
+            PaymentMethod: Stored payment instrument (card, bank account);
+            Merchant: Business accepting payments; Refund: Return of funds to
+            customer
+      attributesAndBusinessImportance:
+        type: string
+        description: >-
+          What are the key attributes of each entity and their business
+          importance?
+        examples:
+          - >-
+            Transaction.amount (critical for financial accuracy),
+            Transaction.status (tracks payment lifecycle),
+            Transaction.created_at (audit trail), Customer.email
+            (communication), PaymentMethod.last4 (security & identification),
+            PaymentMethod.exp_date (validity checking)
+      relationshipsBetweenEntities:
+        type: string
+        description: What are the relationships between the entities?
+        examples:
+          - >-
+            Transaction belongs to one Customer (many-to-one), Transaction uses
+            one PaymentMethod (many-to-one), Customer has many PaymentMethods
+            (one-to-many), Merchant has many Transactions (one-to-many),
+            Transaction can have multiple Refunds (one-to-many)
+      businessComplianceAndIntegrityRules:
+        type: string
+        description: >-
+          What are the business, compliance, and integrity rules related to the
+          entities?
+        examples:
+          - >-
+            Transaction amount must be positive and match authorized amount,
+            refund cannot exceed original transaction amount, payment methods
+            must be validated before use, PCI-DSS compliance required for card
+            data, transactions must be idempotent, currency must match
+            merchant's accepted currencies
+      securityAndPrivacyConsiderations:
+        type: string
+        description: >-
+          What are the security and privacy considerations related to the
+          entities?
+        examples:
+          - >-
+            Customer PII must be encrypted at rest and in transit, card numbers
+            must be tokenized (never stored in plain text), access logs required
+            for all customer data views, data retention limited to 7 years per
+            regulations, customer can request data deletion (GDPR right to be
+            forgotten), payment method data restricted to authorized merchants
+            only
+    required:
+      - canvasType

@@ -1,0 +1,20 @@
+{
+  "id": "A234-1234-1234",
+  "source": "https://github.com/cloudevents",
+  "specversion": "1.0",
+  "type": "com.github.pull_request.opened",
+  "datacontenttype": "application/json",
+  "dataschema": "https://example.com/schemas/pull-request.json",
+  "subject": "pull-request/123",
+  "time": "2018-04-05T17:31:00Z",
+  "data": {
+    "pullRequestId": 123,
+    "title": "Add new feature",
+    "author": "john.doe",
+    "repository": "cloudevents/spec",
+    "status": "open",
+    "created": "2018-04-05T17:31:00Z",
+    "labels": ["enhancement", "needs-review"],
+    "commits": 5
+  }
+}

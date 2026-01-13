@@ -1,0 +1,39 @@
+aid: apiops-cycles
+name: APIOps Cycles
+type: Index
+description: |-
+  APIOps Cycles is a Lean and service design–inspired methodology for designing, improving, and scaling APIs throughout their entire lifecycle. Developed since 2017 and continuously refined through community contributions and real-world projects across industries, APIOps Cycles provides a structured approach to API strategy using a distinctive metro map visualization where stations and lines represent critical aspects of the API lifecycle. The method is built around a collection of strategic canvas templates that help teams systematically address everything from customer journey mapping and value proposition definition to domain modeling, capacity planning, and risk assessment. As an open-source framework released under the Creative Commons Attribution–ShareAlike 4.0 license, APIOps Cycles is freely available for anyone to use, adapt, and share, with the complete method consisting of localized JSON and markdown files that power both the official website and open tooling available as an npm package. Whether you're a developer integrating the method into your products and services, or an organization seeking to establish API product strategy and best practices, APIOps Cycles offers a proven, community-backed approach supported by a network of partners who can provide guidance and expertise in implementing the methodology effectively.
+tags:
+  - Agents
+created: '2026-01-13'
+modified: '2026-01-13'
+url: https://github.com/naftiko/schema/blob/main/ecosystem/apiops-cycles/apis.yml
+specificationVersion: '0.19'
+common:
+  - type: JSONSchema
+    url: apiops-cycles-schema.yaml
+  - type: API Business Model Canvas
+    url: api-business-model-canvas-example.yaml
+  - type: API Value Proposition Canvas
+    url: api-value-proposition-canvas-example.yaml
+  - type: Business Impact Canvas
+    url: business-impact-canvas-example.yaml
+  - type: Capacity Canvas
+    url: capacity-canvas-example.yaml
+  - type: Customer Journey Canvas
+    url: customer-journey-canvas-example.yaml
+  - type: Domain Canvas
+    url: domain-canvas-example.yaml
+  - type: Event Canvas
+    url: event-canvas-example.yaml
+  - type: GraphQL Canvas
+    url: graphql-canvas-example.yaml
+  - type: Interaction Canvas
+    url: interaction-canvas-example.yaml
+  - type: Locations Canvas
+    url: locations-canvas-example.yaml
+  - type: REST Canvas
+    url: rest-canvas-example.yaml    
+maintainers:
+  - FN: Kin Lane
+    email: kinlane@naftiko.io

@@ -1,0 +1,470 @@
+canvasType: graphqlCanvas
+
+apiName: Payment Platform GraphQL API v2
+
+consumerGoals: >
+  - Retrieve transaction history with customer and payment method details in single query (avoid N+1 problem)
+  - Fetch real-time payment status without polling REST endpoints
+  - Access nested order data without multiple API calls
+  - Reduce over-fetching by requesting only needed fields
+  - Subscribe to transaction events for real-time updates
+  - Perform complex queries with filters and sorting
+  - Batch multiple queries in single request
+  - Explore API schema dynamically via introspection
+
+keyTypes: >
+  Transaction {
+    id: ID!
+    amount: Float!
+    currency: String!
+    status: TransactionStatus!
+    description: String
+    customer: Customer!
+    paymentMethod: PaymentMethod!
+    merchant: Merchant!
+    refunds: [Refund!]!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    metadata: JSON
+  }
+  
+  Customer {
+    id: ID!
+    email: String!
+    name: String!
+    phone: String
+    address: Address
+    transactions(limit: Int, offset: Int): [Transaction!]!
+    paymentMethods: [PaymentMethod!]!
+    createdAt: DateTime!
+  }
+  
+  PaymentMethod {
+    id: ID!
+    type: PaymentMethodType!
+    last4: String!
+    expMonth: Int
+    expYear: Int
+    brand: String
+    customer: Customer!
+    isActive: Boolean!
+    createdAt: DateTime!
+  }
+  
+  Merchant {
+    id: ID!
+    businessName: String!
+    email: String!
+    transactions(filters: TransactionFilters): [Transaction!]!
+    balance: Balance!
+    settings: MerchantSettings!
+  }
+  
+  Refund {
+    id: ID!
+    amount: Float!
+    status: RefundStatus!
+    reason: String
+    transaction: Transaction!
+    createdAt: DateTime!
+  }
+  
+  Dispute {
+    id: ID!
+    amount: Float!
+    status: DisputeStatus!
+    reason: String!
+    transaction: Transaction!
+    evidence: DisputeEvidence
+    createdAt: DateTime!
+    dueBy: DateTime
+  }
+
+relationships: >
+  Transaction -> Customer: Many-to-One
+  - transaction.customer returns single Customer
+  - customer.transactions returns array of Transactions
+  
+  Transaction -> PaymentMethod: Many-to-One
+  - transaction.paymentMethod returns single PaymentMethod
+  - paymentMethod.transactions returns array of Transactions
+  
+  Transaction -> Merchant: Many-to-One
+  - transaction.merchant returns single Merchant
+  - merchant.transactions(filters) returns filtered array
+  
+  Customer -> PaymentMethod: One-to-Many
+  - customer.paymentMethods returns array
+  - paymentMethod.customer returns single Customer
+  
+  Transaction -> Refund: One-to-Many
+  - transaction.refunds returns array of Refunds
+  - refund.transaction returns single Transaction
+  
+  Transaction -> Dispute: One-to-One (optional)
+  - transaction.dispute returns single Dispute or null
+  - dispute.transaction returns single Transaction
+
+queries: >
+  # Get single transaction with nested data
+  query GetTransaction($id: ID!) {
+    transaction(id: $id) {
+      id
+      amount
+      currency
+      status
+      customer {
+        id
+        email
+        name
+      }
+      paymentMethod {
+        type
+        last4
+        brand
+      }
+      refunds {
+        id
+        amount
+        status
+      }
+    }
+  }
+  
+  # List transactions with filters
+  query ListTransactions($status: TransactionStatus, $limit: Int, $after: String) {
+    transactions(status: $status, limit: $limit, after: $after) {
+      edges {
+        node {
+          id
+          amount
+          status
+          createdAt
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      totalCount
+    }
+  }
+  
+  # Get customer with transactions
+  query GetCustomer($id: ID!) {
+    customer(id: $id) {
+      id
+      email
+      name
+      transactions(limit: 10) {
+        id
+        amount
+        status
+        createdAt
+      }
+      paymentMethods {
+        id
+        type
+        last4
+      }
+    }
+  }
+  
+  # Search transactions by date and amount
+  query SearchTransactions($filters: TransactionFilters!) {
+    searchTransactions(filters: $filters) {
+      id
+      amount
+      currency
+      status
+      createdAt
+    }
+  }
+  
+  # Get payment methods for customer
+  query GetPaymentMethodsByCustomer($customerId: ID!) {
+    customer(id: $customerId) {
+      paymentMethods {
+        id
+        type
+        last4
+        expMonth
+        expYear
+        brand
+        isActive
+      }
+    }
+  }
+
+mutations: >
+  # Create transaction
+  mutation CreateTransaction($input: TransactionInput!) {
+    createTransaction(input: $input) {
+      transaction {
+        id
+        status
+        amount
+        currency
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+  
+  # Update transaction metadata
+  mutation UpdateTransaction($id: ID!, $input: TransactionUpdateInput!) {
+    updateTransaction(id: $id, input: $input) {
+      transaction {
+        id
+        metadata
+        updatedAt
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+  
+  # Process refund
+  mutation ProcessRefund($transactionId: ID!, $amount: Float!, $reason: String) {
+    processRefund(transactionId: $transactionId, amount: $amount, reason: $reason) {
+      refund {
+        id
+        amount
+        status
+        transaction {
+          id
+          status
+        }
+      }
+      errors {
+        message
+      }
+    }
+  }
+  
+  # Delete payment method
+  mutation DeletePaymentMethod($id: ID!) {
+    deletePaymentMethod(id: $id) {
+      success
+      message
+    }
+  }
+  
+  # Create customer
+  mutation CreateCustomer($input: CustomerInput!) {
+    createCustomer(input: $input) {
+      customer {
+        id
+        email
+        name
+        createdAt
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+  
+  # Capture authorized transaction
+  mutation CaptureTransaction($id: ID!, $amount: Float) {
+    captureTransaction(id: $id, amount: $amount) {
+      transaction {
+        id
+        status
+        capturedAt
+      }
+      errors {
+        message
+      }
+    }
+  }
+
+subscriptions: >
+  # Subscribe to transaction status changes for specific merchant
+  subscription OnTransactionStatusChange($merchantId: ID!) {
+    transactionStatusChanged(merchantId: $merchantId) {
+      transaction {
+        id
+        status
+        amount
+        customer {
+          email
+        }
+      }
+      previousStatus
+      timestamp
+    }
+  }
+  
+  # Subscribe to new transactions for specific customer
+  subscription OnNewTransaction($customerId: ID!) {
+    newTransaction(customerId: $customerId) {
+      id
+      amount
+      status
+      paymentMethod {
+        type
+        last4
+      }
+      createdAt
+    }
+  }
+  
+  # Subscribe to refund processed events
+  subscription OnRefundProcessed {
+    refundProcessed {
+      refund {
+        id
+        amount
+        status
+        transaction {
+          id
+        }
+      }
+      timestamp
+    }
+  }
+  
+  # Subscribe to dispute filed events
+  subscription OnDisputeFiled($merchantId: ID!) {
+    disputeFiled(merchantId: $merchantId) {
+      dispute {
+        id
+        amount
+        reason
+        transaction {
+          id
+          amount
+        }
+        dueBy
+      }
+      timestamp
+    }
+  }
+
+authorizationRules: >
+  Role: MERCHANT
+  - Can access only their own transactions via merchant.transactions()
+  - Can access customer data only for their transactions
+  - Cannot access other merchants' data
+  - Cannot access platform-level analytics
+  
+  Role: CUSTOMER
+  - Can access only their own transaction history via customer.transactions()
+  - Can view only their own payment methods
+  - Cannot access merchant financial data
+  - Cannot see other customers' data
+  
+  Role: ADMIN
+  - Full access to all data
+  - Can query any transaction, customer, merchant
+  - Can perform administrative mutations
+  - Can access platform analytics
+  
+  Field-level Authorization:
+  - Transaction.fee: Only accessible by merchant and admin roles
+  - Customer.address: Only accessible by customer themselves and transaction merchant
+  - PaymentMethod.fingerprint: Admin only
+  - Merchant.balance: Merchant owner and admin only
+  - Sensitive fields like card numbers: Never exposed (only token and last4)
+  
+  Permission: PCI_COMPLIANT
+  - Required to access any payment card details
+  - Required for transactions involving card data
+  - Automatically granted to PCI-DSS certified merchants
+  
+  Rate Limiting by Role:
+  - Free tier: 100 queries/hour, depth limit 3
+  - Basic tier: 1000 queries/hour, depth limit 5
+  - Premium tier: 10000 queries/hour, depth limit 7
+  - Enterprise: Unlimited, depth limit 10
+
+consumerConstraints: >
+  Pagination:
+  - Cursor-based pagination using Relay specification
+  - Maximum 100 items per page (enforced)
+  - Default page size: 10 items
+  - Connections return: edges, nodes, pageInfo, totalCount
+  
+  Filtering:
+  - Date range limited to 90 days for transaction queries
+  - Complex filters available: AND, OR, NOT operators
+  - Supported operators: eq, ne, gt, gte, lt, lte, in, contains
+  - Example: filters: { amount: { gte: 50, lte: 500 }, status: { in: [COMPLETED, REFUNDED] } }
+  
+  Rate Limiting:
+  - 1000 requests per hour per API key (standard tier)
+  - Query complexity scoring: each field = 1 point, nested field = 2 points
+  - Maximum query complexity score: 1000 points
+  - Headers returned: X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset
+  
+  Query Depth:
+  - Maximum depth limited to 5 levels to prevent abuse
+  - Depth 1: Top-level query
+  - Depth 2: First nested object
+  - Depth increases with each level of nesting
+  - Queries exceeding depth limit return error
+  
+  Query Complexity:
+  - Each field costs 1 point
+  - Array fields multiply by estimated result size
+  - Example: transactions(limit: 100) with 10 fields = 1000 points
+  - Maximum complexity per query: 1000 points
+  
+  Time Constraints:
+  - Query timeout: 30 seconds
+  - Subscription timeout: No limit (but idle connections closed after 10 minutes)
+  - Mutation timeout: 60 seconds for long-running operations
+  
+  Data Freshness:
+  - Real-time data: Subscriptions provide instant updates
+  - Queries: Maximum 5-second cache (configurable per field)
+  - Analytics: Refreshed every 5 minutes
+  
+  Batch Operations:
+  - Multiple queries in single request supported
+  - Maximum 10 operations per batch
+  - Mutations executed sequentially (not parallel)
+  - One failure doesn't stop other operations
+
+notesOrOpenQuestions: >
+  Decisions Pending:
+  - Should we implement DataLoader for N+1 query optimization? (DECISION: Yes, implement)
+  - Cache strategy: Redis for frequently accessed merchant data (DECISION: 5-minute TTL)
+  - Consider GraphQL federation for microservices architecture (UNDER REVIEW)
+  
+  Integration Considerations:
+  - Migration path from REST to GraphQL: Provide both APIs for 12 months
+  - Subscription infrastructure: Use WebSocket (graphql-ws protocol)
+  - Schema versioning: Add @deprecated directive for old fields, maintain for 6 months
+  - Error handling: Use GraphQL errors array with error codes for client handling
+  
+  Performance Optimization:
+  - Implement query cost analysis before execution
+  - Use database query batching to reduce database load
+  - Consider implementing persisted queries to reduce payload size
+  - Add monitoring for slow queries (>1 second execution time)
+  
+  Documentation:
+  - Generate schema documentation automatically from GraphQL schema
+  - Create interactive GraphQL playground (GraphiQL)
+  - Provide code generation tools for clients (Apollo codegen)
+  - Create migration guides from REST to GraphQL
+  
+  Security Considerations:
+  - Disable introspection in production (or require authentication)
+  - Implement query depth limiting to prevent DoS attacks
+  - Add query complexity analysis
+  - Use allowlist of approved queries for high-security scenarios
+  
+  Open Questions:
+  - Should we support file uploads via GraphQL? (multipart/form-data)
+  - How to handle real-time updates for transaction list queries? (Use subscriptions)
+  - Should we expose raw SQL/filter expressions? (NO - security risk)
+  - GraphQL vs REST for webhook configurations? (Keep REST for simplicity)

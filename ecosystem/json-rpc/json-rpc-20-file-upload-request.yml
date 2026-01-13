@@ -1,0 +1,15 @@
+jsonrpc: '2.0'
+method: storage.uploadFile
+params:
+  filename: document.pdf
+  contentType: application/pdf
+  size: 2048576
+  data: JVBERi0xLjQKJeLjz9MKMyAwIG9iago8PC9UeXBlL...
+  metadata:
+    title: Q4 Report
+    author: John Doe
+    tags:
+      - report
+      - quarterly
+      - '2025'
+id: upload-001

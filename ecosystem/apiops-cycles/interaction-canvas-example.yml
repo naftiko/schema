@@ -1,0 +1,332 @@
+canvasType: interactionCanvas
+
+crudInteractions: >
+  CREATE:
+  - POST /v2/transactions - Create new payment transaction
+  - POST /v2/customers - Create new customer record
+  - POST /v2/payment-methods - Store new payment method
+  
+  READ:
+  - GET /v2/transactions/{id} - Retrieve specific transaction details
+  - GET /v2/customers/{id} - Get customer profile and data
+  - GET /v2/payment-methods/{id} - View payment method details
+  
+  UPDATE:
+  - PATCH /v2/transactions/{id} - Update transaction metadata only
+  - PATCH /v2/customers/{id} - Update customer profile information
+  - PATCH /v2/payment-methods/{id} - Update payment method expiry
+  
+  DELETE:
+  - DELETE /v2/payment-methods/{id} - Remove stored payment method
+  - DELETE /v2/customers/{id} - Delete customer account (with restrictions)
+
+crudInputAndOutputModels: >
+  CREATE Transaction:
+  Input: {
+    amount: 99.99,
+    currency: "USD",
+    customer_id: "cust_abc123",
+    payment_method_id: "pm_xyz789",
+    description: "Order #12345",
+    metadata: { order_id: "12345", source: "web" }
+  }
+  Output: {
+    id: "txn_def456",
+    status: "pending",
+    amount: 99.99,
+    currency: "USD",
+    created_at: "2024-01-15T14:30:00Z"
+  }
+  
+  READ Transaction:
+  Output: {
+    id: "txn_def456",
+    status: "completed",
+    amount: 99.99,
+    currency: "USD",
+    customer: { id: "cust_abc123", email: "john@example.com" },
+    payment_method: { id: "pm_xyz789", type: "card", last4: "4242" },
+    created_at: "2024-01-15T14:30:00Z",
+    updated_at: "2024-01-15T14:30:05Z"
+  }
+  
+  UPDATE Transaction:
+  Input: { metadata: { shipped: true, tracking: "1Z999AA1" } }
+  Output: { id: "txn_def456", metadata: { order_id: "12345", shipped: true, tracking: "1Z999AA1" } }
+  
+  DELETE PaymentMethod:
+  Output: HTTP 204 No Content
+
+crudProcessingAndValidation: >
+  CREATE Transaction:
+  - Validate amount > 0.50 and < 999999.99
+  - Verify currency in supported list (ISO 4217 codes)
+  - Confirm customer_id exists in database
+  - Check payment_method is active and not expired
+  - Verify payment_method belongs to customer
+  - Check for duplicate transactions using idempotency key
+  - Validate merchant has sufficient API quota
+  - Run fraud detection scoring (reject if score > 80)
+  - Return 201 Created on success, 400 Bad Request on validation failure
+  
+  UPDATE Transaction:
+  - Only metadata and description fields allowed
+  - Transaction must not be in 'processing' state
+  - Validate metadata is valid JSON object
+  - Maximum metadata size: 16KB
+  - Return 200 OK on success, 409 Conflict if locked
+  
+  DELETE PaymentMethod:
+  - Verify no pending transactions using this payment method
+  - Confirm payment method belongs to requesting customer/merchant
+  - Cascade: Mark as deleted, don't physically remove (soft delete)
+  - Return 204 No Content on success, 409 Conflict if in use
+
+queryDrivenInteractions: >
+  LIST Transactions with Filters:
+  GET /v2/transactions?status=completed&date_from=2024-01-01&date_to=2024-01-31&limit=50&offset=0
+  
+  Search Transactions:
+  GET /v2/transactions?customer_id=cust_abc123&min_amount=50&max_amount=500
+  
+  Get Customer Transactions:
+  GET /v2/customers/{id}/transactions?limit=20
+  
+  Generate Daily Report:
+  GET /v2/reports/daily-summary?date=2024-01-15
+  
+  Search by Metadata:
+  GET /v2/transactions?metadata[order_id]=12345
+
+queryDrivenInputAndOutputModels: >
+  Search Transactions Input:
+  Query Parameters: {
+    status: "completed",
+    date_from: "2024-01-01",
+    date_to: "2024-01-31",
+    customer_id: "cust_abc123" (optional),
+    min_amount: 10.00 (optional),
+    max_amount: 1000.00 (optional),
+    limit: 50 (default: 10, max: 100),
+    offset: 0 (default: 0)
+  }
+  
+  Output: {
+    data: [
+      { id: "txn_1", amount: 99.99, status: "completed", created_at: "..." },
+      { id: "txn_2", amount: 149.50, status: "completed", created_at: "..." }
+    ],
+    total_count: 156,
+    has_more: true,
+    next_offset: 50,
+    limit: 50
+  }
+  
+  Daily Report Output: {
+    date: "2024-01-15",
+    total_volume: 125000.50,
+    transaction_count: 1250,
+    avg_amount: 100.00,
+    success_rate: 0.982,
+    failed_count: 23,
+    refund_count: 12
+  }
+
+queryDrivenProcessingAndValidation: >
+  Search Rules:
+  - Date range cannot exceed 90 days (return 400 if exceeded)
+  - limit parameter max value: 100 (enforce ceiling)
+  - status must be valid enum: pending, authorized, completed, failed, refunded
+  - customer_id must exist if provided (return 404 if not found)
+  - Amounts must be positive numbers
+  - Use offset-based pagination for result sets > 100 records
+  - Implement query timeout of 30 seconds
+  - Cache frequent queries for 5 minutes (TTL)
+  - Return 200 with empty array if no results found
+  
+  Performance Optimization:
+  - Index on: customer_id, status, created_at, amount
+  - Composite index on: (merchant_id, created_at) for merchant queries
+  - Use database read replicas for search queries
+  - Apply result set limit at database level
+  - Return total_count via separate optimized COUNT query
+
+commandDrivenInteractions: >
+  Capture Authorized Payment:
+  POST /v2/transactions/{id}/capture
+  
+  Process Refund:
+  POST /v2/transactions/{id}/refund
+  
+  Cancel Pending Transaction:
+  POST /v2/transactions/{id}/cancel
+  
+  Verify Payment Method:
+  POST /v2/payment-methods/{id}/verify
+  
+  Void Authorization:
+  POST /v2/transactions/{id}/void
+  
+  Update Risk Score:
+  POST /v2/customers/{id}/update-risk-score
+
+commandDrivenInputAndOutputModels: >
+  Capture Command:
+  Input: {
+    amount: 99.99 (optional, defaults to full authorized amount),
+    description: "Final capture for order #12345"
+  }
+  Output: {
+    transaction_id: "txn_def456",
+    status: "captured",
+    captured_at: "2024-01-15T14:35:00Z",
+    amount: 99.99,
+    original_amount: 99.99
+  }
+  
+  Refund Command:
+  Input: {
+    amount: 49.99,
+    reason: "Customer requested partial refund",
+    refund_type: "partial"
+  }
+  Output: {
+    refund_id: "rfd_ghi012",
+    original_transaction_id: "txn_def456",
+    amount: 49.99,
+    status: "pending",
+    created_at: "2024-01-16T10:00:00Z",
+    estimated_arrival: "2024-01-19"
+  }
+  
+  Cancel Command:
+  Input: {} (no body required)
+  Output: {
+    transaction_id: "txn_def456",
+    status: "cancelled",
+    cancelled_at: "2024-01-15T14:32:00Z"
+  }
+
+commandDrivenProcessingAndValidation: >
+  Capture Rules:
+  - Transaction must be in 'authorized' status (return 409 if not)
+  - Capture amount cannot exceed authorized amount
+  - Capture must occur within 7 days of authorization (return 410 if expired)
+  - Multiple partial captures allowed if merchant enabled
+  - Sum of partial captures cannot exceed authorization
+  - Idempotency: Same capture request returns same result
+  
+  Refund Rules:
+  - Transaction must be in 'completed' status
+  - Refund amount cannot exceed (original amount - previous refunds)
+  - reason field required (min 10 characters)
+  - Multiple partial refunds allowed
+  - Full refund automatically updates transaction status to 'refunded'
+  - Refund processing time: 5-10 business days
+  - Email notification sent to customer automatically
+  
+  Cancel Rules:
+  - Only pending or authorized transactions can be cancelled
+  - Cannot cancel captured or completed transactions (use refund instead)
+  - Cancelled transactions free up customer's pending transaction limit
+  - Cancel is immediate and cannot be undone
+  
+  Processing:
+  - All commands are asynchronous (return 202 Accepted for long-running)
+  - Use background job queue for processing
+  - Return command ID for status checking: { command_id: "cmd_789", status: "processing" }
+  - Provide status endpoint: GET /v2/commands/{id}/status
+
+eventDrivenInteractions: >
+  Payment Succeeded Event:
+  Triggered when: Payment transaction completes successfully
+  
+  Payment Failed Event:
+  Triggered when: Payment processing fails (card declined, insufficient funds, etc.)
+  
+  Refund Processed Event:
+  Triggered when: Refund completes and funds returned to customer
+  
+  Dispute Created Event:
+  Triggered when: Customer files chargeback or dispute
+  
+  Payment Method Expiring Event:
+  Triggered when: Stored payment method expires within 30 days
+  
+  Fraud Alert Event:
+  Triggered when: Transaction flagged by fraud detection (risk score > 80)
+
+eventDrivenInputAndOutputModels: >
+  Webhook Payload Structure:
+  {
+    event_id: "evt_abc123",
+    event_type: "payment.succeeded",
+    created_at: "2024-01-15T14:30:05Z",
+    data: {
+      transaction_id: "txn_def456",
+      amount: 99.99,
+      currency: "USD",
+      customer_id: "cust_abc123",
+      status: "completed",
+      payment_method: { type: "card", last4: "4242" }
+    },
+    api_version: "2024-01-01"
+  }
+  
+  Expected Webhook Response:
+  HTTP 200 OK
+  {
+    received: true,
+    event_id: "evt_abc123"
+  }
+  
+  Fraud Alert Event:
+  {
+    event_id: "evt_xyz789",
+    event_type: "fraud.alert",
+    created_at: "2024-01-15T14:29:55Z",
+    data: {
+      transaction_id: "txn_def456",
+      risk_score: 85,
+      risk_factors: ["velocity_check_failed", "ip_mismatch", "new_payment_method"],
+      recommended_action: "review",
+      customer_id: "cust_abc123"
+    }
+  }
+
+eventDrivenProcessingAndValidation: >
+  Webhook Delivery:
+  - Verify webhook signature using HMAC-SHA256 with shared secret
+  - Signature header: X-Webhook-Signature: sha256=<signature>
+  - Include timestamp in signed payload to prevent replay attacks
+  - Reject webhooks with timestamp > 5 minutes old
+  
+  Idempotency:
+  - Implement idempotency using event_id
+  - Store processed event_ids with 24-hour TTL
+  - If duplicate event_id received, return 200 without reprocessing
+  - Use distributed lock (Redis) to prevent concurrent processing
+  
+  Retry Logic:
+  - Retry failed webhooks with exponential backoff: 1m, 5m, 15m, 1h, 6h
+  - Maximum 3 retry attempts per webhook
+  - Mark webhook as failed after final retry
+  - Email notification to merchant after all retries exhausted
+  - Merchant can manually replay failed webhooks via dashboard
+  
+  Timeout Rules:
+  - Webhook endpoint must respond within 30 seconds
+  - Return 2xx status code within 5 seconds (acknowledge receipt)
+  - Long processing should be async (accept webhook, process later)
+  
+  Validation:
+  - Webhook URL must be HTTPS (no HTTP allowed)
+  - URL must respond to verification challenge during setup
+  - Validate webhook endpoint returns proper content-type header
+  - Block webhooks to internal/private IP ranges (SSRF prevention)
+  
+  Event Ordering:
+  - Events delivered in order of occurrence when possible
+  - Include sequence number in payload for ordering guarantee
+  - Out-of-order delivery possible during high load
+  - Consumers should handle idempotency and ordering logic

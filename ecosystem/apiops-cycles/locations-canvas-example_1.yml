@@ -1,0 +1,288 @@
+canvasType: locationsCanvas
+
+locationGroups: >
+  Production Regions:
+  - North America (primary market, 70% of traffic)
+  - Europe (secondary market, 25% of traffic)
+  - Asia-Pacific (emerging market, 5% of traffic)
+  
+  Environment Types:
+  - Production (live customer traffic)
+  - Staging (pre-production testing)
+  - Development (internal development)
+  
+  Infrastructure Tiers:
+  - Edge Locations (CDN, API gateway)
+  - Application Tier (API servers, microservices)
+  - Data Tier (databases, caches)
+
+locationGroupCharacteristics: >
+  North America Group:
+  - Primary revenue source (70% of transaction volume)
+  - 24/7 peak times due to diverse time zones
+  - Primary merchant base concentrated in US and Canada
+  - Currency: USD dominant (85%), CAD (15%)
+  - Compliance: PCI-DSS, SOC 2, state-level regulations
+  - Latency requirements: < 50ms for East Coast, < 80ms for West Coast
+  - High availability critical: 99.99% uptime required
+  
+  Europe Group:
+  - Growing market (25% of transaction volume, +30% YoY growth)
+  - GDPR compliance mandatory (strict data residency)
+  - Multi-currency support required: EUR, GBP, CHF, SEK, NOK
+  - Peak times: 9 AM - 6 PM CET
+  - Language support: English, German, French, Spanish
+  - SEPA payment support required
+  - Latency requirements: < 80ms within EU
+  
+  Asia-Pacific Group:
+  - Emerging market (5% of volume, +100% YoY growth)
+  - Strategic expansion planned for 2024-2025
+  - Currencies: JPY, SGD, AUD, HKD
+  - Varied regulatory requirements by country
+  - Higher latency tolerance: < 150ms acceptable
+  - Mobile-first user base (60% mobile traffic)
+  - Peak times: Variable across time zones
+
+locations: >
+  North America:
+  - us-east-1: N. Virginia, USA (AWS)
+  - us-west-2: Oregon, USA (AWS)
+  - ca-central-1: Montreal, Canada (AWS)
+  
+  Europe:
+  - eu-west-1: Dublin, Ireland (AWS)
+  - eu-central-1: Frankfurt, Germany (AWS)
+  - eu-west-2: London, United Kingdom (AWS)
+  
+  Asia-Pacific:
+  - ap-southeast-1: Singapore (AWS)
+  - ap-northeast-1: Tokyo, Japan (AWS)
+  - ap-southeast-2: Sydney, Australia (AWS) - planned Q3 2024
+  
+  Edge Locations (CDN/Cloudflare):
+  - 200+ global edge locations
+  - Major cities: New York, Los Angeles, London, Frankfurt, Singapore, Tokyo
+  
+  Development Environments:
+  - dev-us-east-1: Development environment (Virginia)
+  - staging-us-east-1: Staging environment (Virginia)
+
+locationCharacteristics: >
+  us-east-1 (Primary Region - N. Virginia):
+  - Role: Primary production region, active-active with eu-west-1
+  - Infrastructure: 50 API servers, 10 database instances, 6 Redis nodes
+  - Availability: 99.99% historical uptime
+  - Average latency: 20ms (local), 50ms (East Coast), 80ms (West Coast)
+  - Bandwidth: 10 Gbps dedicated, burstable to 100 Gbps
+  - Payment processors: Direct connections to Stripe, Visa, Mastercard
+  - Compliance: PCI-DSS Level 1 certified data center
+  - Cost: $35,000/month infrastructure
+  - Disaster recovery: Automatic failover to us-west-2
+  
+  us-west-2 (Secondary Region - Oregon):
+  - Role: Disaster recovery, read replica, West Coast optimization
+  - Infrastructure: 20 API servers, 5 database read replicas, 3 Redis nodes
+  - Latency: 15ms (West Coast), 70ms (East Coast)
+  - Bandwidth: 5 Gbps dedicated
+  - Status: Hot standby for failover
+  - Cost: $18,000/month
+  
+  eu-west-1 (European Primary - Dublin):
+  - Role: Primary European region, active-active with us-east-1
+  - Infrastructure: 30 API servers, 8 database instances, 4 Redis nodes
+  - Compliance: GDPR-compliant data center, ISO 27001 certified
+  - Average latency: 30ms (UK), 40ms (Western Europe), 60ms (Eastern Europe)
+  - SEPA payment support enabled
+  - Data residency: All European customer data stays within EU
+  - Cost: $28,000/month
+  
+  eu-central-1 (Frankfurt):
+  - Role: German market optimization, read replica
+  - Infrastructure: 15 API servers, 3 database read replicas
+  - Latency: 20ms (Germany), 35ms (Central Europe)
+  - Strong local banking connections
+  - Cost: $12,000/month
+  
+  ap-southeast-1 (Singapore):
+  - Role: Asia-Pacific hub, regional primary
+  - Infrastructure: 10 API servers, 3 database instances, 2 Redis nodes
+  - Status: Limited production (pilot customers only)
+  - Latency: 30ms (Singapore), 80ms (Hong Kong), 100ms (Tokyo)
+  - Supports: SGD, HKD, MYR currencies
+  - Cost: $8,000/month
+  - Planned expansion: Q3 2024 to full production
+  
+  ap-northeast-1 (Tokyo):
+  - Role: Japanese market, read replica
+  - Infrastructure: 5 API servers, 2 database read replicas
+  - Status: Development/testing phase
+  - Latency: 20ms (Japan)
+  - Cost: $5,000/month
+
+locationDistances: >
+  Cross-Region Distances (Great Circle):
+  - us-east-1 ↔ us-west-2: 3,900 km (2,425 miles)
+  - us-east-1 ↔ eu-west-1: 5,200 km (3,230 miles)
+  - us-east-1 ↔ ap-southeast-1: 15,300 km (9,505 miles)
+  - eu-west-1 ↔ eu-central-1: 1,300 km (808 miles)
+  - eu-west-1 ↔ ap-southeast-1: 10,800 km (6,710 miles)
+  - ap-southeast-1 ↔ ap-northeast-1: 5,300 km (3,293 miles)
+  
+  Network Latencies (Round-Trip Time):
+  - us-east-1 ↔ us-west-2: 65ms
+  - us-east-1 ↔ eu-west-1: 80ms
+  - us-east-1 ↔ ap-southeast-1: 220ms
+  - eu-west-1 ↔ eu-central-1: 25ms
+  - eu-west-1 ↔ ap-southeast-1: 180ms
+  - ap-southeast-1 ↔ ap-northeast-1: 95ms
+  
+  Database Replication Lag:
+  - us-east-1 → us-west-2: 2-3 seconds (async replication)
+  - us-east-1 → eu-west-1: 3-5 seconds (async replication)
+  - eu-west-1 → eu-central-1: 1-2 seconds (synchronous replication)
+  - us-east-1 → ap-southeast-1: 5-8 seconds (async replication)
+
+locationDistanceCharacteristics: >
+  North America Internal (us-east-1 ↔ us-west-2):
+  - Connection type: AWS Direct Connect (10 Gbps dedicated)
+  - Replication: Async database replication (2-3 second lag)
+  - Use case: Disaster recovery, geographic load distribution
+  - Failover time: 30 seconds automatic
+  - Data transfer cost: $0.02/GB (AWS inter-region)
+  - Monthly data transfer: ~5 TB (replication, backups)
+  
+  Transatlantic (us-east-1 ↔ eu-west-1):
+  - Connection type: AWS backbone network
+  - Replication: Bidirectional async (3-5 second lag each direction)
+  - Active-active: Both regions serve production traffic
+  - Geo-routing: DNS-based routing to nearest region
+  - Data residency: European data stays in EU (GDPR requirement)
+  - Data transfer cost: $0.02/GB
+  - Monthly data transfer: ~8 TB
+  
+  Transpacific (us-east-1 ↔ ap-southeast-1):
+  - Connection type: AWS backbone network (limited capacity)
+  - Replication: One-way async (us-east-1 → ap-southeast-1)
+  - Lag: 5-8 seconds due to distance
+  - Use case: Read replica for APAC customers
+  - Not for failover: Too much lag for consistent failover
+  - Data transfer cost: $0.02/GB
+  - Monthly data transfer: ~2 TB
+  
+  European Internal (eu-west-1 ↔ eu-central-1):
+  - Connection type: AWS Direct Connect (40 Gbps)
+  - Replication: Synchronous replication option available
+  - Very low latency: 25ms RTT
+  - Use case: GDPR data residency, German market optimization
+  - Failover time: 15 seconds
+  - Data transfer cost: $0.01/GB (intra-EU pricing)
+  
+  Cross-Region Performance:
+  - Acceptable failover time: < 30 seconds for DR
+  - Maximum replication lag: 10 seconds acceptable for async
+  - Ideal replication lag: < 5 seconds
+  - CDN edge cache: Reduces need for long-distance requests
+  - 95% of requests served from regional location (not cross-region)
+
+locationEndpoints: >
+  Global (Geo-Routed):
+  - https://api.payment.com
+  - Description: Intelligent geo-routing to nearest region
+  - Routing: Latency-based routing via Route53
+  - Failover: Automatic to healthy region
+  - SSL/TLS: Wildcard certificate *.payment.com
+  
+  North America Regional:
+  - https://us-api.payment.com (routes to us-east-1 or us-west-2)
+  - https://us-east.api.payment.com (specific to us-east-1)
+  - https://us-west.api.payment.com (specific to us-west-2)
+  
+  Europe Regional:
+  - https://eu-api.payment.com (routes to eu-west-1 or eu-central-1)
+  - https://eu-west.api.payment.com (specific to Dublin)
+  - https://eu-central.api.payment.com (specific to Frankfurt)
+  
+  Asia-Pacific Regional:
+  - https://ap-api.payment.com (routes to ap-southeast-1 or ap-northeast-1)
+  - https://sg-api.payment.com (specific to Singapore)
+  - https://jp-api.payment.com (specific to Tokyo)
+  
+  Sandbox/Testing:
+  - https://sandbox-api.payment.com (routes to us-east-1 only)
+  - No geographic distribution for sandbox
+  - Rate limited: 100 requests per hour
+  
+  Webhooks (Outbound):
+  - Sent from same region as API request origin
+  - Retry from different region if initial delivery fails
+  - Source IPs documented for firewall allowlisting
+  
+  Status Page:
+  - https://status.payment.com
+  - Real-time availability monitoring
+  - Hosted on separate infrastructure (not affected by API outages)
+
+locationEndpointCharacteristics: >
+  Global Endpoint (api.payment.com):
+  - Automatic geo-routing: Determines nearest region based on client IP
+  - Routing policy: Latency-based routing (Route53)
+  - Failover behavior: Health checks every 10 seconds, failover in < 30 seconds
+  - Single integration point: Clients don't need to manage regional endpoints
+  - Availability SLA: 99.99% uptime
+  - Best for: Most customers (recommended default)
+  - Trade-off: Slightly higher DNS lookup time (~10ms) vs direct regional
+  
+  Regional Endpoints (us-api, eu-api, ap-api):
+  - Direct connection: Routes to specific region or region group
+  - Lowest latency: Skips geo-routing decision
+  - Manual control: Customers choose region explicitly
+  - Use cases: 
+    * Regulatory requirements (e.g., EU data must stay in EU)
+    * Latency optimization for known customer location
+    * Testing specific region behavior
+  - Failover: Manual - customer responsible for switching endpoints
+  - Best for: Enterprise customers with specific requirements
+  
+  Specific Location Endpoints (us-east.api, eu-west.api, etc.):
+  - Pinned to exact data center
+  - No automatic failover
+  - Lowest possible latency for that region
+  - Use cases:
+    * Development/testing against specific region
+    * Troubleshooting regional issues
+    * Performance benchmarking
+  - Not recommended for production: No automatic failover
+  - Best for: Testing and troubleshooting only
+  
+  Sandbox Endpoint:
+  - Single region: Always routes to us-east-1
+  - Separate infrastructure: Isolated from production
+  - Rate limiting: 100 requests per hour (vs 1000+ for production)
+  - No cost: Free to use for testing
+  - Data isolation: Sandbox data purged every 30 days
+  - Features: Matches production API exactly
+  - Best for: Integration testing, development
+  
+  Performance Characteristics:
+  - DNS TTL: 60 seconds (fast failover)
+  - Connection pooling: Keep-alive enabled (reduces latency)
+  - HTTP/2 support: Multiplexed connections
+  - IPv6 support: Enabled on all endpoints
+  - TLS 1.3: Enabled for fastest handshake
+  - OCSP stapling: Reduces certificate verification time
+  
+  Monitoring and Observability:
+  - Health checks: Every 10 seconds per region
+  - Response time monitoring: p50, p95, p99 tracked
+  - Error rate monitoring: Alert if > 2% error rate
+  - Geographic distribution dashboard: Real-time traffic by region
+  - Endpoint-specific status: Available on status page
+  
+  Security:
+  - DDoS protection: Cloudflare on all endpoints
+  - WAF rules: Applied at edge before reaching regional endpoints
+  - IP allowlisting: Available for enterprise customers
+  - Source IP documentation: Published for firewall rules
+  - Certificate: Wildcard cert with SANs for all regional endpoints
+  - API key validation: Happens at edge (Cloudflare Workers)

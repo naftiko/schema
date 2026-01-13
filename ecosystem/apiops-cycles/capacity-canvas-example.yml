@@ -1,0 +1,285 @@
+canvasType: capacityCanvas
+
+currentBusinessVolumes: >
+  Daily Metrics (Average):
+  - API calls: 500,000 per day
+  - Transactions processed: 50,000 per day
+  - Successful transactions: 49,000 (98% success rate)
+  - Failed transactions: 1,000 (2% failure rate)
+  - Refunds processed: 500 per day (1% of transactions)
+  - Webhook deliveries: 150,000 per day (3x transactions due to retries)
+  
+  Hourly Metrics (Average):
+  - Transactions: 5,000 per hour (peak hours)
+  - Transactions: 1,000 per hour (off-peak)
+  - API requests: 20,000 per hour average
+  - Peak: 50,000 per hour (during Black Friday)
+  
+  Per-Second Metrics:
+  - Baseline requests: 50 per second
+  - Peak requests: 200 per second
+  - Database queries: 300 per second (includes read replicas)
+  - Cache hits: 800 per second (Redis)
+  
+  Data Transfer:
+  - Inbound: 500 GB per month
+  - Outbound: 2 TB per month (includes webhooks, API responses, reports)
+  - Database storage: 1.5 TB total, growing 50 GB per month
+  
+  Active Users:
+  - API consumers (merchants): 10,000 active
+  - End customers: 500,000 unique per month
+  - Concurrent connections: Average 2,000, peak 8,000
+  - Webhook endpoints configured: 8,500
+  
+  Geographic Distribution:
+  - North America: 70% of traffic
+  - Europe: 25% of traffic
+  - Asia-Pacific: 5% of traffic
+
+futureConsumptionTrends: >
+  12-Month Growth Projections:
+  - Overall transaction volume: Expected 200% growth (100,000 → 300,000 daily)
+  - New merchants onboarding: 1,000 per month (currently 300 per month)
+  - API call volume: Expected 250% increase (1.25M daily by Q4)
+  
+  Seasonal Patterns:
+  - Black Friday / Cyber Monday: 3-5x normal traffic (November)
+  - Holiday shopping season: 2-3x normal traffic (Nov-Dec)
+  - Back-to-school: 1.5x normal traffic (August-September)
+  - Valentine's Day: 1.5x normal traffic (February)
+  - Summer slowdown: 0.8x normal traffic (June-July)
+  
+  Strategic Initiatives Impact:
+  - Enterprise client onboarding (Q2): Expected 50,000 additional daily transactions
+  - Geographic expansion into APAC (Q3): 20% increase in traffic
+  - New product launch - subscription billing (Q3): 30% increase in recurring transactions
+  - Partnership with e-commerce platform (Q4): 100,000 additional daily transactions
+  
+  Technology Trends:
+  - Mobile app usage increasing: Currently 30%, projected 45% by year-end
+  - API version adoption: v2 API adoption at 60%, target 95% by Q3
+  - GraphQL API usage: Currently 5%, expected 20% by Q4
+  - Real-time webhooks: Currently 85% adoption, target 95%
+  
+  Capacity Concerns:
+  - Database write capacity will reach 80% by Q3 without scaling
+  - Current cache cluster approaching 70% memory utilization
+  - Peak hour API gateway at 65% capacity during normal peaks
+  - Webhook delivery queues approaching 1M backlog during high volume
+
+peakLoadAndAvailabilityRequirements: >
+  Peak Load Specifications:
+  - Black Friday target: Handle 500 requests per second sustained
+  - Cyber Monday target: 600 requests per second for 8-hour period
+  - Flash sale support: 1,000 requests per second for 30-minute burst
+  - Must handle 3x daily average during any 24-hour period
+  - Database must support 1,000 writes per second
+  - Redis cache must support 5,000 operations per second
+  
+  Availability SLA Targets:
+  - Overall uptime: 99.9% (43 minutes downtime per month allowed)
+  - API endpoint availability: 99.95% (21 minutes per month)
+  - Core transaction processing: 99.99% (4 minutes per month)
+  - Webhook delivery: 99.5% (best effort with retry logic)
+  - Planned maintenance window: Sunday 2-4 AM EST (excluded from SLA)
+  
+  Performance Requirements:
+  - API response time (p50): < 100ms
+  - API response time (p95): < 200ms
+  - API response time (p99): < 500ms
+  - Transaction processing time: < 3 seconds end-to-end
+  - Database query time (p95): < 50ms
+  - Cache response time: < 5ms
+  
+  Concurrent Connection Limits:
+  - API gateway: Support 50,000 concurrent connections
+  - WebSocket subscriptions: 10,000 concurrent (GraphQL subscriptions)
+  - Database connections: 2,000 max (with connection pooling)
+  - Redis connections: 5,000 max
+  
+  Geographic Requirements:
+  - North America: < 50ms latency from East Coast
+  - Europe: < 80ms latency from London
+  - Asia-Pacific: < 150ms latency from Tokyo
+  - Multi-region active-active architecture for disaster recovery
+  - RPO (Recovery Point Objective): 5 minutes
+  - RTO (Recovery Time Objective): 15 minutes
+
+cachingStrategies: >
+  Application-Level Caching (Redis):
+  - Frequently accessed merchant profiles: 1-hour TTL
+  - Customer data (non-PII): 15-minute TTL
+  - Payment method metadata (not card numbers): 30-minute TTL
+  - API rate limit counters: 1-hour sliding window
+  - Transaction lookup by ID: 5-minute TTL (immutable after completion)
+  - Currency conversion rates: 1-hour TTL (fetch from provider API)
+  
+  Database Query Result Caching:
+  - Merchant settings: 30-minute TTL
+  - Transaction statistics (dashboard): 5-minute TTL
+  - Daily reports: 24-hour TTL (regenerated overnight)
+  - Supported currency list: 24-hour TTL (rarely changes)
+  
+  CDN Caching (Cloudflare):
+  - API documentation (static): 1-week TTL
+  - JavaScript SDK files: 1-month TTL with versioning
+  - Public merchant logos: 1-day TTL
+  - Status page assets: 1-hour TTL
+  
+  HTTP Response Caching:
+  - GET /transactions/{id} for completed transactions: Cache-Control: max-age=300 (5 min)
+  - GET /customers/{id}: Cache-Control: private, max-age=60 (1 min)
+  - GET /merchants/{id}/settings: Cache-Control: private, max-age=1800 (30 min)
+  - POST requests: Cache-Control: no-cache (never cache mutations)
+  
+  Cache Invalidation Strategies:
+  - Transaction update: Invalidate transaction cache + customer transaction list
+  - Customer update: Invalidate customer cache + related caches
+  - Merchant settings change: Invalidate all merchant-related caches
+  - Use cache tags for grouped invalidation
+  - Publish cache invalidation events via Redis pub/sub
+  
+  Cache Warming:
+  - Pre-populate merchant profiles at 6 AM daily (before business hours)
+  - Warm up popular transaction queries based on previous day's patterns
+  - Pre-fetch currency rates at midnight
+  
+  Cache Sizing:
+  - Redis cluster: 64 GB total (currently 45 GB used)
+  - Cache hit ratio target: > 85%
+  - Current cache hit ratio: 82%
+  - Eviction policy: LRU (Least Recently Used)
+
+rateLimitingStrategies: >
+  Tiered Rate Limits by Plan:
+  
+  Free Tier:
+  - 100 requests per hour per API key
+  - 1 request per second burst
+  - Webhook deliveries: Best effort, no guarantee
+  - Daily transaction limit: 100 transactions
+  
+  Basic Tier ($99/month):
+  - 1,000 requests per hour per API key
+  - 10 requests per second burst
+  - Webhook delivery guarantee: 99%
+  - Daily transaction limit: 10,000 transactions
+  
+  Premium Tier ($299/month):
+  - 10,000 requests per hour per API key
+  - 50 requests per second burst
+  - Webhook delivery guarantee: 99.5%
+  - Daily transaction limit: 100,000 transactions
+  
+  Enterprise Tier (custom pricing):
+  - Unlimited requests (fair use policy)
+  - 100+ requests per second sustained
+  - Webhook delivery SLA: 99.9%
+  - No transaction limits
+  
+  Rate Limiting Implementation:
+  - Algorithm: Token bucket with sliding window
+  - Granularity: Per API key + per merchant account
+  - Headers returned on every response:
+    * X-RateLimit-Limit: Total limit for current window
+    * X-RateLimit-Remaining: Requests remaining
+    * X-RateLimit-Reset: Unix timestamp when limit resets
+  
+  Rate Limit Exceeded Response:
+  - HTTP 429 Too Many Requests
+  - Retry-After header: Seconds until retry allowed
+  - Body: { "error": "rate_limit_exceeded", "retry_after": 60 }
+  
+  Exponential Backoff Guidance:
+  - First retry: Wait 1 second
+  - Second retry: Wait 2 seconds
+  - Third retry: Wait 4 seconds
+  - Max wait: 60 seconds
+  - Add jitter: Random 0-500ms to prevent thundering herd
+  
+  Soft Limits vs Hard Limits:
+  - Soft limit: Warning at 80% of rate limit (X-RateLimit-Warning header)
+  - Hard limit: Requests blocked at 100%
+  - Grace period: Allow 10% overage for 5 minutes during traffic spikes
+  
+  Endpoint-Specific Limits:
+  - POST /transactions: 50% of account rate limit (to prevent abuse)
+  - GET endpoints: Full rate limit available
+  - Search endpoints: 25% of rate limit (expensive queries)
+  - Report generation: 10 requests per hour (regardless of tier)
+  
+  IP-Based Rate Limiting:
+  - Per IP: 1,000 requests per hour (prevents DDoS from single IP)
+  - Suspicious IPs: Automatically throttled to 100 req/hour
+  - Whitelist: Known good IPs exempted from IP-level limits
+
+scalingStrategies: >
+  Horizontal Auto-Scaling:
+  - Kubernetes cluster: 10-100 pod range
+  - Scale-up trigger: CPU > 70% for 3 minutes
+  - Scale-down trigger: CPU < 30% for 10 minutes
+  - Scale-up rate: Add 20% capacity (min 2 pods)
+  - Scale-down rate: Remove 10% capacity (max 2 pods)
+  - Cooldown period: 5 minutes between scaling events
+  
+  Database Scaling:
+  - Primary database: Vertical scaling (16 vCPU, 64GB RAM currently)
+  - Read replicas: 5 replicas across 3 regions
+  - Read traffic: 80% routed to replicas
+  - Write traffic: 100% to primary
+  - Automatic failover: < 30 seconds to promote replica
+  - Future: Database sharding by merchant_id (planned Q3)
+  
+  Cache Scaling:
+  - Redis cluster: 6 nodes (master + 5 replicas)
+  - Memory per node: 16 GB (total 96 GB with replication)
+  - Auto-scaling: Add nodes when memory > 75%
+  - Sharding strategy: Hash slot distribution
+  - Future: Separate cache clusters by region (planned Q4)
+  
+  API Gateway Scaling:
+  - Load balancer: Application Load Balancer (AWS ALB)
+  - Auto-scaling group: 5-20 instances
+  - Instance type: c6i.2xlarge (8 vCPU, 16GB RAM)
+  - Health checks: Every 30 seconds
+  - Unhealthy threshold: 2 consecutive failures
+  - Connection draining: 60 seconds during scale-down
+  
+  Queue-Based Async Processing:
+  - Message queue: RabbitMQ cluster (3 nodes)
+  - Webhook delivery queue: Separate queue with 10 workers
+  - Email notification queue: 5 workers
+  - Report generation queue: 2 workers
+  - Queue depth alarm: > 10,000 messages triggers auto-scaling
+  - Worker scaling: Add workers when queue depth > 5,000
+  
+  Microservices Architecture:
+  - Transaction service: Scales independently (10-50 pods)
+  - Customer service: Scales independently (5-20 pods)
+  - Webhook delivery service: Scales independently (5-30 pods)
+  - Reporting service: Scales independently (2-10 pods)
+  - Each service has dedicated database and cache
+  
+  Geographic Distribution:
+  - Primary region: US-East (Virginia)
+  - Secondary region: EU-West (Ireland)
+  - Tertiary region: AP-Southeast (Singapore) - planned Q3
+  - Active-active: US and EU regions serve traffic simultaneously
+  - Geo-routing: DNS-based routing to nearest region
+  - Cross-region replication: Database replicated with 5-second lag
+  
+  Cost Optimization:
+  - Use spot instances for non-critical batch jobs (60% cost savings)
+  - Reserved instances for baseline capacity (40% savings)
+  - Auto-scaling during off-peak hours to minimum capacity
+  - Archive old transaction data to S3 Glacier (90% storage cost savings)
+  - Compression: Enable gzip for all API responses (bandwidth savings)
+  
+  Monitoring and Alerts:
+  - Alert on CPU > 80% for 5 minutes
+  - Alert on memory > 85%
+  - Alert on API latency p95 > 500ms
+  - Alert on error rate > 2%
+  - Alert on database connection pool > 90%
+  - Daily capacity planning report generated automatically
