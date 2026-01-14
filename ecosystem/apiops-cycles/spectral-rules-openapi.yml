@@ -1,0 +1,506 @@
+extends: [[spectral:oas, all]]
+
+rules:
+  # =============================================================================
+  # CONCEPT READINESS RULES
+  # =============================================================================
+  
+  # Endpoints have business value and feature descriptions
+  operation-description-required:
+    description: All operations must have a description explaining business value
+    given: $.paths[*][*]
+    severity: error
+    then:
+      - field: description
+        function: truthy
+      - field: description
+        function: length
+        functionOptions:
+          min: 20
+    message: "Operation must have a meaningful description (min 20 characters) explaining its business purpose"
+
+  # Mandatory fields are specified
+  schema-properties-required-defined:
+    description: Schemas with required fields must define them in the required array
+    given: $.components.schemas[*]
+    severity: error
+    then:
+      field: required
+      function: defined
+    message: "Schema should explicitly define required fields"
+
+  # Dates use ISO format with timezone
+  date-time-format-required:
+    description: Date/time fields must use ISO 8601 format with timezone
+    given: $..[?(@.type=="string" && (@property.match(/date|time|timestamp|created|updated|modified/i)))]
+    severity: error
+    then:
+      field: format
+      function: enumeration
+      functionOptions:
+        values:
+          - date-time
+          - date
+    message: "Date/time fields must use 'date-time' or 'date' format (ISO 8601)"
+
+  # Field names avoid acronyms, use full words
+  property-names-descriptive:
+    description: Property names should be descriptive and avoid acronyms
+    given: $.components.schemas..properties[*]~
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^(id|api|url|uri|uuid|http|ftp|json|xml|csv|pdf|jpg|png)$"
+    message: "Avoid using acronyms as standalone property names; use descriptive names (e.g., 'userId' instead of 'id', 'apiEndpoint' instead of 'api')"
+
+  property-names-no-abbreviations:
+    description: Property names should use full words, not abbreviations
+    given: $.components.schemas..properties[*]~
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^(num|qty|amt|addr|dept|mgr|msg|req|res|tmp|str|obj|arr|cnt|idx)$"
+    message: "Use full words in property names (e.g., 'quantity' instead of 'qty', 'amount' instead of 'amt')"
+
+  # Creating new resources returns identifiers
+  post-201-returns-id:
+    description: POST operations that create resources (201) must return an identifier
+    given: $.paths[*].post.responses[?(@property == "201")].content[*].schema
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            id:
+              type: string
+          anyOf:
+            - required: ["id"]
+            - required: ["_id"]
+            - required: ["uuid"]
+            - required: ["identifier"]
+    message: "POST 201 Created response must include an identifier field (id, _id, uuid, or identifier)"
+
+  # =============================================================================
+  # API DESIGN PROTOTYPE READINESS RULES
+  # =============================================================================
+
+  # Endpoint paths contain max two resources/sub-resources
+  path-max-depth:
+    description: API paths should not exceed 2 levels of resource nesting
+    given: $.paths[*]~
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^/[^/]+/[^/]+/[^/]+/[^/]+/"
+    message: "Path exceeds recommended depth of 2 resource levels (e.g., /resource/{id}/subresource/{id})"
+
+  # Endpoints and attributes include examples
+  operation-examples-required:
+    description: All operations should include request/response examples
+    given: $.paths[*][*]
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["requestBody"]
+            - required: ["responses"]
+    message: "Operations should include examples in request body or responses"
+
+  request-body-example-required:
+    description: Request bodies should include examples
+    given: $.paths[*][*].requestBody.content[*]
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["example"]
+            - required: ["examples"]
+    message: "Request body should include 'example' or 'examples'"
+
+  response-example-required:
+    description: Success responses should include examples
+    given: $.paths[*][*].responses[?(@property.match(/^2/))].content[*]
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["example"]
+            - required: ["examples"]
+    message: "Success responses should include 'example' or 'examples'"
+
+  # POST is used for create/update (not PUT unless full replacement)
+  put-requires-full-representation:
+    description: PUT should only be used for full resource replacement
+    given: $.paths[*].put
+    severity: warn
+    then:
+      field: description
+      function: pattern
+      functionOptions:
+        match: "(full|complete|entire|replace|replacement)"
+    message: "PUT should only be used for full resource replacement. Consider using POST or PATCH for partial updates. Document this clearly in the description."
+
+  # DELETE is used to remove resources
+  delete-returns-204:
+    description: DELETE operations should return 204 No Content on success
+    given: $.paths[*].delete.responses
+    severity: warn
+    then:
+      field: "204"
+      function: defined
+    message: "DELETE should return 204 No Content on successful deletion"
+
+  # GET has no request body
+  get-no-request-body:
+    description: GET operations must not have a request body
+    given: $.paths[*].get
+    severity: error
+    then:
+      field: requestBody
+      function: undefined
+    message: "GET operations must not have a request body"
+
+  # GET returns 200 OK with content or 204 if empty
+  get-success-response:
+    description: GET operations should return 200 or 204 responses
+    given: $.paths[*].get.responses
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["200"]
+            - required: ["204"]
+    message: "GET should return 200 OK (with content) or 204 No Content (if empty)"
+
+  # POST returns 200 OK when updating or 201 Created on create
+  post-appropriate-status:
+    description: POST should return 200 (update) or 201 (create)
+    given: $.paths[*].post.responses
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["200"]
+            - required: ["201"]
+    message: "POST should return 200 OK (for updates) or 201 Created (for resource creation)"
+
+  # 400 errors provide specific error info
+  error-400-schema-defined:
+    description: 400 Bad Request responses should have a detailed error schema
+    given: $.paths[*][*].responses[?(@property == "400")]
+    severity: warn
+    then:
+      - field: content
+        function: defined
+      - field: description
+        function: truthy
+    message: "400 Bad Request should include content schema with detailed error information"
+
+  error-response-schema-properties:
+    description: Error responses should include error details
+    given: $.paths[*][*].responses[?(@property.match(/^4|^5/))].content[*].schema
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            error:
+              type: object
+          anyOf:
+            - required: ["error"]
+            - required: ["message"]
+            - required: ["errors"]
+    message: "Error responses should include structured error information (error, message, or errors field)"
+
+  # 401 Unauthorized for wrong credentials
+  auth-endpoints-401-response:
+    description: Protected endpoints should define 401 Unauthorized response
+    given: $.paths[*][*][?(@.security)]
+    severity: warn
+    then:
+      field: responses.401
+      function: defined
+    message: "Operations with security requirements should define a 401 Unauthorized response"
+
+  # 403 Forbidden for unauthorized operations
+  protected-endpoints-403-response:
+    description: Protected endpoints should define 403 Forbidden response
+    given: $.paths[*][*][?(@.security)]
+    severity: warn
+    then:
+      field: responses.403
+      function: defined
+    message: "Protected operations should define a 403 Forbidden response for unauthorized access"
+
+  # =============================================================================
+  # PRODUCTION MAINTAINABILITY RULES
+  # =============================================================================
+
+  # Spec contains request/response schema
+  request-body-schema-required:
+    description: Request bodies must have a defined schema
+    given: $.paths[*][post,put,patch].requestBody.content[*]
+    severity: error
+    then:
+      field: schema
+      function: defined
+    message: "Request body must have a schema definition"
+
+  response-schema-required:
+    description: Success responses must have a defined schema
+    given: $.paths[*][*].responses[?(@property.match(/^2/))].content[*]
+    severity: error
+    then:
+      field: schema
+      function: defined
+    message: "Success response must have a schema definition"
+
+  # Token-based authentication defined
+  security-schemes-defined:
+    description: API should define security schemes (OAuth2, Bearer, API Key)
+    given: $.components
+    severity: warn
+    then:
+      field: securitySchemes
+      function: defined
+    message: "API should define security schemes in components.securitySchemes"
+
+  bearer-auth-recommended:
+    description: Token-based authentication (Bearer/OAuth2) is recommended
+    given: $.components.securitySchemes[*]
+    severity: info
+    then:
+      field: type
+      function: enumeration
+      functionOptions:
+        values:
+          - http
+          - oauth2
+          - openIdConnect
+    message: "Consider using Bearer token (http), OAuth2, or OpenID Connect for authentication"
+
+  # UUIDs/pseudo-identifiers instead of DB IDs
+  id-fields-use-strings:
+    description: ID fields should use string type (for UUIDs/pseudo-identifiers)
+    given: $.components.schemas..properties[?(@property.match(/id$/i))]
+    severity: warn
+    then:
+      field: type
+      function: enumeration
+      functionOptions:
+        values:
+          - string
+    message: "ID fields should use string type to support UUIDs and pseudo-identifiers (avoid exposing numeric database IDs)"
+
+  id-fields-recommend-format:
+    description: String ID fields should specify format (uuid recommended)
+    given: $.components.schemas..properties[?(@property.match(/id$/i) && @.type=="string")]
+    severity: info
+    then:
+      field: format
+      function: defined
+    message: "Consider specifying format for ID fields (e.g., 'uuid' for UUID identifiers)"
+
+  # No sensitive data in URLs
+  path-parameters-no-sensitive-data:
+    description: Path parameters should not contain sensitive data
+    given: $.paths[*][*].parameters[?(@.in == "path")]
+    severity: error
+    then:
+      field: name
+      function: pattern
+      functionOptions:
+        notMatch: "(password|secret|token|key|credential|ssn|credit|card|cvv|pin)"
+    message: "Do not include sensitive data (passwords, tokens, credentials) in path parameters"
+
+  query-parameters-no-sensitive-data:
+    description: Query parameters should not contain sensitive data
+    given: $.paths[*][*].parameters[?(@.in == "query")]
+    severity: error
+    then:
+      field: name
+      function: pattern
+      functionOptions:
+        notMatch: "(password|secret|token|key|credential|ssn|credit|card|cvv|pin)"
+    message: "Do not include sensitive data (passwords, tokens, credentials) in query parameters"
+
+  # HTTP methods only for intended resources
+  http-methods-semantic-usage:
+    description: HTTP methods should be used semantically
+    given: $.paths[*]
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            get: true
+            post: true
+            put: true
+            patch: true
+            delete: true
+            head: true
+            options: true
+          additionalProperties: false
+    message: "Only standard HTTP methods (GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS) should be used"
+
+  # =============================================================================
+  # ADDITIONAL BEST PRACTICES
+  # =============================================================================
+
+  # API versioning in path or header
+  api-version-in-path:
+    description: API should include version in path
+    given: $.paths[*]~
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v[0-9]+"
+    message: "Consider including API version in path (e.g., /v1/, /v2/)"
+
+  # OpenAPI version should be 3.1.x
+  openapi-version-3-1:
+    description: OpenAPI version should be 3.1.x for maximum compatibility
+    given: $.openapi
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^3\\.1\\."
+    message: "OpenAPI specification should use version 3.1.x"
+
+  # Info section completeness
+  info-contact-required:
+    description: API info should include contact information
+    given: $.info
+    severity: warn
+    then:
+      field: contact
+      function: defined
+    message: "API info should include contact information for support"
+
+  info-license-required:
+    description: API info should include license information
+    given: $.info
+    severity: info
+    then:
+      field: license
+      function: defined
+    message: "Consider including license information in API specification"
+
+  # Server URLs should use HTTPS
+  servers-https-only:
+    description: Server URLs should use HTTPS protocol
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+    message: "Server URLs must use HTTPS protocol (not HTTP)"
+
+  # Consistent response structure
+  response-structure-consistency:
+    description: Success responses should use consistent structure
+    given: $.paths[*][*].responses[?(@property.match(/^2/))].content[*].schema
+    severity: info
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            data: true
+          anyOf:
+            - required: ["data"]
+            - required: ["result"]
+            - required: ["response"]
+    message: "Consider using a consistent wrapper for response data (e.g., 'data', 'result' field)"
+
+  # Pagination parameters for list endpoints
+  list-endpoints-pagination:
+    description: List/collection endpoints should support pagination
+    given: $.paths[*].get[?(@.operationId.match(/list|search|find/i))].parameters
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            properties:
+              name:
+                enum: ["limit", "offset", "page", "pageSize", "cursor"]
+    message: "List endpoints should include pagination parameters (limit/offset, page/pageSize, or cursor)"
+
+  # Filtering parameters for list endpoints
+  list-endpoints-filtering:
+    description: List endpoints should support filtering
+    given: $.paths[*].get[?(@.operationId.match(/list|search|find/i))]
+    severity: info
+    then:
+      field: parameters
+      function: minItems
+      functionOptions:
+        min: 1
+    message: "Consider adding filter parameters to list endpoints for better usability"
+
+  # Rate limiting headers documented
+  rate-limiting-headers:
+    description: Document rate limiting headers in responses
+    given: $.paths[*][*].responses[?(@property.match(/^2|^429/))]
+    severity: info
+    then:
+      field: headers
+      function: defined
+    message: "Consider documenting rate limit headers (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset)"
+
+  # Deprecation warnings
+  deprecated-operations-marked:
+    description: Deprecated operations must be clearly marked
+    given: $.paths[*][*][?(@.deprecated == true)]
+    severity: error
+    then:
+      field: description
+      function: pattern
+      functionOptions:
+        match: "(deprecated|deprecation|obsolete)"
+    message: "Deprecated operations must clearly indicate deprecation in their description"
+
+  # Tags for organization
+  operations-have-tags:
+    description: Operations should be organized with tags
+    given: $.paths[*][*]
+    severity: warn
+    then:
+      field: tags
+      function: defined
+    message: "Operations should include tags for better organization and documentation"
+
+  tags-have-descriptions:
+    description: Tags should have descriptions
+    given: $.tags[*]
+    severity: info
+    then:
+      field: description
+      function: truthy
+    message: "Tags should include descriptions explaining their purpose"

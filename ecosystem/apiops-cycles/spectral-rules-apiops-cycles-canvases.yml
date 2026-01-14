@@ -1,0 +1,738 @@
+rules:
+
+  # =============================================================================
+  # CUSTOMER JOURNEY CANVAS RULES
+  # =============================================================================
+  
+  customer-journey-persona-exists:
+    description: Customer Journey Canvas should have a persona defined
+    given: $[?(@.canvasType == 'customerJourneyCanvas')]
+    severity: hint
+    then:
+      field: persona
+      function: truthy
+    message: "Consider defining the persona - who is the typical customer experiencing this journey?"
+
+  customer-journey-discovers-need-exists:
+    description: Customer Journey Canvas should describe how customer discovers need
+    given: $[?(@.canvasType == 'customerJourneyCanvas')]
+    severity: hint
+    then:
+      field: customerDiscoversNeed
+      function: truthy
+    message: "Consider describing how the customer recognizes their need or problem"
+
+  customer-journey-need-resolved-exists:
+    description: Customer Journey Canvas should describe how customer need is resolved
+    given: $[?(@.canvasType == 'customerJourneyCanvas')]
+    severity: hint
+    then:
+      field: customerNeedIsResolved
+      function: truthy
+    message: "Consider describing how the customer's need is ultimately resolved"
+
+  customer-journey-steps-exists:
+    description: Customer Journey Canvas should define journey steps
+    given: $[?(@.canvasType == 'customerJourneyCanvas')]
+    severity: hint
+    then:
+      field: journeySteps
+      function: truthy
+    message: "Consider defining the steps the customer takes in their journey"
+
+  customer-journey-pains-exists:
+    description: Customer Journey Canvas should identify customer pains
+    given: $[?(@.canvasType == 'customerJourneyCanvas')]
+    severity: hint
+    then:
+      field: pains
+      function: truthy
+    message: "Consider identifying the customer's pain points or challenges"
+
+  customer-journey-gains-exists:
+    description: Customer Journey Canvas should identify customer gains
+    given: $[?(@.canvasType == 'customerJourneyCanvas')]
+    severity: hint
+    then:
+      field: gains
+      function: truthy
+    message: "Consider identifying the customer's gains or benefits"
+
+  customer-journey-inputs-outputs-exists:
+    description: Customer Journey Canvas should define inputs and outputs
+    given: $[?(@.canvasType == 'customerJourneyCanvas')]
+    severity: hint
+    then:
+      field: inputsAndOutputs
+      function: truthy
+    message: "Consider defining the inputs and outputs at each step"
+
+  customer-journey-interaction-rules-exists:
+    description: Customer Journey Canvas should define interaction and processing rules
+    given: $[?(@.canvasType == 'customerJourneyCanvas')]
+    severity: hint
+    then:
+      field: interactionAndProcessingRules
+      function: truthy
+    message: "Consider defining the interaction and processing rules at each step"
+
+  # =============================================================================
+  # API VALUE PROPOSITION CANVAS RULES
+  # =============================================================================
+
+  value-proposition-tasks-exists:
+    description: API Value Proposition Canvas should define consumer tasks
+    given: $[?(@.canvasType == 'apiValuePropositionCanvas')]
+    severity: hint
+    then:
+      field: tasks
+      function: truthy
+    message: "Consider defining what API consumers are trying to achieve"
+
+  value-proposition-gain-features-exists:
+    description: API Value Proposition Canvas should define gain enabling features
+    given: $[?(@.canvasType == 'apiValuePropositionCanvas')]
+    severity: hint
+    then:
+      field: gainEnablingFeatures
+      function: truthy
+    message: "Consider defining features that enable API consumers to achieve gains"
+
+  value-proposition-pain-features-exists:
+    description: API Value Proposition Canvas should define pain relieving features
+    given: $[?(@.canvasType == 'apiValuePropositionCanvas')]
+    severity: hint
+    then:
+      field: painRelievingFeatures
+      function: truthy
+    message: "Consider defining features that help API consumers overcome pains"
+
+  value-proposition-products-exists:
+    description: API Value Proposition Canvas should define API products
+    given: $[?(@.canvasType == 'apiValuePropositionCanvas')]
+    severity: hint
+    then:
+      field: apiProducts
+      function: truthy
+    message: "Consider defining API products and features that address tasks, pains, and gains"
+
+  # =============================================================================
+  # API BUSINESS MODEL CANVAS RULES
+  # =============================================================================
+
+  business-model-value-proposition-exists:
+    description: API Business Model Canvas should define value proposition
+    given: $[?(@.canvasType == 'apiBusinessModelCanvas')]
+    severity: hint
+    then:
+      field: apiValueProposition
+      function: truthy
+    message: "Consider defining what value the API offers to consumers"
+
+  business-model-consumer-segments-exists:
+    description: API Business Model Canvas should define consumer segments
+    given: $[?(@.canvasType == 'apiBusinessModelCanvas')]
+    severity: hint
+    then:
+      field: apiConsumerSegments
+      function: truthy
+    message: "Consider defining who the target audiences for the API are"
+
+  business-model-developer-relations-exists:
+    description: API Business Model Canvas should define developer relations
+    given: $[?(@.canvasType == 'apiBusinessModelCanvas')]
+    severity: hint
+    then:
+      field: developerRelations
+      function: truthy
+    message: "Consider defining how the API provider reaches and supports consumers"
+
+  business-model-channels-exists:
+    description: API Business Model Canvas should define channels
+    given: $[?(@.canvasType == 'apiBusinessModelCanvas')]
+    severity: hint
+    then:
+      field: channels
+      function: truthy
+    message: "Consider defining through which mechanisms consumers interact with the API"
+
+  business-model-key-resources-exists:
+    description: API Business Model Canvas should define key resources
+    given: $[?(@.canvasType == 'apiBusinessModelCanvas')]
+    severity: hint
+    then:
+      field: keyResources
+      function: truthy
+    message: "Consider defining what unique strategic assets must be acquired or built"
+
+  business-model-key-activities-exists:
+    description: API Business Model Canvas should define key activities
+    given: $[?(@.canvasType == 'apiBusinessModelCanvas')]
+    severity: hint
+    then:
+      field: keyActivities
+      function: truthy
+    message: "Consider defining the most important actions to operate successfully"
+
+  business-model-key-partners-exists:
+    description: API Business Model Canvas should define key partners
+    given: $[?(@.canvasType == 'apiBusinessModelCanvas')]
+    severity: hint
+    then:
+      field: keyPartners
+      function: truthy
+    message: "Consider defining who the key stakeholders are"
+
+  business-model-benefits-exists:
+    description: API Business Model Canvas should define benefits
+    given: $[?(@.canvasType == 'apiBusinessModelCanvas')]
+    severity: hint
+    then:
+      field: benefits
+      function: truthy
+    message: "Consider defining the significant benefits or revenue streams"
+
+  business-model-costs-exists:
+    description: API Business Model Canvas should define costs
+    given: $[?(@.canvasType == 'apiBusinessModelCanvas')]
+    severity: hint
+    then:
+      field: costs
+      function: truthy
+    message: "Consider defining the significant costs in building, deploying, and operating"
+
+  # =============================================================================
+  # DOMAIN CANVAS RULES
+  # =============================================================================
+
+  domain-journey-steps-exists:
+    description: Domain Canvas should select relevant customer journey steps
+    given: $[?(@.canvasType == 'domainCanvas')]
+    severity: hint
+    then:
+      field: selectedCustomerJourneySteps
+      function: truthy
+    message: "Consider selecting which customer journey steps are relevant to this domain"
+
+  domain-core-entities-exists:
+    description: Domain Canvas should define core entities and business meaning
+    given: $[?(@.canvasType == 'domainCanvas')]
+    severity: hint
+    then:
+      field: coreEntitiesAndBusinessMeaning
+      function: truthy
+    message: "Consider defining the core entities and their business meaning"
+
+  domain-attributes-exists:
+    description: Domain Canvas should define attributes and business importance
+    given: $[?(@.canvasType == 'domainCanvas')]
+    severity: hint
+    then:
+      field: attributesAndBusinessImportance
+      function: truthy
+    message: "Consider defining the key attributes of each entity and their business importance"
+
+  domain-relationships-exists:
+    description: Domain Canvas should define relationships between entities
+    given: $[?(@.canvasType == 'domainCanvas')]
+    severity: hint
+    then:
+      field: relationshipsBetweenEntities
+      function: truthy
+    message: "Consider defining the relationships between entities"
+
+  domain-business-rules-exists:
+    description: Domain Canvas should define business, compliance, and integrity rules
+    given: $[?(@.canvasType == 'domainCanvas')]
+    severity: hint
+    then:
+      field: businessComplianceAndIntegrityRules
+      function: truthy
+    message: "Consider defining business, compliance, and integrity rules related to entities"
+
+  domain-security-privacy-exists:
+    description: Domain Canvas should define security and privacy considerations
+    given: $[?(@.canvasType == 'domainCanvas')]
+    severity: hint
+    then:
+      field: securityAndPrivacyConsiderations
+      function: truthy
+    message: "Consider defining security and privacy considerations related to entities"
+
+  # =============================================================================
+  # INTERACTION CANVAS RULES
+  # =============================================================================
+
+  interaction-crud-interactions-exists:
+    description: Interaction Canvas should define CRUD interactions
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: crudInteractions
+      function: truthy
+    message: "Consider defining CRUD (Create, Read, Update, Delete) interactions"
+
+  interaction-crud-models-exists:
+    description: Interaction Canvas should define CRUD input and output models
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: crudInputAndOutputModels
+      function: truthy
+    message: "Consider defining input and output models for CRUD interactions"
+
+  interaction-crud-validation-exists:
+    description: Interaction Canvas should define CRUD processing and validation
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: crudProcessingAndValidation
+      function: truthy
+    message: "Consider defining processing and validation rules for CRUD interactions"
+
+  interaction-query-interactions-exists:
+    description: Interaction Canvas should define query-driven interactions
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: queryDrivenInteractions
+      function: truthy
+    message: "Consider defining query-driven interactions"
+
+  interaction-query-models-exists:
+    description: Interaction Canvas should define query-driven input and output models
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: queryDrivenInputAndOutputModels
+      function: truthy
+    message: "Consider defining input and output models for query-driven interactions"
+
+  interaction-query-validation-exists:
+    description: Interaction Canvas should define query-driven processing and validation
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: queryDrivenProcessingAndValidation
+      function: truthy
+    message: "Consider defining processing and validation rules for query-driven interactions"
+
+  interaction-command-interactions-exists:
+    description: Interaction Canvas should define command-driven interactions
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: commandDrivenInteractions
+      function: truthy
+    message: "Consider defining command-driven interactions"
+
+  interaction-command-models-exists:
+    description: Interaction Canvas should define command-driven input and output models
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: commandDrivenInputAndOutputModels
+      function: truthy
+    message: "Consider defining input and output models for command-driven interactions"
+
+  interaction-command-validation-exists:
+    description: Interaction Canvas should define command-driven processing and validation
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: commandDrivenProcessingAndValidation
+      function: truthy
+    message: "Consider defining processing and validation rules for command-driven interactions"
+
+  interaction-event-interactions-exists:
+    description: Interaction Canvas should define event-driven interactions
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: eventDrivenInteractions
+      function: truthy
+    message: "Consider defining event-driven interactions"
+
+  interaction-event-models-exists:
+    description: Interaction Canvas should define event-driven input and output models
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: eventDrivenInputAndOutputModels
+      function: truthy
+    message: "Consider defining input and output models for event-driven interactions"
+
+  interaction-event-validation-exists:
+    description: Interaction Canvas should define event-driven processing and validation
+    given: $[?(@.canvasType == 'interactionCanvas')]
+    severity: hint
+    then:
+      field: eventDrivenProcessingAndValidation
+      function: truthy
+    message: "Consider defining processing and validation rules for event-driven interactions"
+
+  # =============================================================================
+  # REST CANVAS RULES
+  # =============================================================================
+
+  rest-resources-exists:
+    description: REST Canvas should define API resources
+    given: $[?(@.canvasType == 'restCanvas')]
+    severity: hint
+    then:
+      field: apiResources
+      function: truthy
+    message: "Consider defining the key resources exposed by the API"
+
+  rest-resource-model-exists:
+    description: REST Canvas should define API resource model
+    given: $[?(@.canvasType == 'restCanvas')]
+    severity: hint
+    then:
+      field: apiResourceModel
+      function: truthy
+    message: "Consider defining the structure of the API resource model"
+
+  rest-verbs-exists:
+    description: REST Canvas should define API verbs
+    given: $[?(@.canvasType == 'restCanvas')]
+    severity: hint
+    then:
+      field: apiVerbs
+      function: truthy
+    message: "Consider defining which HTTP verbs are used to interact with resources"
+
+  rest-verb-examples-exists:
+    description: REST Canvas should provide API verb examples
+    given: $[?(@.canvasType == 'restCanvas')]
+    severity: hint
+    then:
+      field: apiVerbExample
+      function: truthy
+    message: "Consider providing examples of API requests and responses for each verb"
+
+  # =============================================================================
+  # GRAPHQL CANVAS RULES
+  # =============================================================================
+
+  graphql-api-name-exists:
+    description: GraphQL Canvas should define API name
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: apiName
+      function: truthy
+    message: "Consider defining the name of the GraphQL API or endpoint"
+
+  graphql-consumer-goals-exists:
+    description: GraphQL Canvas should define consumer goals
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: consumerGoals
+      function: truthy
+    message: "Consider defining what problems consumers are solving and what data they need"
+
+  graphql-key-types-exists:
+    description: GraphQL Canvas should define key types
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: keyTypes
+      function: truthy
+    message: "Consider defining the core types exposed (e.g., User, Order, Product)"
+
+  graphql-relationships-exists:
+    description: GraphQL Canvas should define relationships
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: relationships
+      function: truthy
+    message: "Consider defining how types relate to each other in nested queries"
+
+  graphql-queries-exists:
+    description: GraphQL Canvas should define queries
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: queries
+      function: truthy
+    message: "Consider defining what common queries should be supported"
+
+  graphql-mutations-exists:
+    description: GraphQL Canvas should define mutations
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: mutations
+      function: truthy
+    message: "Consider defining what operations will modify data (create, update, delete)"
+
+  graphql-subscriptions-exists:
+    description: GraphQL Canvas should define subscriptions
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: subscriptions
+      function: truthy
+    message: "Consider defining any real-time updates or events consumers can subscribe to"
+
+  graphql-authorization-exists:
+    description: GraphQL Canvas should define authorization rules
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: authorizationRules
+      function: truthy
+    message: "Consider defining who can access which fields or types"
+
+  graphql-constraints-exists:
+    description: GraphQL Canvas should define consumer constraints
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: consumerConstraints
+      function: truthy
+    message: "Consider defining pagination, filtering, or rate-limiting constraints"
+
+  graphql-notes-exists:
+    description: GraphQL Canvas should document notes or open questions
+    given: $[?(@.canvasType == 'graphqlCanvas')]
+    severity: hint
+    then:
+      field: notesOrOpenQuestions
+      function: truthy
+    message: "Consider documenting any pending decisions or integration considerations"
+
+  # =============================================================================
+  # EVENT CANVAS RULES
+  # =============================================================================
+
+  event-trigger-exists:
+    description: Event Canvas should define user task or trigger
+    given: $[?(@.canvasType == 'eventCanvas')]
+    severity: hint
+    then:
+      field: userTaskOrTrigger
+      function: truthy
+    message: "Consider defining what user action or system event triggers this operation"
+
+  event-payload-exists:
+    description: Event Canvas should define input or event payload
+    given: $[?(@.canvasType == 'eventCanvas')]
+    severity: hint
+    then:
+      field: inputOrEventPayload
+      function: truthy
+    message: "Consider defining what data is included in the incoming event payload"
+
+  event-processing-exists:
+    description: Event Canvas should define processing or logic
+    given: $[?(@.canvasType == 'eventCanvas')]
+    severity: hint
+    then:
+      field: processingOrLogic
+      function: truthy
+    message: "Consider describing the backend processing logic, validations, and transformations"
+
+  event-output-exists:
+    description: Event Canvas should define output or event result
+    given: $[?(@.canvasType == 'eventCanvas')]
+    severity: hint
+    then:
+      field: outputOrEventResult
+      function: truthy
+    message: "Consider defining what resulting event or acknowledgment is produced"
+
+  # =============================================================================
+  # CAPACITY CANVAS RULES
+  # =============================================================================
+
+  capacity-current-volumes-exists:
+    description: Capacity Canvas should define current business volumes
+    given: $[?(@.canvasType == 'capacityCanvas')]
+    severity: hint
+    then:
+      field: currentBusinessVolumes
+      function: truthy
+    message: "Consider defining the current business volumes and transaction rates"
+
+  capacity-future-trends-exists:
+    description: Capacity Canvas should define future consumption trends
+    given: $[?(@.canvasType == 'capacityCanvas')]
+    severity: hint
+    then:
+      field: futureConsumptionTrends
+      function: truthy
+    message: "Consider defining the anticipated future consumption trends"
+
+  capacity-peak-load-exists:
+    description: Capacity Canvas should define peak load and availability requirements
+    given: $[?(@.canvasType == 'capacityCanvas')]
+    severity: hint
+    then:
+      field: peakLoadAndAvailabilityRequirements
+      function: truthy
+    message: "Consider defining the peak load and availability requirements"
+
+  capacity-caching-exists:
+    description: Capacity Canvas should define caching strategies
+    given: $[?(@.canvasType == 'capacityCanvas')]
+    severity: hint
+    then:
+      field: cachingStrategies
+      function: truthy
+    message: "Consider defining what caching strategies can optimize performance"
+
+  capacity-rate-limiting-exists:
+    description: Capacity Canvas should define rate limiting strategies
+    given: $[?(@.canvasType == 'capacityCanvas')]
+    severity: hint
+    then:
+      field: rateLimitingStrategies
+      function: truthy
+    message: "Consider defining what rate limiting strategies can manage consumption"
+
+  capacity-scaling-exists:
+    description: Capacity Canvas should define scaling strategies
+    given: $[?(@.canvasType == 'capacityCanvas')]
+    severity: hint
+    then:
+      field: scalingStrategies
+      function: truthy
+    message: "Consider defining what scaling strategies can accommodate growth"
+
+  # =============================================================================
+  # BUSINESS IMPACT CANVAS RULES
+  # =============================================================================
+
+  impact-availability-risks-exists:
+    description: Business Impact Canvas should identify availability risks
+    given: $[?(@.canvasType == 'businessImpactCanvas')]
+    severity: hint
+    then:
+      field: availabilityRisks
+      function: truthy
+    message: "Consider identifying the potential risks to API availability"
+
+  impact-mitigate-availability-exists:
+    description: Business Impact Canvas should define how to mitigate availability risks
+    given: $[?(@.canvasType == 'businessImpactCanvas')]
+    severity: hint
+    then:
+      field: mitigateAvailabilityRisks
+      function: truthy
+    message: "Consider defining how to mitigate the availability risks"
+
+  impact-security-risks-exists:
+    description: Business Impact Canvas should identify security risks
+    given: $[?(@.canvasType == 'businessImpactCanvas')]
+    severity: hint
+    then:
+      field: securityRisks
+      function: truthy
+    message: "Consider identifying the potential security risks associated with the API"
+
+  impact-mitigate-security-exists:
+    description: Business Impact Canvas should define how to mitigate security risks
+    given: $[?(@.canvasType == 'businessImpactCanvas')]
+    severity: hint
+    then:
+      field: mitigateSecurityRisks
+      function: truthy
+    message: "Consider defining how to mitigate the security risks"
+
+  impact-data-risks-exists:
+    description: Business Impact Canvas should identify data risks
+    given: $[?(@.canvasType == 'businessImpactCanvas')]
+    severity: hint
+    then:
+      field: dataRisks
+      function: truthy
+    message: "Consider identifying the potential risks to data integrity or confidentiality"
+
+  impact-mitigate-data-exists:
+    description: Business Impact Canvas should define how to mitigate data risks
+    given: $[?(@.canvasType == 'businessImpactCanvas')]
+    severity: hint
+    then:
+      field: mitigateDataRisks
+      function: truthy
+    message: "Consider defining how to mitigate the data risks"
+
+  # =============================================================================
+  # LOCATIONS CANVAS RULES
+  # =============================================================================
+
+  locations-groups-exists:
+    description: Locations Canvas should define location groups
+    given: $[?(@.canvasType == 'locationsCanvas')]
+    severity: hint
+    then:
+      field: locationGroups
+      function: truthy
+    message: "Consider defining the relevant location groups"
+
+  locations-group-characteristics-exists:
+    description: Locations Canvas should define location group characteristics
+    given: $[?(@.canvasType == 'locationsCanvas')]
+    severity: hint
+    then:
+      field: locationGroupCharacteristics
+      function: truthy
+    message: "Consider defining the characteristics of the location groups"
+
+  locations-locations-exists:
+    description: Locations Canvas should define locations
+    given: $[?(@.canvasType == 'locationsCanvas')]
+    severity: hint
+    then:
+      field: locations
+      function: truthy
+    message: "Consider defining the relevant locations within each group"
+
+  locations-characteristics-exists:
+    description: Locations Canvas should define location characteristics
+    given: $[?(@.canvasType == 'locationsCanvas')]
+    severity: hint
+    then:
+      field: locationCharacteristics
+      function: truthy
+    message: "Consider defining the characteristics of the locations"
+
+  locations-distances-exists:
+    description: Locations Canvas should define location distances
+    given: $[?(@.canvasType == 'locationsCanvas')]
+    severity: hint
+    then:
+      field: locationDistances
+      function: truthy
+    message: "Consider defining the distances between locations"
+
+  locations-distance-characteristics-exists:
+    description: Locations Canvas should define location distance characteristics
+    given: $[?(@.canvasType == 'locationsCanvas')]
+    severity: hint
+    then:
+      field: locationDistanceCharacteristics
+      function: truthy
+    message: "Consider defining the characteristics of location distances"
+
+  locations-endpoints-exists:
+    description: Locations Canvas should define location endpoints
+    given: $[?(@.canvasType == 'locationsCanvas')]
+    severity: hint
+    then:
+      field: locationEndpoints
+      function: truthy
+    message: "Consider defining the endpoints associated with locations"
+
+  locations-endpoint-characteristics-exists:
+    description: Locations Canvas should define location endpoint characteristics
+    given: $[?(@.canvasType == 'locationsCanvas')]
+    severity: hint
+    then:
+      field: locationEndpointCharacteristics
+      function: truthy
+    message: "Consider defining the characteristics of location endpoints"

@@ -1,0 +1,638 @@
+extends: [[spectral:asyncapi, all]]
+
+rules:
+  # =============================================================================
+  # CONCEPT READINESS RULES
+  # =============================================================================
+  
+  # API has a description that explains its business value and features
+  asyncapi-info-description-required:
+    description: API info must have a comprehensive description explaining business value
+    given: $.info
+    severity: error
+    then:
+      - field: description
+        function: truthy
+      - field: description
+        function: length
+        functionOptions:
+          min: 50
+    message: "API info.description must explain business value and features (min 50 characters)"
+
+  # Mandatory fields are specified
+  message-payload-required-fields:
+    description: Message payloads should explicitly define required fields
+    given: $.components.messages[*].payload
+    severity: error
+    then:
+      field: required
+      function: defined
+    message: "Message payload should explicitly define required fields"
+
+  schema-required-fields-defined:
+    description: Schemas with properties should define required fields
+    given: $.components.schemas[*][?(@.properties)]
+    severity: error
+    then:
+      field: required
+      function: defined
+    message: "Schemas with properties should define which fields are required"
+
+  # Dates are in ISO standard date format including timezone
+  date-time-format-iso:
+    description: Date/time fields must use ISO 8601 format with timezone
+    given: $..[?(@.type=="string" && (@property.match(/date|time|timestamp|created|updated|modified|published/i)))]
+    severity: error
+    then:
+      field: format
+      function: enumeration
+      functionOptions:
+        values:
+          - date-time
+          - date
+    message: "Date/time fields must use 'date-time' or 'date' format (ISO 8601 with timezone)"
+
+  # Fields are described in full words avoiding acronyms
+  property-names-no-acronyms:
+    description: Property names should avoid standalone acronyms
+    given: $.components.schemas..properties[*]~
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^(id|api|url|uri|uuid|http|amqp|mqtt|json|xml|csv|pdf)$"
+    message: "Avoid acronyms as standalone property names; use descriptive names (e.g., 'messageId' instead of 'id')"
+
+  property-names-full-words:
+    description: Property names should use full words, not abbreviations
+    given: $.components.schemas..properties[*]~
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^(num|qty|amt|addr|dept|mgr|msg|req|res|tmp|str|obj|arr|cnt|idx|pct)$"
+    message: "Use full words in property names (e.g., 'quantity' not 'qty', 'message' not 'msg')"
+
+  # When publishing new messages, the relevant topics or channels are clearly identified
+  channel-description-required:
+    description: All channels must have descriptions explaining their purpose
+    given: $.channels[*]
+    severity: error
+    then:
+      field: description
+      function: truthy
+    message: "Each channel must have a description explaining its purpose and usage"
+
+  publish-operation-described:
+    description: Publish operations must have descriptions
+    given: $.channels[*].publish
+    severity: error
+    then:
+      field: description
+      function: truthy
+    message: "Publish operation must have a description explaining what is being published"
+
+  subscribe-operation-described:
+    description: Subscribe operations must have descriptions
+    given: $.channels[*].subscribe
+    severity: error
+    then:
+      field: description
+      function: truthy
+    message: "Subscribe operation must have a description explaining what can be subscribed to"
+
+  # =============================================================================
+  # API DESIGN PROTOTYPE READINESS RULES
+  # =============================================================================
+
+  # Message design contains a clear structure (events, commands, queries)
+  message-structure-consistent:
+    description: Messages should follow consistent structure with common metadata fields
+    given: $.components.messages[*].payload.properties
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["eventType"]
+            - required: ["event"]
+            - required: ["type"]
+            - required: ["messageType"]
+    message: "Messages should include a type/eventType field to identify message structure (event, command, query)"
+
+  message-metadata-fields:
+    description: Messages should include common metadata fields
+    given: $.components.messages[*].payload.properties
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["timestamp"]
+            - required: ["messageId"]
+            - required: ["id"]
+    message: "Messages should include metadata fields like timestamp and messageId for traceability"
+
+  # All messages and attributes include examples
+  message-payload-example-required:
+    description: Message payloads must include examples
+    given: $.components.messages[*].payload
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["example"]
+            - required: ["examples"]
+    message: "Message payload must include 'example' or 'examples'"
+
+  message-header-example-required:
+    description: Message headers should include examples when defined
+    given: $.components.messages[*].headers
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["example"]
+            - required: ["examples"]
+    message: "Message headers should include 'example' or 'examples'"
+
+  # Messages follow a consistent structure across topics/channels
+  message-envelope-pattern:
+    description: Messages should use consistent envelope pattern
+    given: $.components.messages[*].payload
+    severity: info
+    then:
+      field: properties
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            data:
+              type: object
+            metadata:
+              type: object
+    message: "Consider using a consistent envelope pattern with 'data' and 'metadata' fields"
+
+  # Acknowledgments for received messages are defined
+  message-acknowledgment-defined:
+    description: Channels should define acknowledgment strategy in bindings
+    given: $.channels[*]
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ["bindings"]
+            - properties:
+                subscribe:
+                  required: ["bindings"]
+    message: "Consider defining acknowledgment strategy in channel or operation bindings"
+
+  # Errors or issues with messages include specific error information
+  error-message-schema-defined:
+    description: Error messages should be defined with detailed schema
+    given: $.components.messages[?(@property.match(/error|failure|reject/i))]
+    severity: warn
+    then:
+      field: payload
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["properties"]
+          properties:
+            properties:
+              type: object
+              anyOf:
+                - required: ["error"]
+                - required: ["errorCode"]
+                - required: ["errorMessage"]
+    message: "Error messages should include structured error information (error, errorCode, errorMessage)"
+
+  # Authentication and authorization strategies are specified
+  security-schemes-defined:
+    description: API should define security schemes
+    given: $.components
+    severity: error
+    then:
+      field: securitySchemes
+      function: defined
+    message: "AsyncAPI should define security schemes in components.securitySchemes"
+
+  server-security-required:
+    description: Servers should specify security requirements
+    given: $.servers[*]
+    severity: warn
+    then:
+      field: security
+      function: defined
+    message: "Servers should specify security requirements"
+
+  # =============================================================================
+  # PRODUCTION MAINTAINABILITY RULES
+  # =============================================================================
+
+  # Specification contains the schema for the messages
+  message-payload-schema-required:
+    description: All messages must have a payload schema
+    given: $.components.messages[*]
+    severity: error
+    then:
+      field: payload
+      function: defined
+    message: "Message must have a payload schema defined"
+
+  payload-schema-type-defined:
+    description: Message payload schemas must define type
+    given: $.components.messages[*].payload
+    severity: error
+    then:
+      field: type
+      function: defined
+    message: "Message payload schema must define a type"
+
+  # Message transport ensures security (e.g., MQTT/AMQP over TLS)
+  server-protocol-secure:
+    description: Server protocols should use secure transport (TLS/SSL)
+    given: $.servers[*].protocol
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "(amqps|mqtts|wss|https|secure-mqtt|kafka-secure)"
+    message: "Use secure protocols (amqps, mqtts, wss, https) instead of plaintext (amqp, mqtt, ws, http)"
+
+  server-url-secure:
+    description: Server URLs should use secure protocols
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^(mqtt|amqp|ws|http)://"
+    message: "Server URLs must use secure protocols (mqtts://, amqps://, wss://, https://)"
+
+  # API has token-based authentication
+  security-token-based:
+    description: Security schemes should use token-based authentication
+    given: $.components.securitySchemes[*]
+    severity: warn
+    then:
+      field: type
+      function: enumeration
+      functionOptions:
+        values:
+          - http
+          - oauth2
+          - openIdConnect
+          - httpApiKey
+    message: "Use token-based authentication (http/bearer, oauth2, openIdConnect, or httpApiKey)"
+
+  # UUIDs or pseudoidentifiers are used instead of DB IDs
+  id-fields-use-strings:
+    description: ID fields should use string type for UUIDs/pseudo-identifiers
+    given: $.components.schemas..properties[?(@property.match(/[Ii]d$/))][?(@.type)]
+    severity: warn
+    then:
+      field: type
+      function: enumeration
+      functionOptions:
+        values:
+          - string
+    message: "ID fields should use string type to support UUIDs (avoid numeric database IDs)"
+
+  id-fields-recommend-uuid:
+    description: String ID fields should use UUID format
+    given: $.components.schemas..properties[?(@property.match(/[Ii]d$/) && @.type=="string")]
+    severity: info
+    then:
+      field: format
+      function: enumeration
+      functionOptions:
+        values:
+          - uuid
+    message: "Consider using 'uuid' format for ID fields"
+
+  message-id-required:
+    description: Messages should include a unique identifier
+    given: $.components.messages[*].payload.properties
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["messageId"]
+            - required: ["id"]
+            - required: ["eventId"]
+            - required: ["correlationId"]
+    message: "Messages should include a unique identifier (messageId, id, eventId, or correlationId)"
+
+  # Sensitive information is not exposed in topics or channels
+  channel-names-no-sensitive-data:
+    description: Channel names should not contain sensitive information
+    given: $.channels[*]~
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "(password|secret|token|key|credential|ssn|credit|card|cvv|pin|private)"
+    message: "Do not include sensitive data in channel names"
+
+  channel-parameters-no-sensitive-data:
+    description: Channel parameters should not contain sensitive information
+    given: $.channels[*].parameters[*]
+    severity: error
+    then:
+      field: description
+      function: pattern
+      functionOptions:
+        notMatch: "(password|secret|credential|ssn|credit|card)"
+    message: "Do not include sensitive data in channel parameter descriptions"
+
+  # Whitelisting is used to specify which clients can publish/subscribe
+  operation-security-defined:
+    description: Operations should define security requirements
+    given: $.channels[*][publish,subscribe]
+    severity: warn
+    then:
+      field: security
+      function: defined
+    message: "Consider defining security requirements for publish/subscribe operations to control access"
+
+  # =============================================================================
+  # ADDITIONAL BEST PRACTICES
+  # =============================================================================
+
+  # AsyncAPI version should be 2.x
+  asyncapi-version-2-x:
+    description: AsyncAPI version should be 2.x
+    given: $.asyncapi
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^2\\."
+    message: "AsyncAPI specification should use version 2.x"
+
+  # Info section completeness
+  info-contact-required:
+    description: API info should include contact information
+    given: $.info
+    severity: warn
+    then:
+      field: contact
+      function: defined
+    message: "API info should include contact information for support"
+
+  info-license-required:
+    description: API info should include license information
+    given: $.info
+    severity: info
+    then:
+      field: license
+      function: defined
+    message: "Consider including license information in AsyncAPI specification"
+
+  # Server descriptions
+  server-description-required:
+    description: Servers should have descriptions
+    given: $.servers[*]
+    severity: warn
+    then:
+      field: description
+      function: truthy
+    message: "Each server should have a description explaining its purpose and environment"
+
+  # Message correlation
+  message-correlation-id:
+    description: Messages should support correlation for request/response patterns
+    given: $.components.messages[*]
+    severity: info
+    then:
+      field: correlationId
+      function: defined
+    message: "Consider defining correlationId for messages to support request/response correlation"
+
+  # Message traits for consistency
+  message-traits-usage:
+    description: Use message traits for common message characteristics
+    given: $.components
+    severity: info
+    then:
+      field: messageTraits
+      function: defined
+    message: "Consider defining messageTraits for common message characteristics (headers, metadata)"
+
+  # Operation traits for consistency
+  operation-traits-usage:
+    description: Use operation traits for common operation characteristics
+    given: $.components
+    severity: info
+    then:
+      field: operationTraits
+      function: defined
+    message: "Consider defining operationTraits for common operation characteristics (security, bindings)"
+
+  # Channel bindings for protocol-specific configuration
+  channel-bindings-defined:
+    description: Channels should define protocol-specific bindings
+    given: $.channels[*]
+    severity: info
+    then:
+      field: bindings
+      function: defined
+    message: "Consider defining channel bindings for protocol-specific configuration (MQTT, AMQP, Kafka)"
+
+  # Message content type
+  message-content-type-defined:
+    description: Messages should specify contentType
+    given: $.components.messages[*]
+    severity: warn
+    then:
+      field: contentType
+      function: defined
+    message: "Messages should specify contentType (e.g., application/json, avro/binary)"
+
+  # Tags for organization
+  channels-have-tags:
+    description: Channels should use tags for organization
+    given: $.channels[*]
+    severity: warn
+    then:
+      field: tags
+      function: defined
+    message: "Channels should include tags for better organization and documentation"
+
+  operations-have-tags:
+    description: Operations should use tags for organization
+    given: $.channels[*][publish,subscribe]
+    severity: info
+    then:
+      field: tags
+      function: defined
+    message: "Operations should include tags for better categorization"
+
+  tags-have-descriptions:
+    description: Tags should have descriptions
+    given: $.tags[*]
+    severity: info
+    then:
+      field: description
+      function: truthy
+    message: "Tags should include descriptions explaining their purpose"
+
+  # Message versioning
+  message-version-in-payload:
+    description: Messages should include version information
+    given: $.components.messages[*].payload.properties
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["version"]
+            - required: ["schemaVersion"]
+            - required: ["messageVersion"]
+    message: "Consider including version field in message payload for schema evolution"
+
+  # Error handling patterns
+  dead-letter-queue-documented:
+    description: Error handling strategy should be documented
+    given: $.channels[?(@property.match(/dlq|dead.letter|error|failed/i))]
+    severity: info
+    then:
+      field: description
+      function: pattern
+      functionOptions:
+        match: "(dead.letter|DLQ|error.handling|retry|failure)"
+    message: "Document dead letter queue and error handling strategy in channel description"
+
+  # Idempotency
+  message-idempotency-key:
+    description: Messages should support idempotency
+    given: $.components.messages[*].payload.properties
+    severity: info
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["idempotencyKey"]
+            - required: ["deduplicationId"]
+    message: "Consider including idempotencyKey for exactly-once processing semantics"
+
+  # Message schema validation
+  payload-schema-validation:
+    description: Payload schemas should use standard JSON Schema validation
+    given: $.components.messages[*].payload
+    severity: warn
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["$schema"]
+            - required: ["type"]
+    message: "Payload schema should include type or $schema for proper validation"
+
+  # Consistent naming conventions
+  channel-naming-convention:
+    description: Channel names should follow consistent naming convention
+    given: $.channels[*]~
+    severity: info
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z0-9]+([./][a-z0-9]+)*$"
+    message: "Use consistent channel naming (lowercase, dots/slashes for hierarchy, e.g., 'orders.created' or 'orders/created')"
+
+  # Operation IDs
+  operation-id-defined:
+    description: Operations should have unique operationIds
+    given: $.channels[*][publish,subscribe]
+    severity: warn
+    then:
+      field: operationId
+      function: defined
+    message: "Operations should have unique operationIds for code generation and documentation"
+
+  operation-id-unique:
+    description: operationIds must be unique across all operations
+    given: $
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+    message: "Each operationId must be unique across the entire AsyncAPI specification"
+
+  # Message name consistency
+  message-name-convention:
+    description: Message names should follow consistent naming convention
+    given: $.components.messages[*]~
+    severity: info
+    then:
+      function: casing
+      functionOptions:
+        type: pascal
+    message: "Use PascalCase for message component names (e.g., 'OrderCreated', 'PaymentProcessed')"
+
+  # Schema reusability
+  schema-components-usage:
+    description: Encourage use of component schemas for reusability
+    given: $.components
+    severity: info
+    then:
+      field: schemas
+      function: defined
+    message: "Define reusable schemas in components.schemas for consistency"
+
+  # External documentation
+  external-docs-provided:
+    description: Provide external documentation links
+    given: $.info
+    severity: info
+    then:
+      field: externalDocs
+      function: defined
+    message: "Consider providing external documentation link for additional API details"
+
+  # Deprecation handling
+  deprecated-messages-marked:
+    description: Deprecated messages must be clearly marked
+    given: $.components.messages[*][?(@.deprecated == true)]
+    severity: error
+    then:
+      field: description
+      function: pattern
+      functionOptions:
+        match: "(deprecated|deprecation|obsolete|replaced)"
+    message: "Deprecated messages must clearly indicate deprecation in their description"
+
+  deprecated-channels-marked:
+    description: Deprecated channels must be clearly marked
+    given: $.channels[*][?(@.deprecated == true)]
+    severity: error
+    then:
+      field: description
+      function: pattern
+      functionOptions:
+        match: "(deprecated|deprecation|obsolete|replaced)"
+    message: "Deprecated channels must clearly indicate deprecation in their description"
