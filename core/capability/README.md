@@ -5,8 +5,7 @@ This is a draft schema for Naftiko capabilities as informed by market research a
 These are the current artifacts being developed to help define and evolve the capabilities schema.
 
 - APIs.yml - This is a programmatic index for this schema.
-- capabiity-schema-v0.1.0.yml - A JSON Schema for Capabilities.
-- capability-rules-v0.1.0.yml - A set of Spectral rules for capabilities.
+- capabiity-schema.yml - A JSON Schema for Capabilities.
 
 These artifacts are being iterated upon as part of capabilities and then regularly updated with changes.
 
