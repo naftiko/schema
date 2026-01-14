@@ -1,34 +1,130 @@
-"$schema": http://json-schema.org/draft-07/schema#
-definitions:
+$schema: https://json-schema.org/draft/2020-12/schema
+anyOf:
+  - $ref: '#/$defs/A2AError'
+  - $ref: '#/$defs/A2ARequest'
+  - $ref: '#/$defs/APIKeySecurityScheme'
+  - $ref: '#/$defs/AgentCapabilities'
+  - $ref: '#/$defs/AgentCard'
+  - $ref: '#/$defs/AgentCardSignature'
+  - $ref: '#/$defs/AgentExtension'
+  - $ref: '#/$defs/AgentInterface'
+  - $ref: '#/$defs/AgentProvider'
+  - $ref: '#/$defs/AgentSkill'
+  - $ref: '#/$defs/Artifact'
+  - $ref: '#/$defs/AuthenticatedExtendedCardNotConfiguredError'
+  - $ref: '#/$defs/AuthorizationCodeOAuthFlow'
+  - $ref: '#/$defs/CancelTaskRequest'
+  - $ref: '#/$defs/CancelTaskResponse'
+  - $ref: '#/$defs/CancelTaskSuccessResponse'
+  - $ref: '#/$defs/ClientCredentialsOAuthFlow'
+  - $ref: '#/$defs/ContentTypeNotSupportedError'
+  - $ref: '#/$defs/DataPart'
+  - $ref: '#/$defs/DeleteTaskPushNotificationConfigParams'
+  - $ref: '#/$defs/DeleteTaskPushNotificationConfigRequest'
+  - $ref: '#/$defs/DeleteTaskPushNotificationConfigResponse'
+  - $ref: '#/$defs/DeleteTaskPushNotificationConfigSuccessResponse'
+  - $ref: '#/$defs/FileBase'
+  - $ref: '#/$defs/FilePart'
+  - $ref: '#/$defs/FileWithBytes'
+  - $ref: '#/$defs/FileWithUri'
+  - $ref: '#/$defs/GetAuthenticatedExtendedCardRequest'
+  - $ref: '#/$defs/GetAuthenticatedExtendedCardResponse'
+  - $ref: '#/$defs/GetAuthenticatedExtendedCardSuccessResponse'
+  - $ref: '#/$defs/GetTaskPushNotificationConfigParams'
+  - $ref: '#/$defs/GetTaskPushNotificationConfigRequest'
+  - $ref: '#/$defs/GetTaskPushNotificationConfigResponse'
+  - $ref: '#/$defs/GetTaskPushNotificationConfigSuccessResponse'
+  - $ref: '#/$defs/GetTaskRequest'
+  - $ref: '#/$defs/GetTaskResponse'
+  - $ref: '#/$defs/GetTaskSuccessResponse'
+  - $ref: '#/$defs/HTTPAuthSecurityScheme'
+  - $ref: '#/$defs/ImplicitOAuthFlow'
+  - $ref: '#/$defs/InternalError'
+  - $ref: '#/$defs/InvalidAgentResponseError'
+  - $ref: '#/$defs/InvalidParamsError'
+  - $ref: '#/$defs/InvalidRequestError'
+  - $ref: '#/$defs/JSONParseError'
+  - $ref: '#/$defs/JSONRPCError'
+  - $ref: '#/$defs/JSONRPCErrorResponse'
+  - $ref: '#/$defs/JSONRPCMessage'
+  - $ref: '#/$defs/JSONRPCRequest'
+  - $ref: '#/$defs/JSONRPCResponse'
+  - $ref: '#/$defs/JSONRPCSuccessResponse'
+  - $ref: '#/$defs/ListTaskPushNotificationConfigParams'
+  - $ref: '#/$defs/ListTaskPushNotificationConfigRequest'
+  - $ref: '#/$defs/ListTaskPushNotificationConfigResponse'
+  - $ref: '#/$defs/ListTaskPushNotificationConfigSuccessResponse'
+  - $ref: '#/$defs/Message'
+  - $ref: '#/$defs/MessageSendConfiguration'
+  - $ref: '#/$defs/MessageSendParams'
+  - $ref: '#/$defs/MethodNotFoundError'
+  - $ref: '#/$defs/MutualTLSSecurityScheme'
+  - $ref: '#/$defs/OAuth2SecurityScheme'
+  - $ref: '#/$defs/OAuthFlows'
+  - $ref: '#/$defs/OpenIdConnectSecurityScheme'
+  - $ref: '#/$defs/Part'
+  - $ref: '#/$defs/PartBase'
+  - $ref: '#/$defs/PasswordOAuthFlow'
+  - $ref: '#/$defs/PushNotificationAuthenticationInfo'
+  - $ref: '#/$defs/PushNotificationConfig'
+  - $ref: '#/$defs/PushNotificationNotSupportedError'
+  - $ref: '#/$defs/SecurityScheme'
+  - $ref: '#/$defs/SecuritySchemeBase'
+  - $ref: '#/$defs/SendMessageRequest'
+  - $ref: '#/$defs/SendMessageResponse'
+  - $ref: '#/$defs/SendMessageSuccessResponse'
+  - $ref: '#/$defs/SendStreamingMessageRequest'
+  - $ref: '#/$defs/SendStreamingMessageResponse'
+  - $ref: '#/$defs/SendStreamingMessageSuccessResponse'
+  - $ref: '#/$defs/SetTaskPushNotificationConfigRequest'
+  - $ref: '#/$defs/SetTaskPushNotificationConfigResponse'
+  - $ref: '#/$defs/SetTaskPushNotificationConfigSuccessResponse'
+  - $ref: '#/$defs/Task'
+  - $ref: '#/$defs/TaskArtifactUpdateEvent'
+  - $ref: '#/$defs/TaskIdParams'
+  - $ref: '#/$defs/TaskNotCancelableError'
+  - $ref: '#/$defs/TaskNotFoundError'
+  - $ref: '#/$defs/TaskPushNotificationConfig'
+  - $ref: '#/$defs/TaskQueryParams'
+  - $ref: '#/$defs/TaskResubscriptionRequest'
+  - $ref: '#/$defs/TaskState'
+  - $ref: '#/$defs/TaskStatus'
+  - $ref: '#/$defs/TaskStatusUpdateEvent'
+  - $ref: '#/$defs/TextPart'
+  - $ref: '#/$defs/TransportProtocol'
+  - $ref: '#/$defs/UnsupportedOperationError'
+$defs:
   A2AError:
     anyOf:
-    - "$ref": "#/definitions/JSONParseError"
-    - "$ref": "#/definitions/InvalidRequestError"
-    - "$ref": "#/definitions/MethodNotFoundError"
-    - "$ref": "#/definitions/InvalidParamsError"
-    - "$ref": "#/definitions/InternalError"
-    - "$ref": "#/definitions/TaskNotFoundError"
-    - "$ref": "#/definitions/TaskNotCancelableError"
-    - "$ref": "#/definitions/PushNotificationNotSupportedError"
-    - "$ref": "#/definitions/UnsupportedOperationError"
-    - "$ref": "#/definitions/ContentTypeNotSupportedError"
-    - "$ref": "#/definitions/InvalidAgentResponseError"
-    - "$ref": "#/definitions/AuthenticatedExtendedCardNotConfiguredError"
-    description: A discriminated union of all standard JSON-RPC and A2A-specific error
+      - $ref: '#/$defs/JSONParseError'
+      - $ref: '#/$defs/InvalidRequestError'
+      - $ref: '#/$defs/MethodNotFoundError'
+      - $ref: '#/$defs/InvalidParamsError'
+      - $ref: '#/$defs/InternalError'
+      - $ref: '#/$defs/TaskNotFoundError'
+      - $ref: '#/$defs/TaskNotCancelableError'
+      - $ref: '#/$defs/PushNotificationNotSupportedError'
+      - $ref: '#/$defs/UnsupportedOperationError'
+      - $ref: '#/$defs/ContentTypeNotSupportedError'
+      - $ref: '#/$defs/InvalidAgentResponseError'
+      - $ref: '#/$defs/AuthenticatedExtendedCardNotConfiguredError'
+    description: >-
+      A discriminated union of all standard JSON-RPC and A2A-specific error
       types.
   A2ARequest:
     anyOf:
-    - "$ref": "#/definitions/SendMessageRequest"
-    - "$ref": "#/definitions/SendStreamingMessageRequest"
-    - "$ref": "#/definitions/GetTaskRequest"
-    - "$ref": "#/definitions/CancelTaskRequest"
-    - "$ref": "#/definitions/SetTaskPushNotificationConfigRequest"
-    - "$ref": "#/definitions/GetTaskPushNotificationConfigRequest"
-    - "$ref": "#/definitions/TaskResubscriptionRequest"
-    - "$ref": "#/definitions/ListTaskPushNotificationConfigRequest"
-    - "$ref": "#/definitions/DeleteTaskPushNotificationConfigRequest"
-    - "$ref": "#/definitions/GetAuthenticatedExtendedCardRequest"
-    description: A discriminated union representing all possible JSON-RPC 2.0 requests
+      - $ref: '#/$defs/SendMessageRequest'
+      - $ref: '#/$defs/SendStreamingMessageRequest'
+      - $ref: '#/$defs/GetTaskRequest'
+      - $ref: '#/$defs/CancelTaskRequest'
+      - $ref: '#/$defs/SetTaskPushNotificationConfigRequest'
+      - $ref: '#/$defs/GetTaskPushNotificationConfigRequest'
+      - $ref: '#/$defs/TaskResubscriptionRequest'
+      - $ref: '#/$defs/ListTaskPushNotificationConfigRequest'
+      - $ref: '#/$defs/DeleteTaskPushNotificationConfigRequest'
+      - $ref: '#/$defs/GetAuthenticatedExtendedCardRequest'
+    description: >-
+      A discriminated union representing all possible JSON-RPC 2.0 requests
       supported by the A2A specification.
   APIKeySecurityScheme:
     description: Defines a security scheme using an API key.
@@ -39,9 +135,9 @@ definitions:
       in:
         description: The location of the API key.
         enum:
-        - cookie
-        - header
-        - query
+          - cookie
+          - header
+          - query
         type: string
       name:
         description: The name of the header, query, or cookie parameter to be used.
@@ -51,9 +147,9 @@ definitions:
         description: The type of the security scheme. Must be 'apiKey'.
         type: string
     required:
-    - in
-    - name
-    - type
+      - in
+      - name
+      - type
     type: object
   AgentCapabilities:
     description: Defines optional capabilities supported by an agent.
@@ -61,46 +157,66 @@ definitions:
       extensions:
         description: A list of protocol extensions supported by the agent.
         items:
-          "$ref": "#/definitions/AgentExtension"
+          $ref: '#/$defs/AgentExtension'
         type: array
       pushNotifications:
-        description: Indicates if the agent supports sending push notifications for
+        description: >-
+          Indicates if the agent supports sending push notifications for
           asynchronous task updates.
         type: boolean
       stateTransitionHistory:
-        description: Indicates if the agent provides a history of state transitions
-          for a task.
+        description: >-
+          Indicates if the agent provides a history of state transitions for a
+          task.
         type: boolean
       streaming:
-        description: Indicates if the agent supports Server-Sent Events (SSE) for
-          streaming responses.
+        description: >-
+          Indicates if the agent supports Server-Sent Events (SSE) for streaming
+          responses.
         type: boolean
     type: object
   AgentCard:
-    description: |-
-      The AgentCard is a self-describing manifest for an agent. It provides essential
+    description: >-
+      The AgentCard is a self-describing manifest for an agent. It provides
+      essential
+
       metadata including the agent's identity, capabilities, skills, supported
+
       communication methods, and security requirements.
     properties:
       additionalInterfaces:
-        description: |-
-          A list of additional supported interfaces (transport and URL combinations).
-          This allows agents to expose multiple transports, potentially at different URLs.
+        description: >-
+          A list of additional supported interfaces (transport and URL
+          combinations).
+
+          This allows agents to expose multiple transports, potentially at
+          different URLs.
+
 
           Best practices:
+
           - SHOULD include all supported transports for completeness
-          - SHOULD include an entry matching the main 'url' and 'preferredTransport'
-          - MAY reuse URLs if multiple transports are available at the same endpoint
+
+          - SHOULD include an entry matching the main 'url' and
+          'preferredTransport'
+
+          - MAY reuse URLs if multiple transports are available at the same
+          endpoint
+
           - MUST accurately declare the transport available at each URL
 
-          Clients can select any interface from this list based on their transport capabilities
-          and preferences. This enables transport negotiation and fallback scenarios.
+
+          Clients can select any interface from this list based on their
+          transport capabilities
+
+          and preferences. This enables transport negotiation and fallback
+          scenarios.
         items:
-          "$ref": "#/definitions/AgentInterface"
+          $ref: '#/$defs/AgentInterface'
         type: array
       capabilities:
-        "$ref": "#/definitions/AgentCapabilities"
         description: A declaration of optional capabilities supported by the agent.
+        $ref: '#/$defs/AgentCapabilities'
       defaultInputModes:
         description: |-
           Default set of supported input MIME types for all skills, which can be
@@ -109,18 +225,22 @@ definitions:
           type: string
         type: array
       defaultOutputModes:
-        description: |-
-          Default set of supported output MIME types for all skills, which can be
+        description: >-
+          Default set of supported output MIME types for all skills, which can
+          be
+
           overridden on a per-skill basis.
         items:
           type: string
         type: array
       description:
-        description: |-
-          A human-readable description of the agent, assisting users and other agents
+        description: >-
+          A human-readable description of the agent, assisting users and other
+          agents
+
           in understanding its purpose.
         examples:
-        - Agent that helps users with recipes and cooking.
+          - Agent that helps users with recipes and cooking.
         type: string
       documentationUrl:
         description: An optional URL to the agent's documentation.
@@ -131,41 +251,57 @@ definitions:
       name:
         description: A human-readable name for the agent.
         examples:
-        - Recipe Agent
+          - Recipe Agent
         type: string
       preferredTransport:
         default: JSONRPC
-        description: |-
-          The transport protocol for the preferred endpoint (the main 'url' field).
+        description: >-
+          The transport protocol for the preferred endpoint (the main 'url'
+          field).
+
           If not specified, defaults to 'JSONRPC'.
 
-          IMPORTANT: The transport specified here MUST be available at the main 'url'.
-          This creates a binding between the main URL and its supported transport protocol.
-          Clients should prefer this transport and URL combination when both are supported.
+
+          IMPORTANT: The transport specified here MUST be available at the main
+          'url'.
+
+          This creates a binding between the main URL and its supported
+          transport protocol.
+
+          Clients should prefer this transport and URL combination when both are
+          supported.
         examples:
-        - JSONRPC
-        - GRPC
-        - HTTP+JSON
+          - JSONRPC
+          - GRPC
+          - HTTP+JSON
         type: string
       protocolVersion:
         default: 0.3.0
         description: The version of the A2A protocol this agent supports.
         type: string
       provider:
-        "$ref": "#/definitions/AgentProvider"
         description: Information about the agent's service provider.
+        $ref: '#/$defs/AgentProvider'
       security:
-        description: |-
-          A list of security requirement objects that apply to all agent interactions. Each object
-          lists security schemes that can be used. Follows the OpenAPI 3.0 Security Requirement Object.
-          This list can be seen as an OR of ANDs. Each object in the list describes one possible
-          set of security requirements that must be present on a request. This allows specifying,
+        description: >-
+          A list of security requirement objects that apply to all agent
+          interactions. Each object
+
+          lists security schemes that can be used. Follows the OpenAPI 3.0
+          Security Requirement Object.
+
+          This list can be seen as an OR of ANDs. Each object in the list
+          describes one possible
+
+          set of security requirements that must be present on a request. This
+          allows specifying,
+
           for example, "callers must either use OAuth OR an API Key AND mTLS."
         examples:
-        - - oauth:
-            - read
-          - api-key: []
-            mtls: []
+          - - oauth:
+                - read
+            - api-key: []
+              mtls: []
         items:
           additionalProperties:
             items:
@@ -175,25 +311,30 @@ definitions:
         type: array
       securitySchemes:
         additionalProperties:
-          "$ref": "#/definitions/SecurityScheme"
-        description: |-
-          A declaration of the security schemes available to authorize requests. The key is the
+          $ref: '#/$defs/SecurityScheme'
+        description: >-
+          A declaration of the security schemes available to authorize requests.
+          The key is the
+
           scheme name. Follows the OpenAPI 3.0 Security Scheme Object.
         type: object
       signatures:
         description: JSON Web Signatures computed for this AgentCard.
         items:
-          "$ref": "#/definitions/AgentCardSignature"
+          $ref: '#/$defs/AgentCardSignature'
         type: array
       skills:
-        description: The set of skills, or distinct capabilities, that the agent can
+        description: >-
+          The set of skills, or distinct capabilities, that the agent can
           perform.
         items:
-          "$ref": "#/definitions/AgentSkill"
+          $ref: '#/$defs/AgentSkill'
         type: array
       supportsAuthenticatedExtendedCard:
-        description: |-
-          If true, the agent can provide an extended agent card with additional details
+        description: >-
+          If true, the agent can provide an extended agent card with additional
+          details
+
           to authenticated users. Defaults to false.
         type: boolean
       url:
@@ -201,24 +342,23 @@ definitions:
           The preferred endpoint URL for interacting with the agent.
           This URL MUST support the transport specified by 'preferredTransport'.
         examples:
-        - https://api.example.com/a2a/v1
+          - https://api.example.com/a2a/v1
         type: string
       version:
-        description: The agent's own version number. The format is defined by the
-          provider.
+        description: The agent's own version number. The format is defined by the provider.
         examples:
-        - 1.0.0
+          - 1.0.0
         type: string
     required:
-    - capabilities
-    - defaultInputModes
-    - defaultOutputModes
-    - description
-    - name
-    - protocolVersion
-    - skills
-    - url
-    - version
+      - capabilities
+      - defaultInputModes
+      - defaultOutputModes
+      - description
+      - name
+      - protocolVersion
+      - skills
+      - url
+      - version
     type: object
   AgentCardSignature:
     description: |-
@@ -226,75 +366,83 @@ definitions:
       This follows the JSON format of an RFC 7515 JSON Web Signature (JWS).
     properties:
       header:
-        additionalProperties: {}
+        additionalProperties: true
         description: The unprotected JWS header values.
         type: object
       protected:
-        description: |-
-          The protected JWS header for the signature. This is a Base64url-encoded
+        description: >-
+          The protected JWS header for the signature. This is a
+          Base64url-encoded
+
           JSON object, as per RFC 7515.
         type: string
       signature:
         description: The computed signature, Base64url-encoded.
         type: string
     required:
-    - protected
-    - signature
+      - protected
+      - signature
     type: object
   AgentExtension:
     description: A declaration of a protocol extension supported by an Agent.
     examples:
-    - description: Google OAuth 2.0 authentication
-      required: false
-      uri: https://developers.google.com/identity/protocols/oauth2
+      - description: Google OAuth 2.0 authentication
+        required: false
+        uri: https://developers.google.com/identity/protocols/oauth2
     properties:
       description:
         description: A human-readable description of how this agent uses the extension.
         type: string
       params:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional, extension-specific configuration parameters.
         type: object
       required:
-        description: |-
-          If true, the client must understand and comply with the extension's requirements
+        description: >-
+          If true, the client must understand and comply with the extension's
+          requirements
+
           to interact with the agent.
         type: boolean
       uri:
         description: The unique URI identifying the extension.
         type: string
     required:
-    - uri
+      - uri
     type: object
   AgentInterface:
-    description: |-
-      Declares a combination of a target URL and a transport protocol for interacting with the agent.
-      This allows agents to expose the same functionality over multiple transport mechanisms.
+    description: >-
+      Declares a combination of a target URL and a transport protocol for
+      interacting with the agent.
+
+      This allows agents to expose the same functionality over multiple
+      transport mechanisms.
     properties:
       transport:
         description: The transport protocol supported at this URL.
         examples:
-        - JSONRPC
-        - GRPC
-        - HTTP+JSON
+          - JSONRPC
+          - GRPC
+          - HTTP+JSON
         type: string
       url:
-        description: The URL where this interface is available. Must be a valid absolute
+        description: >-
+          The URL where this interface is available. Must be a valid absolute
           HTTPS URL in production.
         examples:
-        - https://api.example.com/a2a/v1
-        - https://grpc.example.com/a2a
-        - https://rest.example.com/v1
+          - https://api.example.com/a2a/v1
+          - https://grpc.example.com/a2a
+          - https://rest.example.com/v1
         type: string
     required:
-    - transport
-    - url
+      - transport
+      - url
     type: object
   AgentProvider:
     description: Represents the service provider of an agent.
     examples:
-    - organization: Google
-      url: https://ai.google.dev
+      - organization: Google
+        url: https://ai.google.dev
     properties:
       organization:
         description: The name of the agent provider's organization.
@@ -303,8 +451,8 @@ definitions:
         description: A URL for the agent provider's website or relevant documentation.
         type: string
     required:
-    - organization
-    - url
+      - organization
+      - url
     type: object
   AgentSkill:
     description: Represents a distinct capability or function that an agent can perform.
@@ -315,11 +463,13 @@ definitions:
           understand its purpose and functionality.
         type: string
       examples:
-        description: |-
-          Example prompts or scenarios that this skill can handle. Provides a hint to
+        description: >-
+          Example prompts or scenarios that this skill can handle. Provides a
+          hint to
+
           the client on how to use the skill.
         examples:
-        - - I need a recipe for bread
+          - - I need a recipe for bread
         items:
           type: string
         type: array
@@ -327,8 +477,9 @@ definitions:
         description: A unique identifier for the agent's skill.
         type: string
       inputModes:
-        description: The set of supported input MIME types for this skill, overriding
-          the agent's defaults.
+        description: >-
+          The set of supported input MIME types for this skill, overriding the
+          agent's defaults.
         items:
           type: string
         type: array
@@ -336,20 +487,26 @@ definitions:
         description: A human-readable name for the skill.
         type: string
       outputModes:
-        description: The set of supported output MIME types for this skill, overriding
-          the agent's defaults.
+        description: >-
+          The set of supported output MIME types for this skill, overriding the
+          agent's defaults.
         items:
           type: string
         type: array
       security:
-        description: |-
+        description: >-
           Security schemes necessary for the agent to leverage this skill.
-          As in the overall AgentCard.security, this list represents a logical OR of security
-          requirement objects. Each object is a set of security schemes that must be used together
+
+          As in the overall AgentCard.security, this list represents a logical
+          OR of security
+
+          requirement objects. Each object is a set of security schemes that
+          must be used together
+
           (a logical AND).
         examples:
-        - - google:
-            - oidc
+          - - google:
+                - oidc
         items:
           additionalProperties:
             items:
@@ -360,25 +517,27 @@ definitions:
       tags:
         description: A set of keywords describing the skill's capabilities.
         examples:
-        - - cooking
-          - customer support
-          - billing
+          - - cooking
+            - customer support
+            - billing
         items:
           type: string
         type: array
     required:
-    - description
-    - id
-    - name
-    - tags
+      - description
+      - id
+      - name
+      - tags
     type: object
   Artifact:
-    description: Represents a file, data structure, or other resource generated by
-      an agent during a task.
+    description: >-
+      Represents a file, data structure, or other resource generated by an agent
+      during a task.
     properties:
       artifactId:
-        description: A unique identifier (e.g. UUID) for the artifact within the scope
-          of the task.
+        description: >-
+          A unique identifier (e.g. UUID) for the artifact within the scope of
+          the task.
         type: string
       description:
         description: An optional, human-readable description of the artifact.
@@ -389,8 +548,9 @@ definitions:
           type: string
         type: array
       metadata:
-        additionalProperties: {}
-        description: Optional metadata for extensions. The key is an extension-specific
+        additionalProperties: true
+        description: >-
+          Optional metadata for extensions. The key is an extension-specific
           identifier.
         type: object
       name:
@@ -399,36 +559,39 @@ definitions:
       parts:
         description: An array of content parts that make up the artifact.
         items:
-          "$ref": "#/definitions/Part"
+          $ref: '#/$defs/Part'
         type: array
     required:
-    - artifactId
-    - parts
+      - artifactId
+      - parts
     type: object
   AuthenticatedExtendedCardNotConfiguredError:
-    description: An A2A-specific error indicating that the agent does not have an
+    description: >-
+      An A2A-specific error indicating that the agent does not have an
       Authenticated Extended Card configured
     properties:
       code:
         const: -32007
-        description: The error code for when an authenticated extended card is not
+        description: >-
+          The error code for when an authenticated extended card is not
           configured.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Authenticated Extended Card is not configured
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   AuthorizationCodeOAuthFlow:
-    description: Defines configuration details for the OAuth 2.0 Authorization Code
-      flow.
+    description: Defines configuration details for the OAuth 2.0 Authorization Code flow.
     properties:
       authorizationUrl:
         description: |-
@@ -443,8 +606,10 @@ definitions:
       scopes:
         additionalProperties:
           type: string
-        description: |-
-          The available scopes for the OAuth2 security scheme. A map between the scope
+        description: >-
+          The available scopes for the OAuth2 security scheme. A map between the
+          scope
+
           name and a short description for it.
         type: object
       tokenUrl:
@@ -453,9 +618,9 @@ definitions:
           This MUST be a URL and use TLS.
         type: string
     required:
-    - authorizationUrl
-    - scopes
-    - tokenUrl
+      - authorizationUrl
+      - scopes
+      - tokenUrl
     type: object
   CancelTaskRequest:
     description: Represents a JSON-RPC request for the `tasks/cancel` method.
@@ -463,8 +628,8 @@ definitions:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -474,62 +639,61 @@ definitions:
         description: The method name. Must be 'tasks/cancel'.
         type: string
       params:
-        "$ref": "#/definitions/TaskIdParams"
         description: The parameters identifying the task to cancel.
+        $ref: '#/$defs/TaskIdParams'
     required:
-    - id
-    - jsonrpc
-    - method
-    - params
+      - id
+      - jsonrpc
+      - method
+      - params
     type: object
   CancelTaskResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/CancelTaskSuccessResponse"
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/CancelTaskSuccessResponse'
     description: Represents a JSON-RPC response for the `tasks/cancel` method.
   CancelTaskSuccessResponse:
-    description: Represents a successful JSON-RPC response for the `tasks/cancel`
-      method.
+    description: Represents a successful JSON-RPC response for the `tasks/cancel` method.
     properties:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
       result:
-        "$ref": "#/definitions/Task"
         description: The result, containing the final state of the canceled Task object.
+        $ref: '#/$defs/Task'
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   ClientCredentialsOAuthFlow:
-    description: Defines configuration details for the OAuth 2.0 Client Credentials
-      flow.
+    description: Defines configuration details for the OAuth 2.0 Client Credentials flow.
     properties:
       refreshUrl:
-        description: The URL to be used for obtaining refresh tokens. This MUST be
-          a URL.
+        description: The URL to be used for obtaining refresh tokens. This MUST be a URL.
         type: string
       scopes:
         additionalProperties:
           type: string
-        description: |-
-          The available scopes for the OAuth2 security scheme. A map between the scope
+        description: >-
+          The available scopes for the OAuth2 security scheme. A map between the
+          scope
+
           name and a short description for it.
         type: object
       tokenUrl:
         description: The token URL to be used for this flow. This MUST be a URL.
         type: string
     required:
-    - scopes
-    - tokenUrl
+      - scopes
+      - tokenUrl
     type: object
   ContentTypeNotSupportedError:
     description: |-
@@ -541,23 +705,26 @@ definitions:
         description: The error code for an unsupported content type.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Incompatible content types
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   DataPart:
-    description: Represents a structured data segment (e.g., JSON) within a message
-      or artifact.
+    description: >-
+      Represents a structured data segment (e.g., JSON) within a message or
+      artifact.
     properties:
       data:
-        additionalProperties: {}
+        additionalProperties: true
         description: The structured data content.
         type: object
       kind:
@@ -565,40 +732,42 @@ definitions:
         description: The type of this part, used as a discriminator. Always 'data'.
         type: string
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata associated with this part.
         type: object
     required:
-    - data
-    - kind
+      - data
+      - kind
     type: object
   DeleteTaskPushNotificationConfigParams:
-    description: Defines parameters for deleting a specific push notification configuration
+    description: >-
+      Defines parameters for deleting a specific push notification configuration
       for a task.
     properties:
       id:
         description: The unique identifier (e.g. UUID) of the task.
         type: string
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata associated with the request.
         type: object
       pushNotificationConfigId:
         description: The ID of the push notification configuration to delete.
         type: string
     required:
-    - id
-    - pushNotificationConfigId
+      - id
+      - pushNotificationConfigId
     type: object
   DeleteTaskPushNotificationConfigRequest:
-    description: Represents a JSON-RPC request for the `tasks/pushNotificationConfig/delete`
-      method.
+    description: >-
+      Represents a JSON-RPC request for the
+      `tasks/pushNotificationConfig/delete` method.
     properties:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -608,31 +777,34 @@ definitions:
         description: The method name. Must be 'tasks/pushNotificationConfig/delete'.
         type: string
       params:
-        "$ref": "#/definitions/DeleteTaskPushNotificationConfigParams"
-        description: The parameters identifying the push notification configuration
-          to delete.
+        description: >-
+          The parameters identifying the push notification configuration to
+          delete.
+        $ref: '#/$defs/DeleteTaskPushNotificationConfigParams'
     required:
-    - id
-    - jsonrpc
-    - method
-    - params
+      - id
+      - jsonrpc
+      - method
+      - params
     type: object
   DeleteTaskPushNotificationConfigResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/DeleteTaskPushNotificationConfigSuccessResponse"
-    description: Represents a JSON-RPC response for the `tasks/pushNotificationConfig/delete`
-      method.
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/DeleteTaskPushNotificationConfigSuccessResponse'
+    description: >-
+      Represents a JSON-RPC response for the
+      `tasks/pushNotificationConfig/delete` method.
   DeleteTaskPushNotificationConfigSuccessResponse:
-    description: Represents a successful JSON-RPC response for the `tasks/pushNotificationConfig/delete`
-      method.
+    description: >-
+      Represents a successful JSON-RPC response for the
+      `tasks/pushNotificationConfig/delete` method.
     properties:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -641,9 +813,9 @@ definitions:
         description: The result is null on successful deletion.
         type: 'null'
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   FileBase:
     description: Defines base properties for a file.
@@ -656,30 +828,34 @@ definitions:
         type: string
     type: object
   FilePart:
-    description: |-
-      Represents a file segment within a message or artifact. The file content can be
+    description: >-
+      Represents a file segment within a message or artifact. The file content
+      can be
+
       provided either directly as bytes or as a URI.
     properties:
       file:
         anyOf:
-        - "$ref": "#/definitions/FileWithBytes"
-        - "$ref": "#/definitions/FileWithUri"
-        description: The file content, represented as either a URI or as base64-encoded
+          - $ref: '#/$defs/FileWithBytes'
+          - $ref: '#/$defs/FileWithUri'
+        description: >-
+          The file content, represented as either a URI or as base64-encoded
           bytes.
       kind:
         const: file
         description: The type of this part, used as a discriminator. Always 'file'.
         type: string
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata associated with this part.
         type: object
     required:
-    - file
-    - kind
+      - file
+      - kind
     type: object
   FileWithBytes:
-    description: Represents a file with its content provided directly as a base64-encoded
+    description: >-
+      Represents a file with its content provided directly as a base64-encoded
       string.
     properties:
       bytes:
@@ -692,7 +868,7 @@ definitions:
         description: An optional name for the file (e.g., "document.pdf").
         type: string
     required:
-    - bytes
+      - bytes
     type: object
   FileWithUri:
     description: Represents a file with its content located at a specific URI.
@@ -707,17 +883,18 @@ definitions:
         description: A URL pointing to the file's content.
         type: string
     required:
-    - uri
+      - uri
     type: object
   GetAuthenticatedExtendedCardRequest:
-    description: Represents a JSON-RPC request for the `agent/getAuthenticatedExtendedCard`
+    description: >-
+      Represents a JSON-RPC request for the `agent/getAuthenticatedExtendedCard`
       method.
     properties:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -727,64 +904,68 @@ definitions:
         description: The method name. Must be 'agent/getAuthenticatedExtendedCard'.
         type: string
     required:
-    - id
-    - jsonrpc
-    - method
+      - id
+      - jsonrpc
+      - method
     type: object
   GetAuthenticatedExtendedCardResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/GetAuthenticatedExtendedCardSuccessResponse"
-    description: Represents a JSON-RPC response for the `agent/getAuthenticatedExtendedCard`
-      method.
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/GetAuthenticatedExtendedCardSuccessResponse'
+    description: >-
+      Represents a JSON-RPC response for the
+      `agent/getAuthenticatedExtendedCard` method.
   GetAuthenticatedExtendedCardSuccessResponse:
-    description: Represents a successful JSON-RPC response for the `agent/getAuthenticatedExtendedCard`
-      method.
+    description: >-
+      Represents a successful JSON-RPC response for the
+      `agent/getAuthenticatedExtendedCard` method.
     properties:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
       result:
-        "$ref": "#/definitions/AgentCard"
         description: The result is an Agent Card object.
+        $ref: '#/$defs/AgentCard'
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   GetTaskPushNotificationConfigParams:
-    description: Defines parameters for fetching a specific push notification configuration
+    description: >-
+      Defines parameters for fetching a specific push notification configuration
       for a task.
     properties:
       id:
         description: The unique identifier (e.g. UUID) of the task.
         type: string
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata associated with the request.
         type: object
       pushNotificationConfigId:
         description: The ID of the push notification configuration to retrieve.
         type: string
     required:
-    - id
+      - id
     type: object
   GetTaskPushNotificationConfigRequest:
-    description: Represents a JSON-RPC request for the `tasks/pushNotificationConfig/get`
+    description: >-
+      Represents a JSON-RPC request for the `tasks/pushNotificationConfig/get`
       method.
     properties:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -795,42 +976,44 @@ definitions:
         type: string
       params:
         anyOf:
-        - "$ref": "#/definitions/TaskIdParams"
-        - "$ref": "#/definitions/GetTaskPushNotificationConfigParams"
+          - $ref: '#/$defs/TaskIdParams'
+          - $ref: '#/$defs/GetTaskPushNotificationConfigParams'
         description: The parameters for getting a push notification configuration.
     required:
-    - id
-    - jsonrpc
-    - method
-    - params
+      - id
+      - jsonrpc
+      - method
+      - params
     type: object
   GetTaskPushNotificationConfigResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/GetTaskPushNotificationConfigSuccessResponse"
-    description: Represents a JSON-RPC response for the `tasks/pushNotificationConfig/get`
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/GetTaskPushNotificationConfigSuccessResponse'
+    description: >-
+      Represents a JSON-RPC response for the `tasks/pushNotificationConfig/get`
       method.
   GetTaskPushNotificationConfigSuccessResponse:
-    description: Represents a successful JSON-RPC response for the `tasks/pushNotificationConfig/get`
-      method.
+    description: >-
+      Represents a successful JSON-RPC response for the
+      `tasks/pushNotificationConfig/get` method.
     properties:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
       result:
-        "$ref": "#/definitions/TaskPushNotificationConfig"
         description: The result, containing the requested push notification configuration.
+        $ref: '#/$defs/TaskPushNotificationConfig'
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   GetTaskRequest:
     description: Represents a JSON-RPC request for the `tasks/get` method.
@@ -838,8 +1021,8 @@ definitions:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -849,18 +1032,18 @@ definitions:
         description: The method name. Must be 'tasks/get'.
         type: string
       params:
-        "$ref": "#/definitions/TaskQueryParams"
         description: The parameters for querying a task.
+        $ref: '#/$defs/TaskQueryParams'
     required:
-    - id
-    - jsonrpc
-    - method
-    - params
+      - id
+      - jsonrpc
+      - method
+      - params
     type: object
   GetTaskResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/GetTaskSuccessResponse"
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/GetTaskSuccessResponse'
     description: Represents a JSON-RPC response for the `tasks/get` method.
   GetTaskSuccessResponse:
     description: Represents a successful JSON-RPC response for the `tasks/get` method.
@@ -868,67 +1051,73 @@ definitions:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
       result:
-        "$ref": "#/definitions/Task"
         description: The result, containing the requested Task object.
+        $ref: '#/$defs/Task'
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   HTTPAuthSecurityScheme:
     description: Defines a security scheme using HTTP authentication.
     properties:
       bearerFormat:
-        description: |-
-          A hint to the client to identify how the bearer token is formatted (e.g., "JWT").
+        description: >-
+          A hint to the client to identify how the bearer token is formatted
+          (e.g., "JWT").
+
           This is primarily for documentation purposes.
         type: string
       description:
         description: An optional description for the security scheme.
         type: string
       scheme:
-        description: |-
-          The name of the HTTP Authentication scheme to be used in the Authorization header,
+        description: >-
+          The name of the HTTP Authentication scheme to be used in the
+          Authorization header,
+
           as defined in RFC7235 (e.g., "Bearer").
-          This value should be registered in the IANA Authentication Scheme registry.
+
+          This value should be registered in the IANA Authentication Scheme
+          registry.
         type: string
       type:
         const: http
         description: The type of the security scheme. Must be 'http'.
         type: string
     required:
-    - scheme
-    - type
+      - scheme
+      - type
     type: object
   ImplicitOAuthFlow:
     description: Defines configuration details for the OAuth 2.0 Implicit flow.
     properties:
       authorizationUrl:
-        description: The authorization URL to be used for this flow. This MUST be
-          a URL.
+        description: The authorization URL to be used for this flow. This MUST be a URL.
         type: string
       refreshUrl:
-        description: The URL to be used for obtaining refresh tokens. This MUST be
-          a URL.
+        description: The URL to be used for obtaining refresh tokens. This MUST be a URL.
         type: string
       scopes:
         additionalProperties:
           type: string
-        description: |-
-          The available scopes for the OAuth2 security scheme. A map between the scope
+        description: >-
+          The available scopes for the OAuth2 security scheme. A map between the
+          scope
+
           name and a short description for it.
         type: object
     required:
-    - authorizationUrl
-    - scopes
+      - authorizationUrl
+      - scopes
     type: object
   InternalError:
     description: An error indicating an internal error on the server.
@@ -938,16 +1127,18 @@ definitions:
         description: The error code for an internal server error.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Internal error
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   InvalidAgentResponseError:
     description: |-
@@ -959,16 +1150,18 @@ definitions:
         description: The error code for an invalid agent response.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Invalid agent response
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   InvalidParamsError:
     description: An error indicating that the method parameters are invalid.
@@ -978,16 +1171,18 @@ definitions:
         description: The error code for an invalid parameters error.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Invalid parameters
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   InvalidRequestError:
     description: An error indicating that the JSON sent is not a valid Request object.
@@ -997,16 +1192,18 @@ definitions:
         description: The error code for an invalid request.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Request payload validation error
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   JSONParseError:
     description: An error indicating that the server received invalid JSON.
@@ -1016,16 +1213,18 @@ definitions:
         description: The error code for a JSON parse error.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Invalid JSON payload
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   JSONRPCError:
     description: Represents a JSON-RPC 2.0 Error object, included in an error response.
@@ -1034,80 +1233,89 @@ definitions:
         description: A number that indicates the error type that occurred.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         description: A string providing a short description of the error.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   JSONRPCErrorResponse:
     description: Represents a JSON-RPC 2.0 Error Response object.
     properties:
       error:
         anyOf:
-        - "$ref": "#/definitions/JSONRPCError"
-        - "$ref": "#/definitions/JSONParseError"
-        - "$ref": "#/definitions/InvalidRequestError"
-        - "$ref": "#/definitions/MethodNotFoundError"
-        - "$ref": "#/definitions/InvalidParamsError"
-        - "$ref": "#/definitions/InternalError"
-        - "$ref": "#/definitions/TaskNotFoundError"
-        - "$ref": "#/definitions/TaskNotCancelableError"
-        - "$ref": "#/definitions/PushNotificationNotSupportedError"
-        - "$ref": "#/definitions/UnsupportedOperationError"
-        - "$ref": "#/definitions/ContentTypeNotSupportedError"
-        - "$ref": "#/definitions/InvalidAgentResponseError"
-        - "$ref": "#/definitions/AuthenticatedExtendedCardNotConfiguredError"
+          - $ref: '#/$defs/JSONRPCError'
+          - $ref: '#/$defs/JSONParseError'
+          - $ref: '#/$defs/InvalidRequestError'
+          - $ref: '#/$defs/MethodNotFoundError'
+          - $ref: '#/$defs/InvalidParamsError'
+          - $ref: '#/$defs/InternalError'
+          - $ref: '#/$defs/TaskNotFoundError'
+          - $ref: '#/$defs/TaskNotCancelableError'
+          - $ref: '#/$defs/PushNotificationNotSupportedError'
+          - $ref: '#/$defs/UnsupportedOperationError'
+          - $ref: '#/$defs/ContentTypeNotSupportedError'
+          - $ref: '#/$defs/InvalidAgentResponseError'
+          - $ref: '#/$defs/AuthenticatedExtendedCardNotConfiguredError'
         description: An object describing the error that occurred.
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
     required:
-    - error
-    - id
-    - jsonrpc
+      - error
+      - id
+      - jsonrpc
     type: object
   JSONRPCMessage:
-    description: Defines the base structure for any JSON-RPC 2.0 request, response,
-      or notification.
+    description: >-
+      Defines the base structure for any JSON-RPC 2.0 request, response, or
+      notification.
     properties:
       id:
-        description: |-
-          A unique identifier established by the client. It must be a String, a Number, or null.
-          The server must reply with the same value in the response. This property is omitted for notifications.
+        description: >-
+          A unique identifier established by the client. It must be a String, a
+          Number, or null.
+
+          The server must reply with the same value in the response. This
+          property is omitted for notifications.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
     required:
-    - jsonrpc
+      - jsonrpc
     type: object
   JSONRPCRequest:
     description: Represents a JSON-RPC 2.0 Request object.
     properties:
       id:
-        description: |-
-          A unique identifier established by the client. It must be a String, a Number, or null.
-          The server must reply with the same value in the response. This property is omitted for notifications.
+        description: >-
+          A unique identifier established by the client. It must be a String, a
+          Number, or null.
+
+          The server must reply with the same value in the response. This
+          property is omitted for notifications.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -1116,26 +1324,27 @@ definitions:
         description: A string containing the name of the method to be invoked.
         type: string
       params:
-        additionalProperties: {}
-        description: A structured value holding the parameter values to be used during
-          the method invocation.
+        additionalProperties: true
+        description: >-
+          A structured value holding the parameter values to be used during the
+          method invocation.
         type: object
     required:
-    - jsonrpc
-    - method
+      - jsonrpc
+      - method
     type: object
   JSONRPCResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/SendMessageSuccessResponse"
-    - "$ref": "#/definitions/SendStreamingMessageSuccessResponse"
-    - "$ref": "#/definitions/GetTaskSuccessResponse"
-    - "$ref": "#/definitions/CancelTaskSuccessResponse"
-    - "$ref": "#/definitions/SetTaskPushNotificationConfigSuccessResponse"
-    - "$ref": "#/definitions/GetTaskPushNotificationConfigSuccessResponse"
-    - "$ref": "#/definitions/ListTaskPushNotificationConfigSuccessResponse"
-    - "$ref": "#/definitions/DeleteTaskPushNotificationConfigSuccessResponse"
-    - "$ref": "#/definitions/GetAuthenticatedExtendedCardSuccessResponse"
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/SendMessageSuccessResponse'
+      - $ref: '#/$defs/SendStreamingMessageSuccessResponse'
+      - $ref: '#/$defs/GetTaskSuccessResponse'
+      - $ref: '#/$defs/CancelTaskSuccessResponse'
+      - $ref: '#/$defs/SetTaskPushNotificationConfigSuccessResponse'
+      - $ref: '#/$defs/GetTaskPushNotificationConfigSuccessResponse'
+      - $ref: '#/$defs/ListTaskPushNotificationConfigSuccessResponse'
+      - $ref: '#/$defs/DeleteTaskPushNotificationConfigSuccessResponse'
+      - $ref: '#/$defs/GetAuthenticatedExtendedCardSuccessResponse'
     description: |-
       A discriminated union representing all possible JSON-RPC 2.0 responses
       for the A2A specification methods.
@@ -1145,44 +1354,47 @@ definitions:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
       result:
-        description: The value of this member is determined by the method invoked
-          on the Server.
+        description: >-
+          The value of this member is determined by the method invoked on the
+          Server.
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   ListTaskPushNotificationConfigParams:
-    description: Defines parameters for listing all push notification configurations
+    description: >-
+      Defines parameters for listing all push notification configurations
       associated with a task.
     properties:
       id:
         description: The unique identifier (e.g. UUID) of the task.
         type: string
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata associated with the request.
         type: object
     required:
-    - id
+      - id
     type: object
   ListTaskPushNotificationConfigRequest:
-    description: Represents a JSON-RPC request for the `tasks/pushNotificationConfig/list`
+    description: >-
+      Represents a JSON-RPC request for the `tasks/pushNotificationConfig/list`
       method.
     properties:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -1192,49 +1404,54 @@ definitions:
         description: The method name. Must be 'tasks/pushNotificationConfig/list'.
         type: string
       params:
-        "$ref": "#/definitions/ListTaskPushNotificationConfigParams"
-        description: The parameters identifying the task whose configurations are
-          to be listed.
+        description: >-
+          The parameters identifying the task whose configurations are to be
+          listed.
+        $ref: '#/$defs/ListTaskPushNotificationConfigParams'
     required:
-    - id
-    - jsonrpc
-    - method
-    - params
+      - id
+      - jsonrpc
+      - method
+      - params
     type: object
   ListTaskPushNotificationConfigResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/ListTaskPushNotificationConfigSuccessResponse"
-    description: Represents a JSON-RPC response for the `tasks/pushNotificationConfig/list`
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/ListTaskPushNotificationConfigSuccessResponse'
+    description: >-
+      Represents a JSON-RPC response for the `tasks/pushNotificationConfig/list`
       method.
   ListTaskPushNotificationConfigSuccessResponse:
-    description: Represents a successful JSON-RPC response for the `tasks/pushNotificationConfig/list`
-      method.
+    description: >-
+      Represents a successful JSON-RPC response for the
+      `tasks/pushNotificationConfig/list` method.
     properties:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
       result:
-        description: The result, containing an array of all push notification configurations
-          for the task.
+        description: >-
+          The result, containing an array of all push notification
+          configurations for the task.
         items:
-          "$ref": "#/definitions/TaskPushNotificationConfig"
+          $ref: '#/$defs/TaskPushNotificationConfig'
         type: array
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   Message:
-    description: Represents a single message in the conversation between a user and
-      an agent.
+    description: >-
+      Represents a single message in the conversation between a user and an
+      agent.
     properties:
       contextId:
         description: The context ID for this message, used to group related interactions.
@@ -1246,16 +1463,19 @@ definitions:
         type: array
       kind:
         const: message
-        description: The type of this object, used as a discriminator. Always 'message'
-          for a Message.
+        description: >-
+          The type of this object, used as a discriminator. Always 'message' for
+          a Message.
         type: string
       messageId:
-        description: A unique identifier for the message, typically a UUID, generated
-          by the sender.
+        description: >-
+          A unique identifier for the message, typically a UUID, generated by
+          the sender.
         type: string
       metadata:
-        additionalProperties: {}
-        description: Optional metadata for extensions. The key is an extension-specific
+        additionalProperties: true
+        description: >-
+          Optional metadata for extensions. The key is an extension-specific
           identifier.
         type: object
       parts:
@@ -1263,91 +1483,104 @@ definitions:
           An array of content parts that form the message body. A message can be
           composed of multiple parts of different types (e.g., text and files).
         items:
-          "$ref": "#/definitions/Part"
+          $ref: '#/$defs/Part'
         type: array
       referenceTaskIds:
-        description: A list of other task IDs that this message references for additional
+        description: >-
+          A list of other task IDs that this message references for additional
           context.
         items:
           type: string
         type: array
       role:
-        description: Identifies the sender of the message. `user` for the client,
-          `agent` for the service.
+        description: >-
+          Identifies the sender of the message. `user` for the client, `agent`
+          for the service.
         enum:
-        - agent
-        - user
+          - agent
+          - user
         type: string
       taskId:
-        description: The ID of the task this message is part of. Can be omitted for
-          the first message of a new task.
+        description: >-
+          The ID of the task this message is part of. Can be omitted for the
+          first message of a new task.
         type: string
     required:
-    - kind
-    - messageId
-    - parts
-    - role
+      - kind
+      - messageId
+      - parts
+      - role
     type: object
   MessageSendConfiguration:
-    description: Defines configuration options for a `message/send` or `message/stream`
+    description: >-
+      Defines configuration options for a `message/send` or `message/stream`
       request.
     properties:
       acceptedOutputModes:
-        description: A list of output MIME types the client is prepared to accept
-          in the response.
+        description: >-
+          A list of output MIME types the client is prepared to accept in the
+          response.
         items:
           type: string
         type: array
       blocking:
-        description: If true, the client will wait for the task to complete. The server
-          may reject this if the task is long-running.
+        description: >-
+          If true, the client will wait for the task to complete. The server may
+          reject this if the task is long-running.
         type: boolean
       historyLength:
-        description: The number of most recent messages from the task's history to
-          retrieve in the response.
+        description: >-
+          The number of most recent messages from the task's history to retrieve
+          in the response.
         type: integer
       pushNotificationConfig:
-        "$ref": "#/definitions/PushNotificationConfig"
-        description: Configuration for the agent to send push notifications for updates
+        description: >-
+          Configuration for the agent to send push notifications for updates
           after the initial response.
+        $ref: '#/$defs/PushNotificationConfig'
     type: object
   MessageSendParams:
-    description: |-
-      Defines the parameters for a request to send a message to an agent. This can be used
+    description: >-
+      Defines the parameters for a request to send a message to an agent. This
+      can be used
+
       to create a new task, continue an existing one, or restart a task.
     properties:
       configuration:
-        "$ref": "#/definitions/MessageSendConfiguration"
         description: Optional configuration for the send request.
+        $ref: '#/$defs/MessageSendConfiguration'
       message:
-        "$ref": "#/definitions/Message"
         description: The message object being sent to the agent.
+        $ref: '#/$defs/Message'
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata for extensions.
         type: object
     required:
-    - message
+      - message
     type: object
   MethodNotFoundError:
-    description: An error indicating that the requested method does not exist or is
-      not available.
+    description: >-
+      An error indicating that the requested method does not exist or is not
+      available.
     properties:
       code:
         const: -32601
         description: The error code for a method not found error.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Method not found
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   MutualTLSSecurityScheme:
     description: Defines a security scheme using mTLS authentication.
@@ -1360,7 +1593,7 @@ definitions:
         description: The type of the security scheme. Must be 'mutualTLS'.
         type: string
     required:
-    - type
+      - type
     type: object
   OAuth2SecurityScheme:
     description: Defines a security scheme using OAuth 2.0.
@@ -1369,39 +1602,44 @@ definitions:
         description: An optional description for the security scheme.
         type: string
       flows:
-        "$ref": "#/definitions/OAuthFlows"
-        description: An object containing configuration information for the supported
-          OAuth 2.0 flows.
+        description: >-
+          An object containing configuration information for the supported OAuth
+          2.0 flows.
+        $ref: '#/$defs/OAuthFlows'
       oauth2MetadataUrl:
-        description: |-
+        description: >-
           URL to the oauth2 authorization server metadata
-          [RFC8414](https://datatracker.ietf.org/doc/html/rfc8414). TLS is required.
+
+          [RFC8414](https://datatracker.ietf.org/doc/html/rfc8414). TLS is
+          required.
         type: string
       type:
         const: oauth2
         description: The type of the security scheme. Must be 'oauth2'.
         type: string
     required:
-    - flows
-    - type
+      - flows
+      - type
     type: object
   OAuthFlows:
     description: Defines the configuration for the supported OAuth 2.0 flows.
     properties:
       authorizationCode:
-        "$ref": "#/definitions/AuthorizationCodeOAuthFlow"
-        description: Configuration for the OAuth Authorization Code flow. Previously
-          called accessCode in OpenAPI 2.0.
+        description: >-
+          Configuration for the OAuth Authorization Code flow. Previously called
+          accessCode in OpenAPI 2.0.
+        $ref: '#/$defs/AuthorizationCodeOAuthFlow'
       clientCredentials:
-        "$ref": "#/definitions/ClientCredentialsOAuthFlow"
-        description: Configuration for the OAuth Client Credentials flow. Previously
-          called application in OpenAPI 2.0.
+        description: >-
+          Configuration for the OAuth Client Credentials flow. Previously called
+          application in OpenAPI 2.0.
+        $ref: '#/$defs/ClientCredentialsOAuthFlow'
       implicit:
-        "$ref": "#/definitions/ImplicitOAuthFlow"
         description: Configuration for the OAuth Implicit flow.
+        $ref: '#/$defs/ImplicitOAuthFlow'
       password:
-        "$ref": "#/definitions/PasswordOAuthFlow"
         description: Configuration for the OAuth Resource Owner Password flow.
+        $ref: '#/$defs/PasswordOAuthFlow'
     type: object
   OpenIdConnectSecurityScheme:
     description: Defines a security scheme using OpenID Connect.
@@ -1417,46 +1655,50 @@ definitions:
         description: The type of the security scheme. Must be 'openIdConnect'.
         type: string
     required:
-    - openIdConnectUrl
-    - type
+      - openIdConnectUrl
+      - type
     type: object
   Part:
     anyOf:
-    - "$ref": "#/definitions/TextPart"
-    - "$ref": "#/definitions/FilePart"
-    - "$ref": "#/definitions/DataPart"
-    description: |-
-      A discriminated union representing a part of a message or artifact, which can
+      - $ref: '#/$defs/TextPart'
+      - $ref: '#/$defs/FilePart'
+      - $ref: '#/$defs/DataPart'
+    description: >-
+      A discriminated union representing a part of a message or artifact, which
+      can
+
       be text, a file, or structured data.
   PartBase:
     description: Defines base properties common to all message or artifact parts.
     properties:
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata associated with this part.
         type: object
     type: object
   PasswordOAuthFlow:
-    description: Defines configuration details for the OAuth 2.0 Resource Owner Password
+    description: >-
+      Defines configuration details for the OAuth 2.0 Resource Owner Password
       flow.
     properties:
       refreshUrl:
-        description: The URL to be used for obtaining refresh tokens. This MUST be
-          a URL.
+        description: The URL to be used for obtaining refresh tokens. This MUST be a URL.
         type: string
       scopes:
         additionalProperties:
           type: string
-        description: |-
-          The available scopes for the OAuth2 security scheme. A map between the scope
+        description: >-
+          The available scopes for the OAuth2 security scheme. A map between the
+          scope
+
           name and a short description for it.
         type: object
       tokenUrl:
         description: The token URL to be used for this flow. This MUST be a URL.
         type: string
     required:
-    - scopes
-    - tokenUrl
+      - scopes
+      - tokenUrl
     type: object
   PushNotificationAuthenticationInfo:
     description: Defines authentication details for a push notification endpoint.
@@ -1470,61 +1712,71 @@ definitions:
           type: string
         type: array
     required:
-    - schemes
+      - schemes
     type: object
   PushNotificationConfig:
-    description: Defines the configuration for setting up push notifications for task
+    description: >-
+      Defines the configuration for setting up push notifications for task
       updates.
     properties:
       authentication:
-        "$ref": "#/definitions/PushNotificationAuthenticationInfo"
-        description: Optional authentication details for the agent to use when calling
-          the notification URL.
+        description: >-
+          Optional authentication details for the agent to use when calling the
+          notification URL.
+        $ref: '#/$defs/PushNotificationAuthenticationInfo'
       id:
-        description: |-
-          A unique identifier (e.g. UUID) for the push notification configuration, set by the client
+        description: >-
+          A unique identifier (e.g. UUID) for the push notification
+          configuration, set by the client
+
           to support multiple notification callbacks.
         type: string
       token:
-        description: A unique token for this task or session to validate incoming
-          push notifications.
+        description: >-
+          A unique token for this task or session to validate incoming push
+          notifications.
         type: string
       url:
         description: The callback URL where the agent should send push notifications.
         type: string
     required:
-    - url
+      - url
     type: object
   PushNotificationNotSupportedError:
-    description: An A2A-specific error indicating that the agent does not support
-      push notifications.
+    description: >-
+      An A2A-specific error indicating that the agent does not support push
+      notifications.
     properties:
       code:
         const: -32003
         description: The error code for when push notifications are not supported.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Push Notification is not supported
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   SecurityScheme:
     anyOf:
-    - "$ref": "#/definitions/APIKeySecurityScheme"
-    - "$ref": "#/definitions/HTTPAuthSecurityScheme"
-    - "$ref": "#/definitions/OAuth2SecurityScheme"
-    - "$ref": "#/definitions/OpenIdConnectSecurityScheme"
-    - "$ref": "#/definitions/MutualTLSSecurityScheme"
-    description: |-
+      - $ref: '#/$defs/APIKeySecurityScheme'
+      - $ref: '#/$defs/HTTPAuthSecurityScheme'
+      - $ref: '#/$defs/OAuth2SecurityScheme'
+      - $ref: '#/$defs/OpenIdConnectSecurityScheme'
+      - $ref: '#/$defs/MutualTLSSecurityScheme'
+    description: >-
       Defines a security scheme that can be used to secure an agent's endpoints.
-      This is a discriminated union type based on the OpenAPI 3.0 Security Scheme Object.
+
+      This is a discriminated union type based on the OpenAPI 3.0 Security
+      Scheme Object.
   SecuritySchemeBase:
     description: Defines base properties shared by all security scheme objects.
     properties:
@@ -1538,8 +1790,8 @@ definitions:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -1549,43 +1801,43 @@ definitions:
         description: The method name. Must be 'message/send'.
         type: string
       params:
-        "$ref": "#/definitions/MessageSendParams"
         description: The parameters for sending a message.
+        $ref: '#/$defs/MessageSendParams'
     required:
-    - id
-    - jsonrpc
-    - method
-    - params
+      - id
+      - jsonrpc
+      - method
+      - params
     type: object
   SendMessageResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/SendMessageSuccessResponse"
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/SendMessageSuccessResponse'
     description: Represents a JSON-RPC response for the `message/send` method.
   SendMessageSuccessResponse:
-    description: Represents a successful JSON-RPC response for the `message/send`
-      method.
+    description: Represents a successful JSON-RPC response for the `message/send` method.
     properties:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
       result:
         anyOf:
-        - "$ref": "#/definitions/Task"
-        - "$ref": "#/definitions/Message"
-        description: The result, which can be a direct reply Message or the initial
-          Task object.
+          - $ref: '#/$defs/Task'
+          - $ref: '#/$defs/Message'
+        description: >-
+          The result, which can be a direct reply Message or the initial Task
+          object.
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   SendStreamingMessageRequest:
     description: Represents a JSON-RPC request for the `message/stream` method.
@@ -1593,8 +1845,8 @@ definitions:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -1604,18 +1856,18 @@ definitions:
         description: The method name. Must be 'message/stream'.
         type: string
       params:
-        "$ref": "#/definitions/MessageSendParams"
         description: The parameters for sending a message.
+        $ref: '#/$defs/MessageSendParams'
     required:
-    - id
-    - jsonrpc
-    - method
-    - params
+      - id
+      - jsonrpc
+      - method
+      - params
     type: object
   SendStreamingMessageResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/SendStreamingMessageSuccessResponse"
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/SendStreamingMessageSuccessResponse'
     description: Represents a JSON-RPC response for the `message/stream` method.
   SendStreamingMessageSuccessResponse:
     description: |-
@@ -1625,35 +1877,35 @@ definitions:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
       result:
         anyOf:
-        - "$ref": "#/definitions/Task"
-        - "$ref": "#/definitions/Message"
-        - "$ref": "#/definitions/TaskStatusUpdateEvent"
-        - "$ref": "#/definitions/TaskArtifactUpdateEvent"
-        description: The result, which can be a Message, Task, or a streaming update
-          event.
+          - $ref: '#/$defs/Task'
+          - $ref: '#/$defs/Message'
+          - $ref: '#/$defs/TaskStatusUpdateEvent'
+          - $ref: '#/$defs/TaskArtifactUpdateEvent'
+        description: The result, which can be a Message, Task, or a streaming update event.
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   SetTaskPushNotificationConfigRequest:
-    description: Represents a JSON-RPC request for the `tasks/pushNotificationConfig/set`
+    description: >-
+      Represents a JSON-RPC request for the `tasks/pushNotificationConfig/set`
       method.
     properties:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -1663,85 +1915,95 @@ definitions:
         description: The method name. Must be 'tasks/pushNotificationConfig/set'.
         type: string
       params:
-        "$ref": "#/definitions/TaskPushNotificationConfig"
         description: The parameters for setting the push notification configuration.
+        $ref: '#/$defs/TaskPushNotificationConfig'
     required:
-    - id
-    - jsonrpc
-    - method
-    - params
+      - id
+      - jsonrpc
+      - method
+      - params
     type: object
   SetTaskPushNotificationConfigResponse:
     anyOf:
-    - "$ref": "#/definitions/JSONRPCErrorResponse"
-    - "$ref": "#/definitions/SetTaskPushNotificationConfigSuccessResponse"
-    description: Represents a JSON-RPC response for the `tasks/pushNotificationConfig/set`
+      - $ref: '#/$defs/JSONRPCErrorResponse'
+      - $ref: '#/$defs/SetTaskPushNotificationConfigSuccessResponse'
+    description: >-
+      Represents a JSON-RPC response for the `tasks/pushNotificationConfig/set`
       method.
   SetTaskPushNotificationConfigSuccessResponse:
-    description: Represents a successful JSON-RPC response for the `tasks/pushNotificationConfig/set`
-      method.
+    description: >-
+      Represents a successful JSON-RPC response for the
+      `tasks/pushNotificationConfig/set` method.
     properties:
       id:
         description: The identifier established by the client.
         type:
-        - string
-        - integer
-        - 'null'
+          - string
+          - integer
+          - 'null'
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
         type: string
       result:
-        "$ref": "#/definitions/TaskPushNotificationConfig"
         description: The result, containing the configured push notification settings.
+        $ref: '#/$defs/TaskPushNotificationConfig'
     required:
-    - id
-    - jsonrpc
-    - result
+      - id
+      - jsonrpc
+      - result
     type: object
   Task:
-    description: Represents a single, stateful operation or conversation between a
-      client and an agent.
+    description: >-
+      Represents a single, stateful operation or conversation between a client
+      and an agent.
     properties:
       artifacts:
-        description: A collection of artifacts generated by the agent during the execution
+        description: >-
+          A collection of artifacts generated by the agent during the execution
           of the task.
         items:
-          "$ref": "#/definitions/Artifact"
+          $ref: '#/$defs/Artifact'
         type: array
       contextId:
-        description: A server-generated unique identifier (e.g. UUID) for maintaining
+        description: >-
+          A server-generated unique identifier (e.g. UUID) for maintaining
           context across multiple related tasks or interactions.
         type: string
       history:
-        description: An array of messages exchanged during the task, representing
-          the conversation history.
+        description: >-
+          An array of messages exchanged during the task, representing the
+          conversation history.
         items:
-          "$ref": "#/definitions/Message"
+          $ref: '#/$defs/Message'
         type: array
       id:
-        description: A unique identifier (e.g. UUID) for the task, generated by the
-          server for a new task.
+        description: >-
+          A unique identifier (e.g. UUID) for the task, generated by the server
+          for a new task.
         type: string
       kind:
         const: task
-        description: The type of this object, used as a discriminator. Always 'task'
-          for a Task.
+        description: >-
+          The type of this object, used as a discriminator. Always 'task' for a
+          Task.
         type: string
       metadata:
-        additionalProperties: {}
-        description: Optional metadata for extensions. The key is an extension-specific
+        additionalProperties: true
+        description: >-
+          Optional metadata for extensions. The key is an extension-specific
           identifier.
         type: object
       status:
-        "$ref": "#/definitions/TaskStatus"
-        description: The current status of the task, including its state and a descriptive
+        description: >-
+          The current status of the task, including its state and a descriptive
           message.
+        $ref: '#/$defs/TaskStatus'
     required:
-    - contextId
-    - id
-    - kind
-    - status
+      - contextId
+      - id
+      - kind
+      - status
     type: object
   TaskArtifactUpdateEvent:
     description: |-
@@ -1749,34 +2011,37 @@ definitions:
       generated or updated. This is typically used in streaming models.
     properties:
       append:
-        description: If true, the content of this artifact should be appended to a
+        description: >-
+          If true, the content of this artifact should be appended to a
           previously sent artifact with the same ID.
         type: boolean
       artifact:
-        "$ref": "#/definitions/Artifact"
         description: The artifact that was generated or updated.
+        $ref: '#/$defs/Artifact'
       contextId:
         description: The context ID associated with the task.
         type: string
       kind:
         const: artifact-update
-        description: The type of this event, used as a discriminator. Always 'artifact-update'.
+        description: >-
+          The type of this event, used as a discriminator. Always
+          'artifact-update'.
         type: string
       lastChunk:
         description: If true, this is the final chunk of the artifact.
         type: boolean
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata for extensions.
         type: object
       taskId:
         description: The ID of the task this artifact belongs to.
         type: string
     required:
-    - artifact
-    - contextId
-    - kind
-    - taskId
+      - artifact
+      - contextId
+      - kind
+      - taskId
     type: object
   TaskIdParams:
     description: Defines parameters containing a task ID, used for simple task operations.
@@ -1785,93 +2050,101 @@ definitions:
         description: The unique identifier (e.g. UUID) of the task.
         type: string
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata associated with the request.
         type: object
     required:
-    - id
+      - id
     type: object
   TaskNotCancelableError:
-    description: An A2A-specific error indicating that the task is in a state where
-      it cannot be canceled.
+    description: >-
+      An A2A-specific error indicating that the task is in a state where it
+      cannot be canceled.
     properties:
       code:
         const: -32002
         description: The error code for a task that cannot be canceled.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Task cannot be canceled
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   TaskNotFoundError:
-    description: An A2A-specific error indicating that the requested task ID was not
-      found.
+    description: An A2A-specific error indicating that the requested task ID was not found.
     properties:
       code:
         const: -32001
         description: The error code for a task not found error.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: Task not found
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
   TaskPushNotificationConfig:
-    description: A container associating a push notification configuration with a
-      specific task.
+    description: >-
+      A container associating a push notification configuration with a specific
+      task.
     properties:
       pushNotificationConfig:
-        "$ref": "#/definitions/PushNotificationConfig"
         description: The push notification configuration for this task.
+        $ref: '#/$defs/PushNotificationConfig'
       taskId:
         description: The unique identifier (e.g. UUID) of the task.
         type: string
     required:
-    - pushNotificationConfig
-    - taskId
+      - pushNotificationConfig
+      - taskId
     type: object
   TaskQueryParams:
-    description: Defines parameters for querying a task, with an option to limit history
+    description: >-
+      Defines parameters for querying a task, with an option to limit history
       length.
     properties:
       historyLength:
-        description: The number of most recent messages from the task's history to
+        description: >-
+          The number of most recent messages from the task's history to
           retrieve.
         type: integer
       id:
         description: The unique identifier (e.g. UUID) of the task.
         type: string
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata associated with the request.
         type: object
     required:
-    - id
+      - id
     type: object
   TaskResubscriptionRequest:
-    description: Represents a JSON-RPC request for the `tasks/resubscribe` method,
-      used to resume a streaming connection.
+    description: >-
+      Represents a JSON-RPC request for the `tasks/resubscribe` method, used to
+      resume a streaming connection.
     properties:
       id:
         description: The identifier for this request.
         type:
-        - string
-        - integer
+          - string
+          - integer
       jsonrpc:
         const: '2.0'
         description: The version of the JSON-RPC protocol. MUST be exactly "2.0".
@@ -1881,48 +2154,51 @@ definitions:
         description: The method name. Must be 'tasks/resubscribe'.
         type: string
       params:
-        "$ref": "#/definitions/TaskIdParams"
         description: The parameters identifying the task to resubscribe to.
+        $ref: '#/$defs/TaskIdParams'
     required:
-    - id
-    - jsonrpc
-    - method
-    - params
+      - id
+      - jsonrpc
+      - method
+      - params
     type: object
   TaskState:
     description: Defines the lifecycle states of a Task.
     enum:
-    - submitted
-    - working
-    - input-required
-    - completed
-    - canceled
-    - failed
-    - rejected
-    - auth-required
-    - unknown
+      - submitted
+      - working
+      - input-required
+      - completed
+      - canceled
+      - failed
+      - rejected
+      - auth-required
+      - unknown
     type: string
   TaskStatus:
     description: Represents the status of a task at a specific point in time.
     properties:
       message:
-        "$ref": "#/definitions/Message"
-        description: An optional, human-readable message providing more details about
-          the current status.
+        description: >-
+          An optional, human-readable message providing more details about the
+          current status.
+        $ref: '#/$defs/Message'
       state:
-        "$ref": "#/definitions/TaskState"
         description: The current state of the task's lifecycle.
+        $ref: '#/$defs/TaskState'
       timestamp:
         description: An ISO 8601 datetime string indicating when this status was recorded.
         examples:
-        - '2023-10-27T10:00:00Z'
+          - '2023-10-27T10:00:00Z'
         type: string
     required:
-    - state
+      - state
     type: object
   TaskStatusUpdateEvent:
-    description: |-
-      An event sent by the agent to notify the client of a change in a task's status.
+    description: >-
+      An event sent by the agent to notify the client of a change in a task's
+      status.
+
       This is typically used in streaming or subscription models.
     properties:
       contextId:
@@ -1933,24 +2209,26 @@ definitions:
         type: boolean
       kind:
         const: status-update
-        description: The type of this event, used as a discriminator. Always 'status-update'.
+        description: >-
+          The type of this event, used as a discriminator. Always
+          'status-update'.
         type: string
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata for extensions.
         type: object
       status:
-        "$ref": "#/definitions/TaskStatus"
         description: The new status of the task.
+        $ref: '#/$defs/TaskStatus'
       taskId:
         description: The ID of the task that was updated.
         type: string
     required:
-    - contextId
-    - final
-    - kind
-    - status
-    - taskId
+      - contextId
+      - final
+      - kind
+      - status
+      - taskId
     type: object
   TextPart:
     description: Represents a text segment within a message or artifact.
@@ -1960,40 +2238,43 @@ definitions:
         description: The type of this part, used as a discriminator. Always 'text'.
         type: string
       metadata:
-        additionalProperties: {}
+        additionalProperties: true
         description: Optional metadata associated with this part.
         type: object
       text:
         description: The string content of the text part.
         type: string
     required:
-    - kind
-    - text
+      - kind
+      - text
     type: object
   TransportProtocol:
     description: Supported A2A transport protocols.
     enum:
-    - JSONRPC
-    - GRPC
-    - HTTP+JSON
+      - JSONRPC
+      - GRPC
+      - HTTP+JSON
     type: string
   UnsupportedOperationError:
-    description: An A2A-specific error indicating that the requested operation is
-      not supported by the agent.
+    description: >-
+      An A2A-specific error indicating that the requested operation is not
+      supported by the agent.
     properties:
       code:
         const: -32004
         description: The error code for an unsupported operation.
         type: integer
       data:
-        description: |-
-          A primitive or structured value containing additional information about the error.
+        description: >-
+          A primitive or structured value containing additional information
+          about the error.
+
           This may be omitted.
       message:
         default: This operation is not supported
         description: The error message.
         type: string
     required:
-    - code
-    - message
+      - code
+      - message
     type: object
