@@ -11,11 +11,11 @@ url: https://github.com/naftiko/schema/blob/main/core/capability/apis.yml
 specificationVersion: '0.19'
 common:
   - type: JSONSchema
-    url: capabiity-schema-v0.1.0.yml
+    url: capabiity-schema.yml
   - type: SpectralRules
-    url: capability-rules-v0.1.0.yml  
+    url: https://github.com/naftiko/rules/blob/main/core/capability-rules.yml
   - type: DiagramImage
-    url: capability-metamodel-v0.1.0.png   
+    url: capability-metamodel.png 
 
   # EXAMPLES - API REUSABILITY CAPABILITY
   - type: Example
